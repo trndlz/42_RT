@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 14:51:34 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/11 18:05:06 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/14 19:38:25 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,66 @@
 double          car(double a)
 {
     return (a * a);
+}
+
+void            rot_x(t_vc *vc, int t)
+{
+    double y;
+    double z;
+
+    y = vc->y;
+    z = vc->z;
+    vc->y = y * cos(t * M_PI / 180) - z * sin(t * M_PI / 180);
+    vc->z = y * sin(t * M_PI / 180) + z * cos(t * M_PI / 180);
+}
+
+void            rot_y(t_vc *vc, int t)
+{
+    double x;
+    double z;
+
+    x = vc->x;
+    z = vc->z;
+    vc->x = x * cos(t * M_PI / 180) + z * sin(t * M_PI / 180);
+    vc->z = -x * sin(t * M_PI / 180) + z * cos(t * M_PI / 180);
+}
+
+void            rot_z(t_vc *vc, int t)
+{
+    double x;
+    double y;
+
+    x = vc->x;
+    y = vc->y;
+    vc->x = x * cos(t * M_PI / 180) - y * sin(t * M_PI / 180);
+    vc->y = x * sin(t * M_PI / 180) + y * cos(t * M_PI / 180);
+}
+
+void            rot_all_axis(t_vc *vc, t_obj *obj)
+{
+    rot_x(vc, obj->rot.x);
+    rot_y(vc, obj->rot.y);
+    rot_z(vc, obj->rot.z);
+}
+
+double           vec_squ_sum(t_vc *v1)
+{
+    if (!v1)
+        return (0);
+    return (car(v1->x) + car(v1->y) + car(v1->z));
+}
+
+t_vc            vec_sub(t_vc *v1, t_vc *v2)
+{
+    t_vc    v;
+
+    v.x = v1->x - v2->x;
+    v.y = v1->y - v2->y;
+    v.z = v1->z - v2->z;
+    return (v);
+}
+
+double           vec_cross_prod(t_vc *v1, t_vc *v2)
+{
+    return (v1->x * v2->x + v1->y * v2->y + v1->z * v2 ->z);
 }

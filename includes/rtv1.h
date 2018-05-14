@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/11 16:44:07 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/14 19:39:05 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,23 @@
 # define WINH 500
 # define WIND 20
 
-typedef struct      s_pt
+typedef struct      s_vc
 {
     double          x;
     double          y;
     double          z;
-}                   t_pt;
+}                   t_vc;
 
 typedef struct      s_sphere
 {
-    double          x0;
-    double          y0;
-    double          z0;
+    t_vc            c;
     double          r;
     unsigned long   color;
 }                   t_sphere;
 
 typedef struct      s_cylinder
 {
-    double          x0;
-    double          y0;
-    double          z0;
+    t_vc            c;
     double          z_min;
     double          r;
     unsigned long   color;
@@ -54,6 +50,16 @@ typedef struct      s_screen
     int             d;
 }                   t_screen;
 
+typedef struct      s_obj
+{
+    int             type;
+    t_vc            rot;
+    t_vc            pos;
+    double          size;
+    unsigned long   color;
+    struct s_obj    *next;
+}                   t_obj;
+
 typedef struct              s_env
 {
     void            *mlx;
@@ -63,14 +69,19 @@ typedef struct              s_env
     int             bpp;
     int             s_l;
     int             endian;
+    int             x;
+    int             y;
     double          a;
     double          b;
     double          c;
-    t_pt            *tmp;
-    t_pt            *ve;
-    t_pt            *ey;
-    t_sphere        *sp;
-    t_cylinder      *cy;
+    double          t;
+    t_vc            tmp;
+    t_vc            ve;
+    t_vc            eye;
+    t_vc            init;
+    t_sphere        sp;
+    t_cylinder      cy;
+    t_obj           *link;
 }                           t_env;
 
 
@@ -83,14 +94,31 @@ void                scene_plot(t_env *e);
 */
 
 double              car(double a);
+void            rot_x(t_vc *vc, int t);
+void            rot_y(t_vc *vc, int t);
+void            rot_z(t_vc *vc, int t);
+void            rot_all_axis(t_vc *vc, t_obj *obj);
+double           vec_squ_sum(t_vc *v1);
+t_vc            vec_sub(t_vc *v1, t_vc *v2);
+double           vec_cross_prod(t_vc *v1, t_vc *v2);
+
 
 /*
 ** STRUCTURES INITIALIZATION
 */
 
 t_env               *init_env(void);
-t_pt                *init_pt(double x, double y, double z);
-t_sphere            *init_sphere(double x0, double y0, double z0, double r);
-t_cylinder          *init_cylinder(double x0, double y0, double z0, double z_min, double r);
+t_vc                init_vc(double x, double y, double z);
+t_sphere            init_sphere(double x0, double y0, double z0, double r);
+t_cylinder          init_cylinder(double x0, double y0, double z0, double r);
+
+/*
+** OBJECTS
+*/
+
+void                obj_add(t_obj **beg, t_obj *n);
+t_obj		        *new_sphere(int x);
+t_obj		        *new_sphere2(int x);
+t_obj               *new_cylinder(int x);
 
 #endif

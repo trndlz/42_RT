@@ -6,7 +6,7 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/05/14 20:01:24 by tmervin          ###   ########.fr        #
+#    Updated: 2018/05/16 16:55:19 by tmervin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ SRC_NAME	:=	test.c			\
 				images.c		\
 				init.c			\
 				objects.c		\
+				intersections.c	\
+				maths_vectors.c	\
 				maths.c
 
 OBJ_PATH	:= obj

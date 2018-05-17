@@ -6,19 +6,22 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/05/16 16:55:19 by tmervin          ###   ########.fr        #
+#    Updated: 2018/05/17 15:03:22 by tmervin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= rtv1
 
 SRC_PATH	:= src
-SRC_NAME	:=	test.c			\
+SRC_NAME	:=	main.c			\
 				images.c		\
 				init.c			\
 				objects.c		\
 				intersections.c	\
 				maths_vectors.c	\
+				lighting.c		\
+				colors.c		\
+				raytracer.c		\
 				maths.c
 
 OBJ_PATH	:= obj

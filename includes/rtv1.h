@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/16 16:22:17 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/17 14:47:31 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define WINW 1000
 # define WINH 500
 # define WIND 20
+# define FOV 100
 
 typedef struct		s_vc
 {
@@ -41,7 +42,7 @@ typedef struct		s_obj
 	t_vc			rot;
 	t_vc			pos;
 	double			size;
-	unsigned long	color;
+	int				color[3];
 	struct s_obj	*next;
 }					t_obj;
 
@@ -60,10 +61,15 @@ typedef struct		s_env
 	double			b;
 	double			c;
 	double			t;
+	double			cost;
 	t_vc			tmp;
 	t_vc			ve;
+	t_vc			ray;
 	t_vc			eye;
-	t_vc			init;
+	t_vc			plan;
+	t_vc			light;
+	t_vc			norm;
+	t_vc			offset;
 	t_obj			*link;
 }					t_env;
 
@@ -82,18 +88,32 @@ void				rot_z(t_vc *vc, int t);
 void				rot_all_axis(t_vc *vc, t_obj *obj);
 double				vec_squ_sum(t_vc *v1);
 t_vc				vec_sub(t_vc *v1, t_vc *v2);
-double				vec_cross_prod(t_vc *v1, t_vc *v2);
-double				vec_module(t_vc *v);
-void				vec_normalize(t_vc *v);
+double				vec_x(t_vc *v1, t_vc *v2);
+double				vec_mod(t_vc *v);
+void				vec_norm(t_vc *v);
+t_vc				vec_mult(t_vc *v, double x);
 
 /*
 ** SHAPES INTERSECTIONS
 */
 
-double				inter_cone(t_env *e, t_vc tmp, t_vc ray, t_obj *obj);
-double				inter_plane(t_vc tmp, t_vc ray, t_obj *obj);
-double				inter_cyl(t_env *e, t_vc tmp, t_vc ray, t_obj *obj);
-double				inter_sph(t_env *e, t_vc tmp, t_vc ray, t_obj *obj);
+double				inter_cone(t_env *e, t_obj *obj);
+double				inter_plane(t_env *e, t_obj *obj);
+double				inter_cyl(t_env *e, t_obj *obj);
+double				inter_sph(t_env *e, t_obj *obj);
+double				quadratic_solver(t_env *e);
+
+/*
+** LIGHTING
+*/
+
+double				diffuse(t_env *e, t_obj *obj);
+
+/*
+** COLORS
+*/
+
+unsigned long		rgb_to_hexa(t_obj *obj, double cost);
 
 /*
 ** STRUCTURES INITIALIZATION
@@ -107,9 +127,9 @@ t_vc				init_vc(double x, double y, double z);
 */
 
 void				obj_add(t_obj **beg, t_obj *n);
-t_obj				*new_sphere(int x);
-t_obj				*new_cylinder(int x);
-t_obj				*new_cone(int x);
+t_obj				*new_sphere(void);
+t_obj				*new_cylinder(void);
+t_obj				*new_cone(void);
 t_obj				*new_plane(void);
 
 #endif

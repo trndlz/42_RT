@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/17 14:47:31 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/23 14:48:26 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ typedef struct		s_obj
 	t_vc			rot;
 	t_vc			pos;
 	double			size;
+	double			ks;
+	double			ka;
+	double			kd;
 	int				color[3];
 	struct s_obj	*next;
 }					t_obj;
@@ -61,14 +64,21 @@ typedef struct		s_env
 	double			b;
 	double			c;
 	double			t;
+	double			t1;
+	double			t2;
 	double			cost;
+	double			cost2;
 	t_vc			tmp;
 	t_vc			ve;
 	t_vc			ray;
 	t_vc			eye;
 	t_vc			plan;
-	t_vc			light;
+	t_obj			*light;
 	t_vc			norm;
+	t_vc			n;
+	t_vc			lm;
+	t_vc			rm;
+	t_vc			v;
 	t_vc			offset;
 	t_obj			*link;
 }					t_env;
@@ -92,6 +102,7 @@ double				vec_x(t_vc *v1, t_vc *v2);
 double				vec_mod(t_vc *v);
 void				vec_norm(t_vc *v);
 t_vc				vec_mult(t_vc *v, double x);
+double				vec_dot(t_vc *v1, t_vc *v2);
 
 /*
 ** SHAPES INTERSECTIONS
@@ -104,16 +115,23 @@ double				inter_sph(t_env *e, t_obj *obj);
 double				quadratic_solver(t_env *e);
 
 /*
+** KEYBOARD
+*/
+
+void	translation(int key, t_env *e);
+int		deal_key(int key, t_env *e);
+
+/*
 ** LIGHTING
 */
 
-double				diffuse(t_env *e, t_obj *obj);
+void				lighting_vectors(t_env *e, t_obj *obj);
 
 /*
 ** COLORS
 */
 
-unsigned long		rgb_to_hexa(t_obj *obj, double cost);
+unsigned long		rgb_to_hexa(t_obj *obj, t_env *e);
 
 /*
 ** STRUCTURES INITIALIZATION
@@ -131,5 +149,6 @@ t_obj				*new_sphere(void);
 t_obj				*new_cylinder(void);
 t_obj				*new_cone(void);
 t_obj				*new_plane(void);
+t_obj				*new_light(void);
 
 #endif

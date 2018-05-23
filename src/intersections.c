@@ -6,11 +6,28 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:03:32 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/17 14:35:12 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/18 11:08:09 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
+
+/*
+** #### SYNTAX
+** V * a = vec_mult(V, a)
+** A | B = vec_cross_prod(A, B)
+** A - B = vec_sub(A, B)
+** nrm(A) = vec_cross_prod(A, B) / (vec_module(A) * vec_module(B))
+*/
+
+/*
+** #### QUADRATIC COEF CALCULATION
+** P-C = eye + t * ray
+** Sphere: a = D|D ; b = D|X ; c = X|X - r*r
+** Cylinder: a = D|D-(D|V)^2; b/2= D|X-(D|V)*(X|V); c = X|X- X|V)^2-r*r
+** Cone:
+** Plane:
+*/
 
 double			inter_sph(t_env *e, t_obj *obj)
 {
@@ -25,7 +42,7 @@ double			inter_cone(t_env *e, t_obj *obj)
 	double k;
 
 	vec_norm(&obj->rot);
-	k = 1 + car(tan(obj->size));
+	k = 1 + car(tan(M_PI * obj->size / 180));
 	e->a = vec_x(&e->ray, &e->ray)
 		- k * car(vec_x(&e->ray, &obj->rot));
 	e->b = 2 * (vec_x(&e->ray, &e->offset)
@@ -42,7 +59,7 @@ double			inter_plane(t_env *e, t_obj *obj)
 
 	vec_norm(&obj->rot);
 	t = -vec_x(&e->offset, &obj->rot) / vec_x(&e->ray, &obj->rot);
-	if (t < 0.00001)
+	if (t < 0)
 		return (-1);
 	return (t);
 }
@@ -61,16 +78,15 @@ double			inter_cyl(t_env *e, t_obj *obj)
 double			quadratic_solver(t_env *e)
 {
 	double d;
-	double t1;
-	double t2;
 
 	d = car(e->b) - 4 * e->a * e->c;
-	if (d < 0.00001)
+	if (d < 0)
 		return (-1);
-	t1 = (-e->b + sqrt(d)) / (2 * e->a);
-	t2 = (-e->b - sqrt(d)) / (2 * e->a);
-	if (d == 0)
-		return (t1);
-	else
-		return (t1 < t2 ? t1 : t2);
+	e->t1 = (-e->b + sqrt(d)) / (2 * e->a);
+	e->t2 = (-e->b - sqrt(d)) / (2 * e->a);
+	if (e->t2 > e->t1 && e->t1 < 0)
+		e->t1 = e->t2;
+	if (e->t2 < e->t1)
+		e->t1 = e->t2;
+	return (e->t1);
 }

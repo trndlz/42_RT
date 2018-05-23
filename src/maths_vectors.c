@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:16:36 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/17 14:36:14 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/22 15:32:56 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,15 @@ void	vec_norm(t_vc *v)
 {
 	double module;
 
-	module = 1.0 / vec_mod(v);
-	v->x *= module;
-	v->y *= module;
-	v->z *= module;
+	module = vec_mod(v);
+	v->x /= module;
+	v->y /= module;
+	v->z /= module;
+}
+
+double	vec_dot(t_vc *v1, t_vc *v2)
+{
+	return (vec_x(v1, v2) / (vec_mod(v1) * vec_mod(v2)));
 }
 
 t_vc	vec_mult(t_vc *v, double a)

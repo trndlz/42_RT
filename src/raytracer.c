@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/17 15:02:11 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/23 10:58:11 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_obj	*nearest_node(t_env *e, t_obj *tmp)
 			t = inter_cone(e, tmp);
 		if (tmp->type == 4)
 			t = inter_plane(e, tmp);
-		if (t > 0 && t < e->t)
+		if (t > 0.00001 && t < e->t)
 		{
 			e->t = t;
 			ret = tmp;
@@ -61,13 +61,17 @@ void	scene_plot(t_env *e)
 		while (++(e->x) < WINW)
 		{
 			tmp = nearest_node(e, o);
+
 			if (tmp)
 			{
-				e->cost = diffuse(e, tmp);
-				if (e->cost > 0.00001 && e->cost <= 1)
-					draw_point(e, e->x, e->y, rgb_to_hexa(tmp, e->cost));
+				lighting_vectors(e, tmp);
+				e->cost = vec_dot(&e->n, &e->lm);
+				//if (tmp->type == 2)
+					//printf("x %f y %f z %f\n", e->n.x, e->n.y, e->n.z);
+				if (e->cost > 0.00001 && e->cost < 1.0)
+					draw_point(e, e->x, e->y, rgb_to_hexa(tmp, e));
 				else
-					draw_point(e, e->x, e->y, rgb_to_hexa(tmp, 0));
+					draw_point(e, e->x, e->y, 0);
 			}
 		}
 	}

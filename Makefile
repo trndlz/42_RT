@@ -6,7 +6,7 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/05/17 15:03:22 by tmervin          ###   ########.fr        #
+#    Updated: 2018/05/23 14:53:21 by tmervin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC_NAME	:=	main.c			\
 				lighting.c		\
 				colors.c		\
 				raytracer.c		\
+				keyboard.c		\
 				maths.c
 
 OBJ_PATH	:= obj

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:16:36 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/22 15:32:56 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/24 09:29:03 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ t_vc	vec_sub(t_vc *v1, t_vc *v2)
 	v.x = v1->x - v2->x;
 	v.y = v1->y - v2->y;
 	v.z = v1->z - v2->z;
+	return (v);
+}
+
+t_vc	vec_croise(t_vc *v1, t_vc *v2)
+{
+	t_vc	v;
+
+	v.x = v1->y * v2->z - v1->z * v2->y;
+	v.y = v1->z * v2->x - v1->x * v2->z;
+	v.z = v1->x * v2->y - v1->y * v2->x;
 	return (v);
 }
 

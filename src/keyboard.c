@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 10:47:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/23 14:43:37 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/24 15:34:00 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,17 @@ int		deal_key(int key, t_env *e)
 	}
 	translation(key, e);
 	create_image(e);
+	return (0);
+}
+
+int		deal_mouse(int k, int x, int y, t_env *e)
+{
+	if (x >= 0 && y >= 0 && x <= WINW && y <= WINH && e)
+	{
+		if (k == 1)
+		{
+			printf("x %d / y %d\n", x, y);
+		}
+	}
 	return (0);
 }

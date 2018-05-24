@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 14:47:23 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/23 14:45:07 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/24 15:53:47 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_obj		*new_sphere(void)
 	if (!(new = malloc(sizeof(t_obj))))
 		return (NULL);
 	new->type = 1;
-	new->pos = init_vc(0, 175, 30);
-	new->size = 42;
+	new->pos = init_vc(0, 0, 30);
+	new->size = 40;
 	new->color[0] = 224;
 	new->color[1] = 17;
 	new->color[2] = 95;
@@ -39,8 +39,8 @@ t_obj		*new_cone(void)
 		return (NULL);
 	new->type = 3;
 	new->rot = init_vc(0, 0, 1);
-	new->pos = init_vc(50, 50, 0);
-	new->size = 25;
+	new->pos = init_vc(0, 0, 0);
+	new->size = 20;
 	new->color[0] = 255;
 	new->color[1] = 204;
 	new->color[2] = 51;
@@ -59,8 +59,8 @@ t_obj		*new_cylinder(void)
 		return (NULL);
 	new->type = 2;
 	new->rot = init_vc(0, 0, 1);
-	new->pos = init_vc(0, 0, 0);
-	new->size = 10;
+	new->pos = init_vc(-10, 40, -10);
+	new->size = 20;
 	new->color[0] = 62;
 	new->color[1] = 180;
 	new->color[2] = 137;
@@ -78,7 +78,7 @@ t_obj		*new_light(void)
 	if (!(new = malloc(sizeof(t_obj))))
 		return (NULL);
 	new->type = 5;
-	new->pos = init_vc(-50, 70, 50);
+	new->pos = init_vc(-470, 575, 775);
 	new->color[0] = 255;
 	new->color[1] = 255;
 	new->color[2] = 255;
@@ -93,11 +93,11 @@ t_obj		*new_plane(void)
 	if (!(new = malloc(sizeof(t_obj))))
 		return (NULL);
 	new->type = 4;
-	new->rot = init_vc(0, 1, 0);
-	new->pos = init_vc(0, 0, 0);
-	new->color[0] = 255;
-	new->color[1] = 50;
-	new->color[2] = 50;
+	new->rot = init_vc(1, 0, 1);
+	new->pos = init_vc(0, 0, 1);
+	new->color[0] = 170;
+	new->color[1] = 170;
+	new->color[2] = 170;
 	new->ks = 0;
 	new->ka = 0.8;
 	new->kd = 1;

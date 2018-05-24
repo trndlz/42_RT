@@ -6,16 +6,16 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:41:47 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/23 14:50:50 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/24 15:45:15 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-int					ratio_limits(double i)
+double				ratio_limits(double i)
 {
-	if (i < 0.0)
-		return (0.0);
+	if (i < 0.00001)
+		return (0);
 	if (i > 1.0)
 		return (1.0);
 	else
@@ -45,16 +45,16 @@ unsigned long		rgb_to_hexa(t_obj *obj, t_env *e)
 	double dotdiffuse;
 	double dotspecular;
 
-	dotdiffuse = e->cost;
-	//if (obj->type == 2)
-		//printf("%f\n", e->cost);
-	dotspecular = vec_dot(&e->rm, &e->v);
-	r = obj->ka * dotdiffuse * obj->color[0];// + obj->kd * dotdiffuse * e->light->color[0] + obj->ks * pow(dotspecular, 20) * e->light->color[0];
-	g = obj->ka * dotdiffuse * obj->color[1];// + obj->kd * dotdiffuse * e->light->color[1];// + obj->ks * pow(dotspecular, 20) * e->light->color[1];
-	b = obj->ka * dotdiffuse * obj->color[2];// + obj->kd * dotdiffuse * e->light->color[2];// + obj->ks * pow(dotspecular, 20) * e->light->color[2];
+	dotdiffuse = ratio_limits(e->cost);
+	dotspecular = pow(vec_dot(&e->rm, &e->v), 49);
+	dotspecular = ratio_limits(dotspecular);
+
+	r = obj->color[0] * dotdiffuse + obj->ks * e->light->color[0] * dotspecular;
+	g = obj->color[1] * dotdiffuse + obj->ks * e->light->color[1] * dotspecular;
+	b = obj->color[2] * dotdiffuse + obj->ks * e->light->color[2] * dotspecular;
+
 	r = color_limits(r);
 	g = color_limits(g);
 	b = color_limits(b);
-
 	return (((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff));
 }

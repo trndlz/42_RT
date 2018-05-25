@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/24 15:49:29 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/25 16:55:55 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 # include <math.h>
 # include "mlx.h"
 # include "libft.h"
-# define WINW 1000
-# define WINH 500
+# define WINX 1000
+# define WINY 500
 # define WIND 20
-# define FOV 50
+# define FOV 2
 
 typedef struct		s_vc
 {

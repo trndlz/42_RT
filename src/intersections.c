@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:03:32 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/24 14:57:34 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/25 17:00:27 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ double			quadratic_solver(t_env *e)
 {
 	double d;
 
-	d = car(e->b) - 4 * e->a * e->c;
+	d = car(e->b) - 4 * (e->a * e->c);
 	if (d < 0)
 		return (-1);
 	e->t1 = (-e->b + sqrt(d)) / (2 * e->a);

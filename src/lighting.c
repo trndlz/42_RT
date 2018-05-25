@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:42:39 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/24 14:09:37 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/25 16:59:19 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	lighting_vectors(t_env *e, t_obj *obj)
 	t_vc	tmp;
 	double	k;
 
+	//e->v = init_vc(e->eye_dir.x + e->t * e->ray.x, e->eye_dir.y + e->t * e->ray.y, e->eye_dir.y + e->t * e->ray.z);
 	e->v = init_vc(e->eye.x + e->t * e->ray.x, e->eye.y + e->t * e->ray.y, e->eye.y + e->t * e->ray.z);
 	e->lm = init_vc(e->light->pos.x - e->v.x, e->light->pos.y - e->v.y, e->light->pos.z - e->v.z);
 	vec_norm(&e->lm);
@@ -59,10 +60,6 @@ void	lighting_vectors(t_env *e, t_obj *obj)
 	if (obj->type == 4)
 		e->n = obj->rot;
 	vec_norm(&e->n);
-	//if (obj->type == 3)
-	//{
-	//	printf("x %f / y %f / z %f \n", e->n.x, e->n.y, e->n.z);
-	//}
 	e->rm = vec_mult(&e->n, 2 * vec_dot(&e->lm, &e->n));
 	e->rm = vec_sub(&e->rm, &e->lm);
 	vec_norm(&e->rm);

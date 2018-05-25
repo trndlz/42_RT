@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/24 15:45:54 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/25 16:56:29 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int             main(void)
 	e->light = new_light();
 	e->link = NULL;
     s1 = new_sphere();
-    //obj_add(&e->link, s1);
+    obj_add(&e->link, s1);
     c1 = new_cylinder();
     //obj_add(&e->link, c1);
     c2 = new_cylinder();

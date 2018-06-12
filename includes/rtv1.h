@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/25 16:55:55 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/12 15:40:36 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define WINX 1000
 # define WINY 500
 # define WIND 20
-# define FOV 2
+# define FOV 100
 
 typedef struct		s_vc
 {
@@ -29,12 +29,17 @@ typedef struct		s_vc
 	double			z;
 }					t_vc;
 
-typedef struct		s_screen
+typedef struct		s_vport
 {
-	int				winx;
-	int				winy;
-	int				d;
-}					t_screen;
+	t_vc			up_vec;
+	t_vc			cam_dir;
+	t_vc			right;
+	t_vc			vp_up_left;
+	t_vc			up;
+	double			vp_width;
+	double			vp_height;
+	double			vp_dist;
+}					t_vport;
 
 typedef struct		s_obj
 {
@@ -68,12 +73,13 @@ typedef struct		s_env
 	double			t2;
 	double			cost;
 	double			cost2;
+	t_vport 			*vport;
 	t_vc			tmp;
 	t_vc			ve;
 	t_vc			ray;
 	t_vc			ray_dir;
-	t_vc			eye;
-	t_vc			eye_dir;
+	t_vc			eye_pos;
+	t_vc			eye_rot;
 	t_vc			plan;
 	t_obj			*light;
 	t_vc			norm;
@@ -102,6 +108,7 @@ void				rot_y(t_vc *vc, int t);
 void				rot_z(t_vc *vc, int t);
 void				rot_all_axis(t_vc *vc, t_obj *obj);
 double				vec_squ_sum(t_vc *v1);
+t_vc				vec_add(t_vc *v1, t_vc *v2);
 t_vc				vec_sub(t_vc *v1, t_vc *v2);
 t_vc				vec_croise(t_vc *v1, t_vc *v2);
 double				vec_x(t_vc *v1, t_vc *v2);

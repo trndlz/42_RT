@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:42:39 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/25 16:59:19 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/12 15:33:11 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ void	lighting_vectors(t_env *e, t_obj *obj)
 	t_vc	tmp;
 	double	k;
 
-	//e->v = init_vc(e->eye_dir.x + e->t * e->ray.x, e->eye_dir.y + e->t * e->ray.y, e->eye_dir.y + e->t * e->ray.z);
-	e->v = init_vc(e->eye.x + e->t * e->ray.x, e->eye.y + e->t * e->ray.y, e->eye.y + e->t * e->ray.z);
+	e->v = init_vc(e->eye_pos.x + e->t * e->ray.x, e->eye_pos.y + e->t * e->ray.y, e->eye_pos.y + e->t * e->ray.z);
 	e->lm = init_vc(e->light->pos.x - e->v.x, e->light->pos.y - e->v.y, e->light->pos.z - e->v.z);
 	vec_norm(&e->lm);
 	if (obj->type == 1)

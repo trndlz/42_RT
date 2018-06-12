@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/25 16:56:29 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/12 19:21:48 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int             main(void)
     k1 = new_cone();
 	//rot_x(&k1->rot, 0);
 	//rot_y(&k1->rot, 0);
-    obj_add(&e->link, k1);
+    //obj_add(&e->link, k1);
     p1 = new_plane();
     obj_add(&e->link, p1);
     create_image(e);

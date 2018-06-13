@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 10:47:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/25 11:33:26 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/13 14:31:39 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	translation(int key, t_env *e)
 {
+	printf("KEY  %d \n", key);
 	if (key == 0)
 		e->light->pos.x += 25;
 	if (key == 13)
@@ -41,13 +42,13 @@ int		deal_key(int key, t_env *e)
 	return (0);
 }
 
-int		deal_mouse(int k, int x, int y, t_env *e)
+int		deal_mouse(int k, int y, int z, t_env *e)
 {
-	if (x >= 0 && y >= 0 && x <= WINX && y <= WINY && e)
+	if (y >= 0 && z >= 0 && y <= WINY && z <= WINZ && e)
 	{
 		if (k == 1)
 		{
-			printf("x %d / y %d\n", x, y);
+			printf("x %d / y %d\n", y, z);
 		}
 	}
 	return (0);

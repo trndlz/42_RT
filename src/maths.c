@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 14:51:34 by tmervin           #+#    #+#             */
-/*   Updated: 2018/05/17 14:36:41 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/13 16:35:14 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	rot_z(t_vc *vc, int t)
 	vc->y = x * sin(t * M_PI / 180) + y * cos(t * M_PI / 180);
 }
 
-void	rot_all_axis(t_vc *vc, t_obj *obj)
+void	rot_all_axis(t_vc *vc, t_vc obj)
 {
-	rot_x(vc, obj->rot.x);
-	rot_y(vc, obj->rot.y);
-	rot_z(vc, obj->rot.z);
+	rot_x(vc, obj.x);
+	rot_y(vc, obj.y);
+	rot_z(vc, obj.z);
 }

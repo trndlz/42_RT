@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:42:39 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/13 18:18:20 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/13 18:22:20 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	lighting_vectors(t_env *e, t_obj *obj)
 	n.x = 0;
 	n.y = 0;
 	n.z = 100;
-	if (e->y == 500 && e->z == 500)
-		printf("e-v LIGHTING x %f y %f z %f \n", e->v.x, e->v.y, e->v.z);
+
 	e->v = init_vc(e->eye_lookfrom.x + e->t * e->ray.x, e->eye_lookfrom.y + e->t * e->ray.y, e->eye_lookfrom.z + e->t * e->ray.z);
 	e->lm = init_vc(e->light->pos.x - e->v.x, e->light->pos.y - e->v.y, e->light->pos.z - e->v.z);
 	e->v = vec_sub(e->v, obj->pos);

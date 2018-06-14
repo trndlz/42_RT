@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:03:32 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/13 18:03:51 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 10:20:39 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ double			inter_plane(t_vc ray, t_vc offset)
 double			inter_cyl(t_env *e, t_obj *obj, t_vc ray, t_vc offset)
 {
 	e->a = car(ray.x) + car(ray.y);
-	e->b = 2.0 * vec_x(ray, offset) - ray.z * offset.z;
+	e->b = 2.0 * (vec_x(ray, offset) - ray.z * offset.z);
 	e->c = car(offset.x) + car(offset.y) - car(obj->size);
 	return (quadratic_solver(e));
 }
@@ -75,11 +75,6 @@ double			quadratic_solver(t_env *e)
 		return (-1);
 	e->t1 = (-e->b + sqrt(d)) / (2.0 * e->a);
 	e->t2 = (-e->b - sqrt(d)) / (2.0 * e->a);
-	// if (e->t2 > e->t1 && e->t1 < 0)
-	// 	e->t1 = e->t2;
-	// if (e->t2 < e->t1)
-	// 	e->t1 = e->t2;
-	// return (e->t1);
 	if (e->t1 < e->t2)
 		return (e->t1);
 	else

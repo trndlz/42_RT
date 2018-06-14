@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/13 17:51:31 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 12:59:31 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct		s_obj
 	int				type;
 	t_vc			rot;
 	t_vc			pos;
+	int				col;
 	double			size;
 	double			ks;
 	double			ka;
@@ -165,5 +166,21 @@ t_obj				*new_cylinder(int k);
 t_obj				*new_cone(void);
 t_obj				*new_plane(int a, int b, int c);
 t_obj				*new_light(void);
+
+/*
+** PARSER
+*/
+
+int ft_htod(char c);
+int ft_htoi(char *str);
+int ft_iscolor(char *str);
+int ft_isnumber(char *str);
+int check_value(char **str);
+int		name_type(char *str);
+void error_messages(int error);
+t_obj	*attribute_object(char **tab_values);
+char	*tabtospace(char *str);
+void	attribute_scene(int fd, t_obj **link);
+void	get_scene(char **argv, t_obj **link);
 
 #endif

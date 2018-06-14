@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/13 18:20:56 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 11:38:01 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,11 @@ double		shadow(t_env *e, t_obj *tmp)
 	t_vc	v2;
 
 	e->s = 999999999;
-	v2= init_vc(e->eye_lookfrom.x + e->t * e->ray.x, e->eye_lookfrom.y + e->t * e->ray.y, e->eye_lookfrom.z + e->t * e->ray.z);
-	p = vec_mult(vec_sub(tmp->pos, v2), 1.0);
-
-	light = vec_mult(e->lm, 1.0);
+	v2 = init_vc(e->eye_lookfrom.x + e->t * e->ray.x, e->eye_lookfrom.y + e->t * e->ray.y, e->eye_lookfrom.z + e->t * e->ray.z);
+	light = vec_mult(e->lm, -1.0);
 	while (tmp)
 	{
+		p = vec_mult(vec_sub(tmp->pos, v2), 1.0);
 		if (tmp->type == 1)
 			s = inter_sph(e, tmp, light, p);
 		else if (tmp->type == 2)
@@ -76,10 +75,7 @@ double		shadow(t_env *e, t_obj *tmp)
 		else if (tmp->type == 4)
 			s = inter_plane(light, p);
 		if (s > 0.00001 && s < 0.99)
-		{
 			e->s = s;
-		}
-
 		tmp = tmp->next;
 	}
 	return (e->s);
@@ -116,18 +112,8 @@ void	scene_plot(t_env *e)
 			{
 
 				lighting_vectors(e, tmp);
-				if (e->y == 500 && e->z == 500)
-				{
-					printf("t %f\n", e->t);
-					printf("e-v x %f y %f z %f \n", e->v.x, e->v.y, e->v.z);
-					printf("ray-v x %f y %f z %f \n", e->ray.x, e->ray.y, e->ray.z);
-				}
 				e->cost = vec_dot(e->n, e->lm);
 				s = shadow(e, tmp);
-				if (e->y == 500 && e->z == 500)
-				{
-					printf("e-v x %f y %f z %f \n", e->v.x, e->v.y, e->v.z);
-				}
 				if (e->cost > 0 && s == 999999999)
 					draw_point(e, e->y, e->z, rgb_to_hexa(tmp, e));
 				else

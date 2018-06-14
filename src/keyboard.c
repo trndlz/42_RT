@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 10:47:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/13 14:31:39 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 09:21:08 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		deal_mouse(int k, int y, int z, t_env *e)
 	{
 		if (k == 1)
 		{
-			printf("x %d / y %d\n", y, z);
+			printf("y %d / z %d\n", y, z);
 		}
 	}
 	return (0);

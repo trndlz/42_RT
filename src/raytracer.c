@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 17:31:41 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 18:36:33 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_vc	create_ray(t_env *e)
 	v.x = (double)(FOV);
 	v.y = (double)(WINY / 2 - e->y);
 	v.z = (double)(WINZ / 2 - e->z);
-	rot_all_axis(v, e->eye_rot);
+	v = rot_all_axis(v, e->eye_rot);
 	return (v);
 }
 

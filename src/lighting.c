@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:42:39 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 17:10:53 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/14 18:38:47 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	lighting_vectors(t_env *e, t_obj *obj)
 	{
 		e->n = init_vc(0, 0, 100);
 		e->n = rot_all_axis(e->n, obj->rot);
-		e->n.z = (vec_x(e->n, vec_sub(obj->pos, e->eye_lookfrom)) < 0 ? 100 : -100);
+		e->n = (vec_x(e->n, vec_sub(obj->pos, e->eye_lookfrom)) < 0 ? e->n : vec_mult(e->n, -1));
 	}
 	if (obj->type != 4)
 		e->n = rot_all_axis_inv(e->n, obj->rot);

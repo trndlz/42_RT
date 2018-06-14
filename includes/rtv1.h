@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 16:36:40 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 17:21:11 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,11 @@ void				scene_plot(t_env *e);
 */
 
 double				car(double a);
-void				rot_x(t_vc *vc, int t);
-void				rot_y(t_vc *vc, int t);
-void				rot_z(t_vc *vc, int t);
-void				rot_all_axis(t_vc *vc, t_vc obj);
+t_vc				rot_x(t_vc vc, int t);
+t_vc				rot_y(t_vc vc, int t);
+t_vc				rot_z(t_vc vc, int t);
+t_vc				rot_all_axis(t_vc vc, t_vc obj);
+t_vc				rot_all_axis_inv(t_vc vc, t_vc obj);
 double				vec_squ_sum(t_vc v1);
 t_vc				vec_add(t_vc *v1, t_vc *v2);
 t_vc				vec_sub(t_vc v1, t_vc v2);

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 14:51:34 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/13 16:35:14 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 15:32:00 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,42 +17,54 @@ double	car(double a)
 	return (a * a);
 }
 
-void	rot_x(t_vc *vc, int t)
+t_vc		rot_x(t_vc vc, int t)
 {
 	double y;
 	double z;
 
-	y = vc->y;
-	z = vc->z;
-	vc->y = y * cos(t * M_PI / 180) - z * sin(t * M_PI / 180);
-	vc->z = y * sin(t * M_PI / 180) + z * cos(t * M_PI / 180);
+	y = vc.y;
+	z = vc.z;
+	vc.y = y * cos(t * M_PI / 180) - z * sin(t * M_PI / 180);
+	vc.z = y * sin(t * M_PI / 180) + z * cos(t * M_PI / 180);
+	return (vc);
 }
 
-void	rot_y(t_vc *vc, int t)
+t_vc		rot_y(t_vc vc, int t)
 {
 	double x;
 	double z;
 
-	x = vc->x;
-	z = vc->z;
-	vc->x = x * cos(t * M_PI / 180) + z * sin(t * M_PI / 180);
-	vc->z = -x * sin(t * M_PI / 180) + z * cos(t * M_PI / 180);
+	x = vc.x;
+	z = vc.z;
+	vc.x = x * cos(t * M_PI / 180) + z * sin(t * M_PI / 180);
+	vc.z = -x * sin(t * M_PI / 180) + z * cos(t * M_PI / 180);
+	return (vc);
 }
 
-void	rot_z(t_vc *vc, int t)
+t_vc		rot_z(t_vc vc, int t)
 {
 	double x;
 	double y;
 
-	x = vc->x;
-	y = vc->y;
-	vc->x = x * cos(t * M_PI / 180) - y * sin(t * M_PI / 180);
-	vc->y = x * sin(t * M_PI / 180) + y * cos(t * M_PI / 180);
+	x = vc.x;
+	y = vc.y;
+	vc.x = x * cos(t * M_PI / 180) - y * sin(t * M_PI / 180);
+	vc.y = x * sin(t * M_PI / 180) + y * cos(t * M_PI / 180);
+	return (vc);
 }
 
-void	rot_all_axis(t_vc *vc, t_vc obj)
+t_vc	rot_all_axis(t_vc vc, t_vc obj)
 {
-	rot_x(vc, obj.x);
-	rot_y(vc, obj.y);
-	rot_z(vc, obj.z);
+	vc = rot_z(vc, obj.z);
+	vc = rot_y(vc, obj.y);
+	vc = rot_x(vc, obj.x);
+	return (vc);
+}
+
+t_vc	rot_all_axis_inv(t_vc vc, t_vc obj)
+{
+	rot_x(vc, -obj.x);
+	rot_y(vc, -obj.y);
+	rot_z(vc, -obj.z);
+	return (vc);
 }

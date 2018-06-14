@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:42:39 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 14:53:58 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 17:10:53 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ void	lighting_vectors(t_env *e, t_obj *obj)
 	e->v = init_vc(e->eye_lookfrom.x + e->t * e->ray.x, e->eye_lookfrom.y + e->t * e->ray.y, e->eye_lookfrom.z + e->t * e->ray.z);
 	e->lm = init_vc(e->light->pos.x - e->v.x, e->light->pos.y - e->v.y, e->light->pos.z - e->v.z);
 	e->v = vec_sub(e->v, obj->pos);
+	e->lm = rot_all_axis(e->lm, obj->rot);
+	e->v = rot_all_axis(e->v, obj->rot);
+	// vec_norm(e->lm);
 	e->n = e->v;
 	if (obj->type == 3)
 		e->n.z = - e->t * e->ray.z / obj->size;
@@ -52,8 +55,12 @@ void	lighting_vectors(t_env *e, t_obj *obj)
 	if (obj->type == 4)
 	{
 		e->n = init_vc(0, 0, 100);
+		e->n = rot_all_axis(e->n, obj->rot);
 		e->n.z = (vec_x(e->n, vec_sub(obj->pos, e->eye_lookfrom)) < 0 ? 100 : -100);
 	}
+	if (obj->type != 4)
+		e->n = rot_all_axis_inv(e->n, obj->rot);
+	// vec_norm(e->n);
 	e->rm = vec_mult(e->n, 2 * vec_dot(e->lm, e->n));
 	e->rm = vec_sub(e->rm, e->lm);
 }

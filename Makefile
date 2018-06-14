@@ -6,7 +6,7 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/06/14 16:30:53 by tmervin          ###   ########.fr        #
+#    Updated: 2018/06/14 16:36:28 by tmervin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ SRC_PATH	:= src
 SRC_NAME	:=	main.c			\
 				images.c		\
 				init.c			\
-				objects.c		\
 				intersections.c	\
 				maths_vectors.c	\
 				lighting.c		\
@@ -47,8 +46,8 @@ OBJ			:= $(addprefix $(OBJ_PATH)/, $(OBJ_NAME))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C libft
-	make -C minilibx_macos/
+	##make -C libft
+	##make -C minilibx_macos/
 	$(CC) $(LDFLAGS) $(LDLIBS) $(MINILIBX) $^ -o $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
@@ -60,14 +59,14 @@ norm:
 	norminette $(SRC)
 
 clean:
-	make clean -C libft/
-	make clean -C minilibx_macos/
+	##make clean -C libft/
+	##make clean -C minilibx_macos/
 	rm -fv $(OBJ)
 	@rmdir $(OBJ_PATH) 2> /dev/null || true
 
 fclean: clean
-	make fclean -C libft/
-	make clean -C minilibx_macos/
+	##make fclean -C libft/
+	##make clean -C minilibx_macos/
 	rm -fv $(NAME)
 
 re: fclean all

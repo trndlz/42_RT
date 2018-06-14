@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 14:48:05 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 16:35:49 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ t_obj	*nearest_node(t_env *e, t_obj *tmp)
 	double	t;
 	t_obj	*ret;
 
-	t = 0;
 	e->t = 999999999;
 	ret = NULL;
 	while (tmp)
 	{
 		e->ray = create_ray(e);
-		e->offset = vec_sub(e->eye_lookfrom, tmp->pos); // AJOUTER LA ROTATION DE L'OBJET + CAMERA
+		e->offset = vec_sub(e->eye_lookfrom, tmp->pos);
 		if (tmp->type == 1)
 			t = inter_sph(e, tmp, e->ray, e->offset);
 		if (tmp->type == 2)
@@ -61,7 +60,8 @@ double		shadow(t_env *e, t_obj *tmp)
 	t_vc	v2;
 
 	e->s = 999999999;
-	v2 = init_vc(e->eye_lookfrom.x + e->t * e->ray.x, e->eye_lookfrom.y + e->t * e->ray.y, e->eye_lookfrom.z + e->t * e->ray.z);
+	v2 = init_vc(e->eye_lookfrom.x + e->t * e->ray.x, e->eye_lookfrom.y +
+		e->t * e->ray.y, e->eye_lookfrom.z + e->t * e->ray.z);
 	light = vec_mult(e->lm, -1.0);
 	while (tmp)
 	{
@@ -83,7 +83,7 @@ double		shadow(t_env *e, t_obj *tmp)
 	return (e->s);
 }
 
-int multiply_color(int hex, double mult)
+int			multiply_color(int hex, double mult)
 {
 	int r;
 	int g;
@@ -94,10 +94,10 @@ int multiply_color(int hex, double mult)
 	b = (hex % 0X100);
 	g = (hex / 0X100) % 0X100;
 	r = (hex / (0X100 * 0X100)) % 0X100;
-		hex = (int)(mult * b) + (int)(mult * g) * 0X100 + (int)(mult * r) * 0X100 * 0X100 ;
+	hex = (int)(mult * b) + (int)(mult * g) * 0X100 +
+	(int)(mult * r) * 0X100 * 0X100;
 	return (hex);
 }
-
 
 void	scene_plot(t_env *e)
 {

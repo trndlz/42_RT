@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 15:37:52 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 16:36:40 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,11 +142,7 @@ t_vc				init_vc(double x, double y, double z);
 */
 
 void				obj_add(t_obj **beg, t_obj *n);
-t_obj				*new_sphere(int k);
-t_obj				*new_cylinder(int k);
-t_obj				*new_cone(void);
-t_obj				*new_plane(int a, int b, int c);
-t_obj				*new_light(void);
+
 
 /*
 ** ERROR MGT

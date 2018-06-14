@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:42:39 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 15:35:28 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/14 17:10:53 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,6 @@
 
 void	lighting_vectors(t_env *e, t_obj *obj)
 {
-	t_vc n;
-
-	n.x = 0;
-	n.y = 0;
-	n.z = 100;
-
 	e->v = init_vc(e->eye_lookfrom.x + e->t * e->ray.x, e->eye_lookfrom.y + e->t * e->ray.y, e->eye_lookfrom.z + e->t * e->ray.z);
 	e->lm = init_vc(e->light->pos.x - e->v.x, e->light->pos.y - e->v.y, e->light->pos.z - e->v.z);
 	e->v = vec_sub(e->v, obj->pos);
@@ -60,7 +54,7 @@ void	lighting_vectors(t_env *e, t_obj *obj)
 		e->n.z = obj->pos.z;
 	if (obj->type == 4)
 	{
-		e->n = n;
+		e->n = init_vc(0, 0, 100);
 		e->n = rot_all_axis(e->n, obj->rot);
 		e->n.z = (vec_x(e->n, vec_sub(obj->pos, e->eye_lookfrom)) < 0 ? 100 : -100);
 	}
@@ -69,5 +63,4 @@ void	lighting_vectors(t_env *e, t_obj *obj)
 	// vec_norm(e->n);
 	e->rm = vec_mult(e->n, 2 * vec_dot(e->lm, e->n));
 	e->rm = vec_sub(e->rm, e->lm);
-	// vec_norm(e->rm);
 }

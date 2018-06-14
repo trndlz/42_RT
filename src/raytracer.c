@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 17:21:47 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 17:31:41 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ double		shadow(t_env *e, t_obj *o, t_obj *tmp)
 	v2 = init_vc(e->eye_lookfrom.x + e->t * e->ray.x, e->eye_lookfrom.y +
 		e->t * e->ray.y, e->eye_lookfrom.z + e->t * e->ray.z);
 	light = vec_mult(e->lm, -1.0);
-	while (tmp)
+	while (o)
 	{
 		if (o != tmp)
 		{

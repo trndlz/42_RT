@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 13:33:15 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 15:37:52 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,6 @@ typedef struct		s_vc
 	double			y;
 	double			z;
 }					t_vc;
-
-typedef struct		s_vport
-{
-	t_vc			up_vec;
-	t_vc			vec_dir;
-	t_vc			right_vec;
-	t_vc			vp_up_left;
-	double			vp_width;
-	double			vp_height;
-	double			vp_dist;
-	double			x_indent;
-	double			y_indent;
-}					t_vport;
 
 typedef struct		s_obj
 {
@@ -66,20 +53,16 @@ typedef struct		s_env
 	int				endian;
 	int				y;
 	int				z;
+	double			t;
+	double			s;
 	double			a;
 	double			b;
 	double			c;
-	double			t;
-	double			s;
 	double			t1;
 	double			t2;
 	double			cost;
-	double			cost2;
-	t_vport 			*vport;
 	t_vc			tmp;
-	t_vc			ve;
 	t_vc			ray;
-	t_vc			ray_dir;
 	t_vc			eye_lookfrom;
 	t_vc			eye_rot;
 	t_vc			plan;
@@ -90,8 +73,6 @@ typedef struct		s_env
 	t_vc			rm;
 	t_vc			v;
 	t_vc			k;
-	t_vc			i;
-	t_vc			j;
 	t_vc			offset;
 	t_obj			*link;
 }					t_env;
@@ -168,19 +149,27 @@ t_obj				*new_plane(int a, int b, int c);
 t_obj				*new_light(void);
 
 /*
+** ERROR MGT
+*/
+
+void				ft_usage(void);
+void				ft_malloc_error(t_env *e);
+void				exit_message(char *str);
+
+/*
 ** PARSER
 */
 
-int ft_htod(char c);
-int ft_htoi(char *str);
-int ft_iscolor(char *str);
-int ft_isnumber(char *str);
-int check_value(char **str);
-int		name_type(char *str);
-void error_messages(int error);
-t_obj	*attribute_object(char **tab_values);
-char	*tabtospace(char *str);
-void	attribute_scene(int fd, t_env *e);
-void	get_scene(char **argv, t_env *e);
+int					ft_htod(char c);
+int					ft_htoi(char *str);
+int					ft_iscolor(char *str);
+int					ft_isnumber(char *str);
+int					check_value(char **str);
+int					name_type(char *str);
+void				error_messages(int error);
+t_obj				*attribute_object(char **tab_values);
+char				*tabtospace(char *str);
+void				attribute_scene(int fd, t_env *e);
+void				get_scene(char **argv, t_env *e);
 
 #endif

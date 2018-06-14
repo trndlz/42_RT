@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   usage.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 16:08:19 by tmervin          ###   ########.fr       */
+/*   Created: 2018/06/14 14:57:03 by tmervin           #+#    #+#             */
+/*   Updated: 2018/06/14 15:10:59 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-int             main(int ac, char **av)
+void		ft_usage(void)
 {
-    t_env *e;
+	ft_putstr_fd("Usage:\n", 2);
+	ft_putstr_fd("./rtv1 scene_file\n", 2);
+	exit(1);
+}
 
-	if (ac != 2)
-		ft_usage();
-    if (!(e = init_env()))
-    	exit_message("Problem while creating environment structure\n");
-	e->link = NULL;
-    get_scene(av, e);
-	create_image(e);
-	mlx_hook(e->win, 2, 3, deal_key, e);
-	//mlx_hook(e->win, 6, 1L << 6, mouse_move, e);
-    mlx_mouse_hook(e->win, deal_mouse, e);
-    mlx_loop(e->mlx);
-    return (0);
+void		ft_malloc_error(t_env *e)
+{
+	ft_putstr_fd("Problem while malloc\n", 2);
+	free(e);
+	exit(1);
+}
+
+void		exit_message(char *str)
+{
+	ft_putstr_fd(str, 2);
+	exit(1);
 }

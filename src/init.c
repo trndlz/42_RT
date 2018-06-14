@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 15:04:59 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/13 16:45:17 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 13:53:34 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_env		*init_env(void)
 		return (NULL);
 	if (!(e->win = mlx_new_window(e->mlx, WINY, WINZ, "RTv1")))
 		return (NULL);
-	e->eye_lookfrom = init_vc(-1000, 0, 0);
+	e->eye_lookfrom = init_vc(-1000, 200, 0);
 	e->eye_rot = init_vc(0, 0, 0);
 	return (e);
 }

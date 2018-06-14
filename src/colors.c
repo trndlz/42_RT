@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:41:47 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/13 16:05:40 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 13:56:31 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ unsigned long		rgb_to_hexa(t_obj *obj, t_env *e)
 	int r;
 	int g;
 	int b;
+	int x;
+	int y;
+	int z;
 	double dotdiffuse;
 	double dotspecular;
 
@@ -49,9 +52,13 @@ unsigned long		rgb_to_hexa(t_obj *obj, t_env *e)
 	dotspecular = pow(vec_dot(e->rm, e->v), 50);
 	dotspecular = ratio_limits(dotspecular);
 
-	r = obj->color[0] * dotdiffuse + obj->ks * e->light->color[0] * dotspecular;
-	g = obj->color[1] * dotdiffuse + obj->ks * e->light->color[1] * dotspecular;
-	b = obj->color[2] * dotdiffuse + obj->ks * e->light->color[2] * dotspecular;
+	x = (obj->col / (0X100 * 0X100)) % 0X100;
+	y = (obj->col / 0X100) % 0X100;
+	z = (obj->col % 0X100);
+
+	r = x * dotdiffuse + 0.5 * 255 * dotspecular;
+	g = y * dotdiffuse + 0.5 * 255 * dotspecular;
+	b = z * dotdiffuse + 0.5 * 255 * dotspecular;
 
 	r = color_limits(r);
 	g = color_limits(g);

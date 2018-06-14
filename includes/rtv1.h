@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 12:59:31 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 13:33:15 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ int		name_type(char *str);
 void error_messages(int error);
 t_obj	*attribute_object(char **tab_values);
 char	*tabtospace(char *str);
-void	attribute_scene(int fd, t_obj **link);
-void	get_scene(char **argv, t_obj **link);
+void	attribute_scene(int fd, t_env *e);
+void	get_scene(char **argv, t_env *e);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 13:18:42 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 13:29:22 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ int             main(int ac, char **av)
     // // obj_add(&e->link, p2);
 	// p3 = new_plane(0, 0, 50);
     // //obj_add(&e->link, p3);
-	get_scene(av, &e->link);
+	get_scene(av, e);
 
-	printf("ppp\n");
+
      create_image(e);
+
      mlx_hook(e->win, 2, 3, deal_key, e);
      //mlx_hook(e->win, 6, 1L << 6, mouse_move, e);
      mlx_mouse_hook(e->win, deal_mouse, e);

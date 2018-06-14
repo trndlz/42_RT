@@ -1,5 +1,6 @@
-#NAME	X		Y		Z		RX	RY	DR	COLOR		LENGTH		SPEC	DIFF	AMB
-cone 	1000	-300	0		0	0	0	0xFF00FF	10			0 0 0
-sphere	1200	-0		0		0	0	0	0xFF00FF	30			0 0 0
-plane	1250	-400	5000	0	0	0 	0xFFFFFF	0			0 0 0
-light	900		-0		0		0	0	0	0xFFFFFF	0			0 0 0
+#NAME		X		Y		Z		RX	RY	DR	COLOR		LENGTH		SPEC	DIFF	AMB
+cone 		3000	200		1000	0	0	0	0x00FF00	1			0 0 0
+sphere		1000	0		100		0	0	0	0xFF00FF	200			0 0 0
+cylinder	1000	500		0		0	0	0 	0xFF0000	40			0 0 0
+cylinder	1000	200		0		0	0	0 	0x0000FF	20			0 0 0
+light		0		0		0		0	0	0	0xFFFFFF	0			0 0 0

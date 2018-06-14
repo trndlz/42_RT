@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 11:38:01 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 14:48:05 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,34 +74,40 @@ double		shadow(t_env *e, t_obj *tmp)
 			s = inter_cone(e, tmp, light, p);
 		else if (tmp->type == 4)
 			s = inter_plane(light, p);
-		if (s > 0.00001 && s < 0.99)
+		else
+			return (e->s);
+		if (s > 0.000001 && s < 0.99)
 			e->s = s;
 		tmp = tmp->next;
 	}
 	return (e->s);
 }
 
-int multiply_color(int *rgb, double mult)
+int multiply_color(int hex, double mult)
 {
-	int hex;
+	int r;
+	int g;
+	int b;
 
 	if (mult < 0)
 		mult = 0;
-		hex = (int)(mult * rgb[2]) + (int)(mult * rgb[1]) * 0X100 + (int)(mult * rgb[0]) * 0X100 * 0X100 ;
+	b = (hex % 0X100);
+	g = (hex / 0X100) % 0X100;
+	r = (hex / (0X100 * 0X100)) % 0X100;
+		hex = (int)(mult * b) + (int)(mult * g) * 0X100 + (int)(mult * r) * 0X100 * 0X100 ;
 	return (hex);
 }
+
 
 void	scene_plot(t_env *e)
 {
 	t_obj	*o;
 	t_obj	*tmp;
-	double		s;
-	int		i;
+	double	s;
 
 	o = e->link;
 	e->z = -1;
-	i = 0;
-	s=0;
+	s = 0;
 	while (++(e->z) < WINZ)
 	{
 		e->y = -1;
@@ -110,17 +116,16 @@ void	scene_plot(t_env *e)
 			tmp = nearest_node(e, o);
 			if (tmp)
 			{
-
 				lighting_vectors(e, tmp);
 				e->cost = vec_dot(e->n, e->lm);
-				s = shadow(e, tmp);
+				s = shadow(e, o);
 				if (e->cost > 0 && s == 999999999)
 					draw_point(e, e->y, e->z, rgb_to_hexa(tmp, e));
+				else if (s != 999999999)
+					draw_point(e, e->y, e->z, multiply_color(tmp->col, 0.35 * e->cost));
 				else
 					draw_point(e, e->y, e->z, 0x000000);
-
 			}
-
 		}
 	}
 }

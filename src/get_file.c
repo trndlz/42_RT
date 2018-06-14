@@ -67,10 +67,7 @@ int check_value(char **str)
 	i = 0;
 	j = 1;
 	while (str[i])
-	{
-		printf("i %d : %s\n", i, str[i]);
 		i++;
-	}
 	if (i != 12)
 		return (1);
 	while (j < 10 && str[i])
@@ -156,10 +153,11 @@ char	*tabtospace(char *str)
 	return (str);
 }
 
-void	attribute_scene(int fd, t_obj **link)
+void	attribute_scene(int fd, t_env *e)
 {
 	char	*str;
 	char	**tab_values;
+	t_obj		*tmp;
 
 	while (get_next_line(fd, &str))
 	{
@@ -167,13 +165,20 @@ void	attribute_scene(int fd, t_obj **link)
 		{
 			str = tabtospace(str);
 			tab_values = ft_strsplit(str, ' ');
-			obj_add(link, attribute_object(tab_values));
+			tmp = attribute_object(tab_values);
+			if (tmp->type != 5)
+				obj_add(&e->link, tmp);
+			else
+			{
+				e->light = tmp;
+				printf(" > light x %f y %f z %f\n", e->light->pos.x, e->light->pos.y, e->light->pos.z);
+			}
 		}
 	}
 }
 
 
-void	get_scene(char **argv, t_obj **link)
+void	get_scene(char **argv, t_env *e)
 {
 	int			fd;
 
@@ -184,5 +189,5 @@ void	get_scene(char **argv, t_obj **link)
 	// }
     // On veut verifer que le fichier ne soit pas vide
 	if ((fd = open(argv[1], O_RDONLY)) >= 0)
-		attribute_scene(fd, link);
+		attribute_scene(fd, e);
 }

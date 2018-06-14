@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 13:37:05 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 13:18:26 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 13:21:30 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void			create_image(t_env *e)
 {
+
 	mlx_clear_window(e->mlx, e->win);
 	e->image = mlx_new_image(e->mlx, WINY, WINZ);
 	e->imgstr = (int *)mlx_get_data_addr(e->image, &e->bpp, &e->s_l,

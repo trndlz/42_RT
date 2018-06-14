@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 14:48:05 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/14 16:37:51 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_vc	create_ray(t_env *e)
 	v.x = (double)(FOV);
 	v.y = (double)(WINY / 2 - e->y);
 	v.z = (double)(WINZ / 2 - e->z);
-	rot_all_axis(&v, e->eye_rot);
+	rot_all_axis(v, e->eye_rot);
 	return (v);
 }
 
@@ -34,7 +34,10 @@ t_obj	*nearest_node(t_env *e, t_obj *tmp)
 	while (tmp)
 	{
 		e->ray = create_ray(e);
-		e->offset = vec_sub(e->eye_lookfrom, tmp->pos); // AJOUTER LA ROTATION DE L'OBJET + CAMERA
+		e->offset = vec_sub(e->eye_lookfrom, tmp->pos);
+		e->ray = rot_all_axis(e->ray, tmp->rot);
+		e->offset = rot_all_axis(e->offset, tmp->rot);
+		// AJOUTER LA ROTATION CAMERA
 		if (tmp->type == 1)
 			t = inter_sph(e, tmp, e->ray, e->offset);
 		if (tmp->type == 2)
@@ -53,7 +56,7 @@ t_obj	*nearest_node(t_env *e, t_obj *tmp)
 	return (ret);
 }
 
-double		shadow(t_env *e, t_obj *tmp)
+double		shadow(t_env *e, t_obj *o, t_obj *tmp)
 {
 	double	s;
 	t_vc	p;
@@ -61,24 +64,30 @@ double		shadow(t_env *e, t_obj *tmp)
 	t_vc	v2;
 
 	e->s = 999999999;
-	v2 = init_vc(e->eye_lookfrom.x + e->t * e->ray.x, e->eye_lookfrom.y + e->t * e->ray.y, e->eye_lookfrom.z + e->t * e->ray.z);
-	light = vec_mult(e->lm, -1.0);
-	while (tmp)
+
+	while (o)
 	{
-		p = vec_mult(vec_sub(tmp->pos, v2), 1.0);
-		if (tmp->type == 1)
-			s = inter_sph(e, tmp, light, p);
-		else if (tmp->type == 2)
-			s = inter_cyl(e, tmp, light, p);
-		else if (tmp->type == 3)
-			s = inter_cone(e, tmp, light, p);
-		else if (tmp->type == 4)
-			s = inter_plane(light, p);
-		else
-			return (e->s);
-		if (s > 0.000001 && s < 0.99)
-			e->s = s;
-		tmp = tmp->next;
+		if(o != tmp)
+		{
+			v2 = init_vc(e->eye_lookfrom.x + e->t * e->ray.x, e->eye_lookfrom.y + e->t * e->ray.y, e->eye_lookfrom.z + e->t * e->ray.z);
+			light = init_vc( -e->light->pos.x + v2.x,  -e->light->pos.y + v2.y,  -e->light->pos.z + v2.z);
+			light = rot_all_axis(light, o->rot);
+			p = vec_mult(vec_sub(o->pos, v2), 1.0);
+			p = rot_all_axis(p, o->rot);
+			if (o->type == 1)
+				s = inter_sph(e, o, light, p);
+			else if (o->type == 2)
+				s = inter_cyl(e, o, light, p);
+			else if (o->type == 3)
+				s = inter_cone(e, o, light, p);
+			else if (o->type == 4)
+				s = inter_plane(light, p);
+			if (s > 0.0000001 && s < 0.999999)
+				e->s = s;
+				if (e->y == 859 && e->z == 809)
+					printf("type %d ombre %f\n", o->type, e->s);
+		}
+		o = o->next;
 	}
 	return (e->s);
 }
@@ -118,7 +127,7 @@ void	scene_plot(t_env *e)
 			{
 				lighting_vectors(e, tmp);
 				e->cost = vec_dot(e->n, e->lm);
-				s = shadow(e, o);
+				s = shadow(e, o, tmp);
 				if (e->cost > 0 && s == 999999999)
 					draw_point(e, e->y, e->z, rgb_to_hexa(tmp, e));
 				else if (s != 999999999)

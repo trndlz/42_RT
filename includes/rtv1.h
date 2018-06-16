@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 17:21:11 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/16 11:20:05 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 # include <math.h>
 # include "mlx.h"
 # include "libft.h"
+# include <pthread.h>
 # define WINY 1000
 # define WINZ 1000
 # define FOV 1000
+# define TH_NB 4
 
 typedef struct		s_vc
 {
@@ -49,6 +51,7 @@ typedef struct		s_env
 	void			*image;
 	int				*imgstr;
 	int				bpp;
+	int				thread_int;
 	int				s_l;
 	int				endian;
 	int				y;
@@ -74,12 +77,13 @@ typedef struct		s_env
 	t_vc			v;
 	t_vc			k;
 	t_vc			offset;
+	pthread_t		pth[TH_NB];
 	t_obj			*link;
 }					t_env;
 
 void				create_image(t_env *e);
 void				draw_point(t_env *e, int x, int y, unsigned int color);
-void				scene_plot(t_env *e);
+void				*scene_plot(void *arg);
 
 /*
 ** MATHS

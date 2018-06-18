@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   maths.c                                            :+:      :+:    :+:   */
+/*   maths_rot.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 14:51:34 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 15:32:00 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/18 18:43:55 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-
-double	car(double a)
-{
-	return (a * a);
-}
 
 t_vc		rot_x(t_vc vc, int t)
 {
@@ -53,7 +48,7 @@ t_vc		rot_z(t_vc vc, int t)
 	return (vc);
 }
 
-t_vc	rot_all_axis(t_vc vc, t_vc obj)
+t_vc		rot_all_axis(t_vc vc, t_vc obj)
 {
 	vc = rot_z(vc, obj.z);
 	vc = rot_y(vc, obj.y);
@@ -61,7 +56,7 @@ t_vc	rot_all_axis(t_vc vc, t_vc obj)
 	return (vc);
 }
 
-t_vc	rot_all_axis_inv(t_vc vc, t_vc obj)
+t_vc		rot_all_axis_inv(t_vc vc, t_vc obj)
 {
 	rot_x(vc, -obj.x);
 	rot_y(vc, -obj.y);

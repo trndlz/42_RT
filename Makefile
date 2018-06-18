@@ -6,7 +6,7 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/06/18 10:27:32 by tmervin          ###   ########.fr        #
+#    Updated: 2018/06/18 18:41:42 by tmervin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRC_NAME	:=	main.c			\
 				keyboard.c		\
 				get_file.c		\
 				usage.c			\
-				maths.c
+				maths_rot.c		\
+				maths_functions.c
 
 OBJ_PATH	:= obj
 HEAD_PATH	:= ./includes

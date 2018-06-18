@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/18 16:06:57 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/18 18:45:21 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,47 +62,14 @@ t_obj	*nearest_node(t_env *e)
 	return (ret);
 }
 
-int		shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *llst)
-{
-	double	s;
-	int		nb_cross;
-	t_vc	p;
-	t_vc	light;
-	t_vc	v2;
-
-	nb_cross = 0;
-	v2 = vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom);
-	light = vec_mult(e->lm, -1.0);
-	while (olst)
-	{
-		if (olst != tmp)
-		{
-			llst = e->light_link;
-			while (llst)
-			{
-				light = rot_all_axis(vec_sub(v2, llst->pos), olst->rot);
-				p = rot_all_axis(vec_sub(olst->pos, v2), olst->rot);
-				s = distance_to_inter(e, olst, light, p);
-				if (s > 0.0000001 && s < 0.999999)
-					nb_cross++;
-				llst = llst->next;
-			}
-		}
-		olst = olst->next;
-	}
-	return (nb_cross);
-}
-
-
-
 void	compute_scene_vectors(t_env *e, t_obj *tmp)
 {
 	t_obj	*llst;
-	int		ambient;
+	int		color;
 	int		nb_shadow;
 
 	llst = e->light_link;
-	ambient = tmp->col;
+	color = multiply_color(tmp->col, 0.4);
 	while (llst)
 	{
 		lighting_vectors(e, tmp, llst);
@@ -112,9 +79,13 @@ void	compute_scene_vectors(t_env *e, t_obj *tmp)
 		e->cost = vec_dot(e->n, e->lm);
 		nb_shadow = shadows(e, tmp, e->obj_link, llst);
 		if (nb_shadow > 0)
-			draw_point(e, e->y, e->z, multiply_color(tmp->col, 0.55 * e->cost / nb_shadow));
-		else if (e->cost > 0 && nb_shadow == 0)
-			draw_point(e, e->y, e->z, rgb_to_hexa(tmp, e));
+			draw_point(e, e->y, e->z,
+				multiply_color(tmp->col, 0.85 * e->cost / nb_shadow));
+		else
+		{
+			color = specular_diffuse(color, llst, e);
+			draw_point(e, e->y, e->z, color);
+		}
 		llst = llst->next;
 	}
 }

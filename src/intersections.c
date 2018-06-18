@@ -6,28 +6,11 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:03:32 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 10:20:39 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/18 18:34:25 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-
-/*
-** #### SYNTAX
-** V * a = vec_mult(V, a)
-** A | B = vec_cross_prod(A, B)
-** A - B = vec_sub(A, B)
-** nrm(A) = vec_cross_prod(A, B) / (vec_module(A) * vec_module(B))
-*/
-
-/*
-** #### QUADRATIC COEF CALCULATION
-** P-C = eye + t * ray
-** Sphere: a = D|D ; b = D|X ; c = X|X - r*r
-** Cylinder: a = D|D-(D|V)^2; b/2= D|X-(D|V)*(X|V); c = X|X- X|V)^2-r*r
-** Cone:
-** Plane:
-*/
 
 double			inter_sph(t_env *e, t_obj *obj, t_vc ray, t_vc offset)
 {
@@ -39,7 +22,6 @@ double			inter_sph(t_env *e, t_obj *obj, t_vc ray, t_vc offset)
 
 double			inter_cone(t_env *e, t_obj *obj, t_vc ray, t_vc offset)
 {
-
 	e->a = ray.x * ray.x + ray.y * ray.y - ray.z * ray.z / obj->size;
 	e->b = 2.0 * ((offset.x * ray.x) + (offset.y * ray.y)
 	- (offset.z * ray.z / obj->size));
@@ -52,7 +34,7 @@ double			inter_plane(t_vc ray, t_vc offset)
 {
 	double t;
 
-	t = - offset.z / ray.z;
+	t = -offset.z / ray.z;
 	if (t < 0)
 		return (-1);
 	return (t);

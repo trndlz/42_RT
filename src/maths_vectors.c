@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:16:36 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/18 14:34:30 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/18 18:43:50 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,6 @@ t_vc	vec_sub(t_vc v1, t_vc v2)
 	return (v);
 }
 
-t_vc	vec_subp(t_vc *v1, t_vc *v2)
-{
-	t_vc v;
-
-	v.x = v1->x - v2->x;
-	v.y = v1->y - v2->y;
-	v.z = v1->z - v2->z;
-	return (v);
-}
-
 t_vc	vec_add(t_vc v1, t_vc v2)
 {
 	t_vc v;
@@ -45,36 +35,6 @@ t_vc	vec_add(t_vc v1, t_vc v2)
 	v.y = v1.y + v2.y;
 	v.z = v1.z + v2.z;
 	return (v);
-}
-
-t_vc	vec_croise(t_vc *v1, t_vc *v2)
-{
-	t_vc	v;
-
-	v.x = v1->y * v2->z - v1->z * v2->y;
-	v.y = v1->z * v2->x - v1->x * v2->z;
-	v.z = v1->x * v2->y - v1->y * v2->x;
-	return (v);
-}
-
-double	vec_x(t_vc v1, t_vc v2)
-{
-	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
-}
-
-double	vec_mod(t_vc v)
-{
-	return (sqrt(vec_x(v, v)));
-}
-
-void	vec_norm(t_vc v)
-{
-	double module;
-
-	module = vec_mod(v);
-	v.x /= module;
-	v.y /= module;
-	v.z /= module;
 }
 
 double	vec_dot(t_vc v1, t_vc v2)

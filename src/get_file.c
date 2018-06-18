@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:55:28 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/18 11:22:45 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/18 18:53:08 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ int check_value(char **str)
 	{
 		if (ft_isnumber(str[j]))
 			return (3);
-            // A TESTER AVEC UNE VALEUR TROP GRANDE POUR UN INT
 		j++;
 	}
 	if (ft_iscolor(str[10]))
@@ -142,10 +141,8 @@ t_obj	*attribute_object(char **tab_values)
 	if (!(scene->type = name_type(tab_values[0])))
 		error_messages(2);
 	if (scene->type != 5)
-	{
-		scene->col = ft_htoi(tab_values[7]);
 		scene->size = (double)ft_atoi(tab_values[8]);
-	}
+	scene->col = ft_htoi(tab_values[7]);
 	scene->pos = init_vc((double)ft_atoi(tab_values[1]), (double)ft_atoi(tab_values[2]), (double)ft_atoi(tab_values[3]));
 	scene->rot = init_vc((double)ft_atoi(tab_values[4]), (double)ft_atoi(tab_values[5]), (double)ft_atoi(tab_values[6]));
 	scene->next = NULL;

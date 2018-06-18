@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/18 15:53:16 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/18 18:51:24 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,17 @@ typedef struct		s_env
 	t_obj			*light_link;
 }					t_env;
 
+/*
+** RAYTRACER
+*/
+
 void				create_image(t_env *e);
 void				draw_point(t_env *e, int x, int y, unsigned int color);
 void				*scene_plot(void *arg);
+t_vc				create_ray(t_env *e);
+double				distance_to_inter(t_env *e, t_obj *obj_list, t_vc ray, t_vc p);
+t_obj				*nearest_node(t_env *e);
+void				compute_scene_vectors(t_env *e, t_obj *tmp);
 
 /*
 ** MATHS
@@ -119,18 +127,19 @@ double				inter_sph(t_env *e, t_obj *obj, t_vc ray, t_vc offset);
 double				quadratic_solver(t_env *e);
 
 /*
-** KEYBOARD
+** KEYBOARD / MOUSE
 */
 
-void	translation(int key, t_env *e);
-int		deal_key(int key, t_env *e);
-int		deal_mouse(int k, int x, int y, t_env *e);
+void				translation(int key, t_env *e);
+int					deal_key(int key, t_env *e);
+int					deal_mouse(int k, int x, int y, t_env *e);
 
 /*
 ** LIGHTING
 */
 
 void				lighting_vectors(t_env *e, t_obj *obj, t_obj *light_list);
+int					shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *llst);
 
 /*
 ** COLORS
@@ -138,6 +147,7 @@ void				lighting_vectors(t_env *e, t_obj *obj, t_obj *light_list);
 
 unsigned long		rgb_to_hexa(t_obj *obj, t_env *e);
 int					multiply_color(int hex, double mult);
+int					add_color(int hex1, int hex2);
 int					specular_diffuse(int color, t_obj *light, t_env *e);
 
 /*
@@ -152,6 +162,7 @@ t_vc				init_vc(double x, double y, double z);
 */
 
 void				obj_add(t_obj **beg, t_obj *n);
+void				clear_list(t_obj *head);
 
 
 /*
@@ -175,7 +186,7 @@ int					name_type(char *str);
 void				error_messages(int error);
 t_obj				*attribute_object(char **tab_values);
 char				*tabtospace(char *str);
-int				attribute_scene(int fd, t_env *e);
+int					attribute_scene(int fd, t_env *e);
 void				get_scene(char **argv, t_env *e);
 
 #endif

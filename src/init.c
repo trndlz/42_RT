@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 15:04:59 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/18 10:39:00 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/18 18:51:38 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ t_vc		init_vc(double x, double y, double z)
 	vc.y = (double)y;
 	vc.z = (double)z;
 	return (vc);
+}
+
+void	clear_list(t_obj *head)
+{
+	t_obj *tmp;
+
+	while (head != NULL)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp);
+	}
 }
 
 void		obj_add(t_obj **beg, t_obj *n)

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:55:28 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/14 16:09:50 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/18 11:22:45 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	attribute_scene(int fd, t_env *e)
+int	attribute_scene(int fd, t_env *e)
 {
 	char	*str;
 	char	**tab_values;
@@ -184,31 +184,35 @@ void	attribute_scene(int fd, t_env *e)
 	int		err;
 
 	err = 0;
-	while (get_next_line(fd, &str))
+	while (get_next_line(fd, &str) == 1)
 	{
 		if (str[0] != '#' && str[0] != '\n')
 		{
 			str = tabtospace(str);
-			tab_values = ft_strsplit(str, ' ');
+			if (!(tab_values = ft_strsplit(str, ' ')))
+				return (-1);
 			tmp = attribute_object(tab_values);
-
 			if (tmp->type >= 1 && tmp->type <= 4)
-				obj_add(&e->link, tmp);
+				obj_add(&e->obj_link, tmp);
 			else if (tmp->type == 5)
-				e->light = tmp;
+				obj_add(&e->light_link, tmp);
 			else if (tmp->type == 6)
 			{
-				e->eye_lookfrom = tmp->pos;
-				e->eye_rot = tmp->rot;
+				e->eye_lookfrom = init_vc(tmp->pos.x, tmp->pos.y, tmp->pos.z);
+				e->eye_rot = init_vc(tmp->rot.x, tmp->rot.y, tmp->rot.z);
 				err++;
+				free(tmp);
 			}
 			free_split(tab_values);
 		}
 		free(str);
+
 	}
-	free(tmp);
-	if (!e->light || err == 0)
+	free(str);
+	close(fd);
+	if (err == 0)
 		error_messages(6);
+	return (1);
 }
 
 

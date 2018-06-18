@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/16 11:57:09 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/18 16:06:57 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,128 +23,118 @@ t_vc	create_ray(t_env *e)
 	return (v);
 }
 
-t_obj	*nearest_node(t_env *e, t_obj *o)
+double	distance_to_inter(t_env *e, t_obj *obj_list, t_vc ray, t_vc p)
+{
+	if (obj_list->type == 1)
+		return (inter_sph(e, obj_list, ray, p));
+	else if (obj_list->type == 2)
+		return (inter_cyl(e, obj_list, ray, p));
+	else if (obj_list->type == 3)
+		return (inter_cone(e, obj_list, ray, p));
+	else if (obj_list->type == 4)
+		return (inter_plane(ray, p));
+	return (-1);
+}
+
+t_obj	*nearest_node(t_env *e)
 {
 	double	t;
 	t_obj	*ret;
+	t_obj	*olst;
 
 	e->t = 999999999;
 	ret = NULL;
-	while (o)
+	olst = e->obj_link;
+	while (olst)
 	{
 		e->ray = create_ray(e);
-		e->offset = vec_sub(e->eye_lookfrom, o->pos);
-		e->ray = rot_all_axis(e->ray, o->rot);
-		if (e->y == 781 && e->z == 156)
-		{
-			printf("\nRAY %f %f %f\n", e->ray.x,e->ray.y,e->ray.z);
-		}
-		e->offset = rot_all_axis(e->offset, o->rot);
-		// AJOUTER LA ROTATION CAMERA
-		if (o->type == 1)
-			t = inter_sph(e, o, e->ray, e->offset);
-		if (o->type == 2)
-			t = inter_cyl(e, o, e->ray, e->offset);
-		if (o->type == 3)
-			t = inter_cone(e, o, e->ray, e->offset);
-		if (o->type == 4)
-			t = inter_plane(e->ray, e->offset);
+		e->offset = vec_sub(e->eye_lookfrom, olst->pos);
+		e->ray = rot_all_axis(e->ray, olst->rot);
+		e->offset = rot_all_axis(e->offset, olst->rot);
+		t = distance_to_inter(e, olst, e->ray, e->offset);
 		if (t > 0.00001 && t < e->t)
 		{
 			e->t = t;
-			ret = o;
+			ret = olst;
 		}
-		o = o->next;
+		olst = olst->next;
 	}
 	return (ret);
 }
 
-double		shadow(t_env *e, t_obj *o, t_obj *tmp)
+int		shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *llst)
 {
 	double	s;
+	int		nb_cross;
 	t_vc	p;
 	t_vc	light;
 	t_vc	v2;
 
-	e->s = 999999999;
-	v2 = init_vc(e->eye_lookfrom.x + e->t * e->ray.x, e->eye_lookfrom.y +
-		e->t * e->ray.y, e->eye_lookfrom.z + e->t * e->ray.z);
+	nb_cross = 0;
+	v2 = vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom);
 	light = vec_mult(e->lm, -1.0);
-	while (o)
+	while (olst)
 	{
-		if (o != tmp)
+		if (olst != tmp)
 		{
-			// v2 = init_vc(e->eye_lookfrom.x + e->t * e->ray.x, e->eye_lookfrom.y + e->t * e->ray.y, e->eye_lookfrom.z + e->t * e->ray.z);
-			light = init_vc( -e->light->pos.x + v2.x,  -e->light->pos.y + v2.y,  -e->light->pos.z + v2.z);
-			light = rot_all_axis(light, o->rot);
-			p = vec_mult(vec_sub(o->pos, v2), 1.0);
-			p = rot_all_axis(p, o->rot);
-			if (o->type == 1)
-				s = inter_sph(e, o, light, p);
-			else if (o->type == 2)
-				s = inter_cyl(e, o, light, p);
-			else if (o->type == 3)
-				s = inter_cone(e, o, light, p);
-			else if (o->type == 4)
-				s = inter_plane(light, p);
-			if (s > 0.0000001 && s < 0.999999)
-				e->s = s;
-			if (e->y == 781 && e->z == 156)
-				printf("type %d ombre  %f\n", o->type, e->s);
+			llst = e->light_link;
+			while (llst)
+			{
+				light = rot_all_axis(vec_sub(v2, llst->pos), olst->rot);
+				p = rot_all_axis(vec_sub(olst->pos, v2), olst->rot);
+				s = distance_to_inter(e, olst, light, p);
+				if (s > 0.0000001 && s < 0.999999)
+					nb_cross++;
+				llst = llst->next;
+			}
 		}
-		o = o->next;
+		olst = olst->next;
 	}
-	return (e->s);
+	return (nb_cross);
 }
 
-int			multiply_color(int hex, double mult)
-{
-	int r;
-	int g;
-	int b;
 
-	if (mult < 0)
-		mult = 0;
-	b = (hex % 0X100);
-	g = (hex / 0X100) % 0X100;
-	r = (hex / (0X100 * 0X100)) % 0X100;
-	hex = (int)(mult * b) + (int)(mult * g) * 0X100 +
-	(int)(mult * r) * 0X100 * 0X100;
-	return (hex);
+
+void	compute_scene_vectors(t_env *e, t_obj *tmp)
+{
+	t_obj	*llst;
+	int		ambient;
+	int		nb_shadow;
+
+	llst = e->light_link;
+	ambient = tmp->col;
+	while (llst)
+	{
+		lighting_vectors(e, tmp, llst);
+		e->v2 = vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom);
+		e->lm = vec_sub(llst->pos, e->v2);
+		e->lm = rot_all_axis_inv(e->lm, tmp->rot);
+		e->cost = vec_dot(e->n, e->lm);
+		nb_shadow = shadows(e, tmp, e->obj_link, llst);
+		if (nb_shadow > 0)
+			draw_point(e, e->y, e->z, multiply_color(tmp->col, 0.55 * e->cost / nb_shadow));
+		else if (e->cost > 0 && nb_shadow == 0)
+			draw_point(e, e->y, e->z, rgb_to_hexa(tmp, e));
+		llst = llst->next;
+	}
 }
 
 void	*scene_plot(void *arg)
 {
-	t_obj	*o;
 	t_obj	*tmp;
-	t_vc	v2;
-	t_env *e;
+	t_env	*e;
 
 	e = (t_env *)arg;
-	o = e->link;
-	e->z = -1;
-	while (++(e->z) < WINZ)
+	e->z = (e->thread_int) * WINZ / TH_NB - 1;
+	while (++(e->z) < ((e->thread_int + 1) * WINZ) / TH_NB)
 	{
 		e->y = -1;
 		while (++(e->y) < WINY)
 		{
-			tmp = nearest_node(e, o);
+			tmp = nearest_node(e);
 			e->ray = create_ray(e);
 			if (tmp)
-			{
-				lighting_vectors(e, tmp);
-				v2 = init_vc(e->eye_lookfrom.x + e->t * e->ray.x, e->eye_lookfrom.y + e->t * e->ray.y, e->eye_lookfrom.z + e->t * e->ray.z);
-				e->lm = init_vc(e->light->pos.x - v2.x, e->light->pos.y - v2.y, e->light->pos.z - v2.z);
-				e->lm = rot_all_axis_inv(e->lm, tmp->rot);
-				e->cost = vec_dot(e->n, e->lm);
-				shadow(e, o, tmp);
-				if (e->cost > 0 && e->s == 999999999)
-					draw_point(e, e->y, e->z, rgb_to_hexa(tmp, e));
-				else if (e->s != 999999999)
-					draw_point(e, e->y, e->z, multiply_color(tmp->col, 0.35 * e->cost));
-				else
-					draw_point(e, e->y, e->z, 0x000000);
-			}
+				compute_scene_vectors(e, tmp);
 		}
 	}
 	return (NULL);

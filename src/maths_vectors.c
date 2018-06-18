@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:16:36 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/13 16:04:38 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/18 14:34:30 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,23 @@ t_vc	vec_sub(t_vc v1, t_vc v2)
 	return (v);
 }
 
-t_vc	vec_add(t_vc *v1, t_vc *v2)
+t_vc	vec_subp(t_vc *v1, t_vc *v2)
 {
 	t_vc v;
 
-	v.x = v1->x + v2->x;
-	v.y = v1->y + v2->y;
-	v.z = v1->z + v2->z;
+	v.x = v1->x - v2->x;
+	v.y = v1->y - v2->y;
+	v.z = v1->z - v2->z;
+	return (v);
+}
+
+t_vc	vec_add(t_vc v1, t_vc v2)
+{
+	t_vc v;
+
+	v.x = v1.x + v2.x;
+	v.y = v1.y + v2.y;
+	v.z = v1.z + v2.z;
 	return (v);
 }
 

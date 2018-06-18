@@ -7,7 +7,9 @@ cylinder	1000	500		0		45	23	0 	0xFF0000	40			0 0 0
 #cylinder	500		200		0		0	-5	34 	0x0000FF	20			0 0 0
 #cylinder	1000	800		0		45	23	0 	0xFF0000	40			0 0 0
 #cylinder	1000	750		0		0	-65	34 	0x0000FF	20			0 0 0
-light		0		0		0		0	0	0	0xFFFFFF	0			0 0 0
+light		-500	0		0		0	0	0	0xFFFFFF	0			0 0 0
+light		-500		300		50		0	0	0	0xFFFFFF	0			0 0 0
+#light		5		500		700		0	0	0	0xFFFFFF	0			0 0 0
 plane 1600		0		0		0	90	0	0xFFFFFF	0			0 0 0
 plane 0		0		-500		0	0	0	0xFFFFFF	0			0 0 0
 plane 0		500		0		90	0	0	0xFFFFFF	0			0 0 0

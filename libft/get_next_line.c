@@ -6,10 +6,11 @@
 /*   By: tmervin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 10:45:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/04/18 11:34:14 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/06 15:22:00 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "libft.h"
 
 char			*cut_until(char *s, char c)
@@ -77,7 +78,7 @@ char			*cut_after(char *tempo)
 	if (tmp2)
 		tempo = ft_strdup(tmp2 + 1);
 	else
-		tempo = "\0";
+		tempo = ft_strdup("\0");
 	return (tempo);
 }
 

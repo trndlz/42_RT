@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/16 11:20:05 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/18 15:53:16 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define WINY 1000
 # define WINZ 1000
 # define FOV 1000
-# define TH_NB 4
+# define TH_NB 50
 
 typedef struct		s_vc
 {
@@ -75,10 +75,12 @@ typedef struct		s_env
 	t_vc			lm;
 	t_vc			rm;
 	t_vc			v;
+	t_vc			v2;
 	t_vc			k;
 	t_vc			offset;
 	pthread_t		pth[TH_NB];
-	t_obj			*link;
+	t_obj			*obj_link;
+	t_obj			*light_link;
 }					t_env;
 
 void				create_image(t_env *e);
@@ -96,8 +98,9 @@ t_vc				rot_z(t_vc vc, int t);
 t_vc				rot_all_axis(t_vc vc, t_vc obj);
 t_vc				rot_all_axis_inv(t_vc vc, t_vc obj);
 double				vec_squ_sum(t_vc v1);
-t_vc				vec_add(t_vc *v1, t_vc *v2);
+t_vc				vec_add(t_vc v1, t_vc v2);
 t_vc				vec_sub(t_vc v1, t_vc v2);
+t_vc				vec_subp(t_vc *v1, t_vc *v2);
 t_vc				vec_croise(t_vc *v1, t_vc *v2);
 double				vec_x(t_vc v1, t_vc v2);
 double				vec_mod(t_vc v);
@@ -127,13 +130,15 @@ int		deal_mouse(int k, int x, int y, t_env *e);
 ** LIGHTING
 */
 
-void				lighting_vectors(t_env *e, t_obj *obj);
+void				lighting_vectors(t_env *e, t_obj *obj, t_obj *light_list);
 
 /*
 ** COLORS
 */
 
 unsigned long		rgb_to_hexa(t_obj *obj, t_env *e);
+int					multiply_color(int hex, double mult);
+int					specular_diffuse(int color, t_obj *light, t_env *e);
 
 /*
 ** STRUCTURES INITIALIZATION
@@ -170,7 +175,7 @@ int					name_type(char *str);
 void				error_messages(int error);
 t_obj				*attribute_object(char **tab_values);
 char				*tabtospace(char *str);
-void				attribute_scene(int fd, t_env *e);
+int				attribute_scene(int fd, t_env *e);
 void				get_scene(char **argv, t_env *e);
 
 #endif

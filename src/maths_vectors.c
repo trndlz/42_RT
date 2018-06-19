@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:16:36 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/18 18:43:50 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/19 12:32:41 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ t_vc	vec_sub(t_vc v1, t_vc v2)
 	v.y = v1.y - v2.y;
 	v.z = v1.z - v2.z;
 	return (v);
+}
+
+t_vc	vec_norm(t_vc v)
+{
+	t_vc	ret;
+	double	module;
+
+	module = vec_mod(v);
+	ret.x = v.x / module;
+	ret.y = v.y / module;
+	ret.z = v.z / module;
+	return (ret);
 }
 
 t_vc	vec_add(t_vc v1, t_vc v2)

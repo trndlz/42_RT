@@ -6,35 +6,29 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:42:39 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/18 18:45:08 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/19 21:24:33 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-void	lighting_vectors(t_env *e, t_obj *obj, t_obj *llst)
+void	normal_vectors(t_env *e, t_obj *obj)
 {
-	e->v = vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom);
-	e->lm = vec_sub(llst->pos, e->v);
-	e->lm = rot_all_axis(e->lm, obj->rot);
-	e->v = vec_sub(e->v, obj->pos);
-	e->v = rot_all_axis(e->v, obj->rot);
+	double m;
+
+	e->v = vec_add(vec_mult(e->ray, e->t), e->offset);
 	e->n = e->v;
-	if (obj->type == 3)
-		e->n.z = -e->t * e->ray.z / obj->size;
-	if (obj->type == 2)
-		e->n.z = obj->pos.z;
-	if (obj->type == 4)
+	m = vec_x(e->ray, obj->rot) * e->t + vec_x(e->offset, obj->rot);
+	if (obj->type == 3 || obj->type == 2)
 	{
-		e->n = init_vc(0, 0, 100);
-		e->n = rot_all_axis(e->n, obj->rot);
-		e->n = (vec_x(e->n, vec_sub(obj->pos, e->eye_lookfrom)) < 0
-		? e->n : vec_mult(e->n, -1));
+		if (obj->type == 3)
+			m *= (1 + car(tan(M_PI * obj->size / 180)));
+		e->n = vec_sub(vec_add(vec_mult(e->ray, e->t), e->offset),
+		vec_mult(obj->rot, m));
 	}
-	if (obj->type != 4)
-		e->n = rot_all_axis_inv(e->n, obj->rot);
-	e->rm = vec_mult(e->n, 2 * vec_dot(e->lm, e->n));
-	e->rm = vec_sub(e->rm, e->lm);
+	if (obj->type == 4)
+		e->n = obj->rot;
+	e->n = vec_norm(e->n);
 }
 
 int		shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *llst)
@@ -58,7 +52,7 @@ int		shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *llst)
 				light = rot_all_axis(vec_sub(v2, llst->pos), olst->rot);
 				p = rot_all_axis(vec_sub(olst->pos, v2), olst->rot);
 				s = distance_to_inter(e, olst, light, p);
-				if (s > 0.0000001 && s < 0.999999)
+				if (s > 0 && s < 1)
 					nb_cross++;
 				llst = llst->next;
 			}

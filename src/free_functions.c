@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/19 18:17:38 by tmervin          ###   ########.fr       */
+/*   Created: 2018/06/19 21:12:32 by tmervin           #+#    #+#             */
+/*   Updated: 2018/06/19 21:25:05 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-int		main(int ac, char **av)
+void		free_split(char **split)
 {
-	t_env *e;
+	int i;
 
-	if (ac != 2)
-		ft_usage();
-	if (!(e = init_env()))
-		exit_message("Problem while creating environment structure\n");
-	e->obj_link = NULL;
-	e->light_link = NULL;
-	if (!get_scene(av, e))
-		exit_message("Probem while opening file\n");
-	create_image(e);
-	mlx_hook(e->win, 2, 3, deal_key, e);
-	mlx_mouse_hook(e->win, deal_mouse, e);
-	mlx_loop(e->mlx);
-	return (0);
+	i = -1;
+	while (split[++i])
+		free(split[i]);
+	free(split);
+}
+
+void		clear_list(t_obj *head)
+{
+	t_obj *tmp;
+
+	while (head != NULL)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp);
+	}
 }

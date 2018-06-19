@@ -6,25 +6,28 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/06/18 18:41:42 by tmervin          ###   ########.fr        #
+#    Updated: 2018/06/19 21:45:15 by tmervin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= rtv1
 
 SRC_PATH	:= src
-SRC_NAME	:=	main.c			\
-				images.c		\
-				init.c			\
-				intersections.c	\
-				maths_vectors.c	\
-				lighting.c		\
-				colors.c		\
-				raytracer.c		\
-				keyboard.c		\
-				get_file.c		\
-				usage.c			\
-				maths_rot.c		\
+SRC_NAME	:=	main.c				\
+				images.c			\
+				init.c				\
+				intersections.c		\
+				maths_vectors.c		\
+				lighting.c			\
+				colors.c			\
+				raytracer.c			\
+				keyboard.c			\
+				parser.c			\
+				parser_errors.c		\
+				parser_functions.c	\
+				free_functions.c	\
+				usage.c				\
+				maths_rot.c			\
 				maths_functions.c
 
 OBJ_PATH	:= obj
@@ -47,8 +50,8 @@ OBJ			:= $(addprefix $(OBJ_PATH)/, $(OBJ_NAME))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	#make -C libft
-	#make -C minilibx_macos/
+	make -C libft
+	make -C minilibx_macos/
 	$(CC) $(LDFLAGS) $(LDLIBS) $(MINILIBX) $^ -o $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
@@ -60,14 +63,14 @@ norm:
 	norminette $(SRC)
 
 clean:
-	#make clean -C libft/
-	#make clean -C minilibx_macos/
+	make clean -C libft/
+	make clean -C minilibx_macos/
 	rm -fv $(OBJ)
 	@rmdir $(OBJ_PATH) 2> /dev/null || true
 
 fclean: clean
-	#make fclean -C libft/
-	#make clean -C minilibx_macos/
+	make fclean -C libft/
+	make clean -C minilibx_macos/
 	rm -fv $(NAME)
 
 re: fclean all

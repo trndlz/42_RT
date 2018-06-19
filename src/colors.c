@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:41:47 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/18 18:27:15 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/19 21:34:48 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,18 @@ int			add_color(int hex1, int hex2)
 	return (((int)(r & 0xff) << 16) + ((int)(g & 0xff) << 8) + (int)(b & 0xff));
 }
 
-int			specular_diffuse(int color, t_obj *light, t_env *e)
+int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_env *e)
 {
 	int		color_diff;
 	int		color_spec;
 	double	dot_spec;
 	double	dot_diff;
 
-	dot_spec = ratio_limits(pow(vec_dot(e->rm, e->v), 30));
+	e->rm = vec_norm(vec_sub(vec_mult(e->n, 2 * e->cost), e->lm));
+	dot_spec = ratio_limits(pow(vec_dot(e->rm, vec_mult(e->v2, -1.0)), ALPHA_SPEC));
 	dot_diff = ratio_limits(e->cost);
-	color_spec = multiply_color(light->col, dot_spec * 0.3);
-	color_diff = multiply_color(light->col, dot_diff * 0.3);
+	color_spec = multiply_color(light->col, dot_spec * obj->coef.x);
+	color_diff = multiply_color(obj->col, dot_diff * obj->coef.y);
 	color_spec = add_color(color_spec, color_diff);
 	color_spec = add_color(color_spec, color);
 	return (color_spec);

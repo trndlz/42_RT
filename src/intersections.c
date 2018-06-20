@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:03:32 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/19 21:25:22 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/20 14:47:27 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,17 @@ double			inter_cyl(t_env *e, t_obj *obj, t_vc ray, t_vc offset)
 double			quadratic_solver(t_env *e)
 {
 	double d;
+	double t1;
+	double t2;
 
 	d = (double)car(e->b) - (double)(4.0 * (e->a * e->c));
 	if (d < 0)
 		return (-1);
-	e->t1 = (-e->b + sqrt(d)) / (2.0 * e->a);
-	e->t2 = (-e->b - sqrt(d)) / (2.0 * e->a);
-	if (e->t2 > e->t1 && e->t1 < 0)
-		e->t1 = e->t2;
-	if (e->t2 < e->t1)
-		e->t1 = e->t2;
-	return (e->t1);
+	t1 = (-e->b + sqrt(d)) / (2.0 * e->a);
+	t2 = (-e->b - sqrt(d)) / (2.0 * e->a);
+	if (t2 > t1 && t1 < 0)
+		t1 = t2;
+	if (t2 < t1)
+		t1 = t2;
+	return (t1);
 }

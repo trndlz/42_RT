@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/19 21:41:26 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/20 16:19:10 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	compute_scene_vectors(t_env *e, t_obj *tmp)
 	int		nb_shadow;
 
 	llst = e->light_link;
+    // on met l'ambiant, on peut multiplier par le nmbre de light
 	color = multiply_color(tmp->col, tmp->coef.z);
 	draw_point(e, e->y, e->z, color);
 	while (llst)
@@ -76,14 +77,9 @@ void	compute_scene_vectors(t_env *e, t_obj *tmp)
 		e->lm = vec_norm(vec_sub(llst->pos, e->v2));
 		e->cost = vec_dot(e->n, e->lm);
 		nb_shadow = shadows(e, tmp, e->obj_link, llst);
-		if (nb_shadow > 0)
-			draw_point(e, e->y, e->z,
-				multiply_color(tmp->col, 0.85 * e->cost / nb_shadow));
-		else
-		{
+		if (nb_shadow)
 			color = specular_diffuse(color, llst, tmp, e);
-			draw_point(e, e->y, e->z, color);
-		}
+		draw_point(e, e->y, e->z, color);
 		llst = llst->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/19 21:35:14 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/20 14:47:16 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ typedef struct		s_env
 	double			a;
 	double			b;
 	double			c;
-	double			t1;
-	double			t2;
 	double			cost;
 	t_vc			tmp;
 	t_vc			ray;

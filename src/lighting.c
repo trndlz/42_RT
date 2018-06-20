@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:42:39 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/19 21:24:33 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/20 16:18:44 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	normal_vectors(t_env *e, t_obj *obj)
 	e->n = vec_norm(e->n);
 }
 
-int		shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *llst)
+int		shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *light_obj)
 {
 	double	s;
 	int		nb_cross;
@@ -44,20 +44,13 @@ int		shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *llst)
 	light = vec_mult(e->lm, -1.0);
 	while (olst)
 	{
-		if (olst != tmp)
-		{
-			llst = e->light_link;
-			while (llst)
-			{
-				light = rot_all_axis(vec_sub(v2, llst->pos), olst->rot);
-				p = rot_all_axis(vec_sub(olst->pos, v2), olst->rot);
-				s = distance_to_inter(e, olst, light, p);
-				if (s > 0 && s < 1)
-					nb_cross++;
-				llst = llst->next;
-			}
-		}
+		tmp += 0;
+		light = rot_all_axis(vec_sub(v2, light_obj->pos), olst->rot);
+		p = rot_all_axis(vec_sub(olst->pos, v2), olst->rot);
+		s = distance_to_inter(e, olst, light, p);
+		if (s > 0.00001 && s < 0.99999)
+			return (0);
 		olst = olst->next;
 	}
-	return (nb_cross);
+	return (1);
 }

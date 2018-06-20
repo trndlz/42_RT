@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 14:47:16 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/20 17:09:06 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ int					specular_diffuse(int color, t_obj *light, t_obj *obj, t_env *e);
 */
 
 t_env				*init_env(void);
+int					init_mlx(t_env *e);
 t_vc				init_vc(double x, double y, double z);
 
 /*
@@ -194,7 +195,8 @@ int					name_type(char *str);
 void				error_messages(int error);
 t_obj				*attribute_object(char **tab_values);
 char				*tabtospace(char *str);
-int					attribute_scene(int fd, t_env *e);
+int					attribute_scene(char *str, t_env *e);
 int					get_scene(char **av, t_env *e);
+int					create_objects(t_env *e, char **tab_values);
 
 #endif

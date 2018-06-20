@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 21:11:50 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/19 21:31:12 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/20 17:09:05 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int		check_value(char **str)
 			return (7);
 		if (ft_iscolor(str[7]))
 			return (3);
+		if (ft_atoi(str[8]) < 0.0)
+			return (4);
 	}
 	return (0);
 }

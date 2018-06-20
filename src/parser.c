@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:55:28 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 16:17:21 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/20 17:10:24 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ t_obj	*attribute_object(char **tab_values)
 	return (scene);
 }
 
-void	create_objects(t_env *e, char **tab_values)
+int		create_objects(t_env *e, char **tab_values)
 {
 	t_obj *tmp;
 
-	tmp = attribute_object(tab_values);
+	if (!(tmp = attribute_object(tab_values)))
+		return (0);
 	if (tmp->type >= 1 && tmp->type <= 4)
 		obj_add(&e->obj_link, tmp);
 	else if (tmp->type == 5)
@@ -73,35 +74,36 @@ void	create_objects(t_env *e, char **tab_values)
 		e->nb_eye++;
 		free(tmp);
 	}
+	return (1);
 }
 
-int		attribute_scene(int fd, t_env *e)
+int		attribute_scene(char *str, t_env *e)
 {
-	char	*str;
 	char	**tab_values;
 
-	while (get_next_line(fd, &str) == 1)
+	if (str[0] != '#' && ft_strlen(str) > 1)
 	{
-		if (str[0] != '#' && ft_strlen(str) > 1)
+		str = tabtospace(str);
+		if (!(tab_values = ft_strsplit(str, ' ')))
 		{
-			str = tabtospace(str);
-			if (!(tab_values = ft_strsplit(str, ' ')))
-				return (0);
-			create_objects(e, tab_values);
-			free_split(tab_values);
+			free(str);
+			return (0);
 		}
-		free(str);
+		if (!(create_objects(e, tab_values)))
+		{
+			free(str);
+			free_split(tab_values);
+			return (0);
+		}
+		free_split(tab_values);
 	}
-	free(str);
-	close(fd);
-	if (e->nb_eye != 1)
-		error_messages(6);
 	return (1);
 }
 
 int		get_scene(char **av, t_env *e)
 {
-	int	fd;
+	int		fd;
+	char	*str;
 
 	fd = open(av[1], O_DIRECTORY);
 	if (fd > 0)
@@ -111,8 +113,17 @@ int		get_scene(char **av, t_env *e)
 		return (0);
 	else
 	{
-		if (!attribute_scene(fd, e))
-			return (0);
+		while (get_next_line(fd, &str) == 1)
+		{
+			if (!attribute_scene(str, e))
+			{
+				free(str);
+				return (0);
+			}
+			free(str);
+		}
 	}
+	free(str);
+	close(fd);
 	return (1);
 }

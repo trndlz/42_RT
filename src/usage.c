@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:57:03 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 17:01:21 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/20 17:22:35 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,5 @@ void		ft_malloc_error(t_env *e)
 void		exit_message(char *str)
 {
 	ft_putstr_fd(str, 2);
-	pause();
 	exit(1);
 }

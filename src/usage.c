@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:57:03 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 16:17:17 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/20 16:35:34 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void		ft_usage(void)
 void		ft_malloc_error(t_env *e)
 {
 	ft_putstr_fd("Problem while malloc\n", 2);
+	free(e);
 	exit(1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:55:28 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 16:17:21 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/20 16:41:36 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		attribute_scene(int fd, t_env *e)
 	return (1);
 }
 
-int		get_scene(char **av, t_env *e)
+int		parser(char **av, t_env *e)
 {
 	int	fd;
 

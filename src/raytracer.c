@@ -6,58 +6,51 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 16:19:10 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/20 17:51:01 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-t_vc	create_ray(t_env *e)
+void	create_ray(t_env *e)
 {
-	t_vc v;
-
-	v.x = (double)(FOV);
-	v.y = (double)(WINY / 2 - e->y);
-	v.z = (double)(WINZ / 2 - e->z);
-	v = rot_all_axis(v, e->eye_rot);
-	return (v);
+	e->ray.x = (double)(FOV);
+	e->ray.y = (double)(WINY / 2 - e->y);
+	e->ray.z = (double)(WINZ / 2 - e->z);
+	e->ray = rot_all_axis(e->ray, e->eye_rot);
 }
 
 double	distance_to_inter(t_env *e, t_obj *obj_list, t_vc ray, t_vc p)
 {
-	if (obj_list->type == 1)
-		return (inter_sph(e, obj_list, ray, p));
-	else if (obj_list->type == 2)
-		return (inter_cyl(e, obj_list, ray, p));
-	else if (obj_list->type == 3)
-		return (inter_cone(e, obj_list, ray, p));
-	else if (obj_list->type == 4)
-		return (inter_plane(ray, p, obj_list));
-	return (-1);
+	double d;
+	d = (obj_list->type == 1) ? inter_sph(e, obj_list, ray, p) : -1.0;
+	d = (obj_list->type == 2) ? inter_cyl(e, obj_list, ray, p) : d;
+	d = (obj_list->type == 3) ? inter_cone(e, obj_list, ray, p) : d;
+	d = (obj_list->type == 4) ? inter_plane(ray, p, obj_list) : d;
+	return (d);
 }
 
 t_obj	*nearest_node(t_env *e)
 {
 	double	t;
-	t_obj	*ret;
+	t_obj	*near_node;
 	t_obj	*olst;
 
 	e->t = 999999999;
-	ret = NULL;
+	near_node = NULL;
 	olst = e->obj_link;
 	while (olst)
 	{
-		e->ray = create_ray(e);
 		e->offset = vec_sub(e->eye_lookfrom, olst->pos);
 		t = distance_to_inter(e, olst, e->ray, e->offset);
-		if (t > 0.00001 && t < e->t)
+		if (t > 0 && t < e->t)
 		{
 			e->t = t;
-			ret = olst;
+			near_node = olst;
 		}
 		olst = olst->next;
 	}
-	return (ret);
+	return (near_node);
 }
 
 void	compute_scene_vectors(t_env *e, t_obj *tmp)
@@ -96,7 +89,7 @@ void	*scene_plot(void *arg)
 		e->y = -1;
 		while (++(e->y) < WINY)
 		{
-			e->ray = create_ray(e);
+			create_ray(e);
 			tmp = nearest_node(e);
 			if (tmp)
 			{

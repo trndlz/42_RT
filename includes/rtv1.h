@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 17:46:57 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/20 17:54:19 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,11 @@ typedef struct		s_env
 	t_vc			eye_rot;
 	t_vc			plan;
 	t_obj			*light;
-	t_vc			norm;
 	t_vc			n;
 	t_vc			lm;
 	t_vc			rm;
 	t_vc			v;
 	t_vc			v2;
-	t_vc			k;
 	t_vc			offset;
 	pthread_t		pth[TH_NB];
 	t_obj			*obj_link;
@@ -92,7 +90,8 @@ void				create_image(t_env *e);
 void				draw_point(t_env *e, int x, int y, unsigned int color);
 void				*scene_plot(void *arg);
 void				create_ray(t_env *e);
-double				distance_to_inter(t_env *e, t_obj *obj_list, t_vc ray, t_vc p);
+double				distance_to_inter(t_env *e, t_obj *obj_list,
+					t_vc ray, t_vc p);
 t_obj				*nearest_node(t_env *e);
 void				compute_scene_vectors(t_env *e, t_obj *tmp);
 
@@ -149,13 +148,15 @@ int					shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *llst);
 unsigned long		rgb_to_hexa(t_obj *obj, t_env *e);
 int					multiply_color(int hex, double mult);
 int					add_color(int hex1, int hex2);
-int					specular_diffuse(int color, t_obj *light, t_obj *obj, t_env *e);
+int					specular_diffuse(int color, t_obj *light,
+					t_obj *obj, t_env *e);
 
 /*
 ** STRUCTURES INITIALIZATION
 */
 
 t_env				*init_env(void);
+int					init_mlx(t_env *e);
 t_vc				init_vc(double x, double y, double z);
 
 /*
@@ -164,7 +165,6 @@ t_vc				init_vc(double x, double y, double z);
 
 void				obj_add(t_obj **beg, t_obj *n);
 void				clear_list(t_obj *head);
-
 
 /*
 ** ERROR MGT
@@ -194,7 +194,8 @@ int					name_type(char *str);
 void				error_messages(int error);
 t_obj				*attribute_object(char **tab_values);
 char				*tabtospace(char *str);
-int					attribute_scene(int fd, t_env *e);
+int					attribute_scene(char *str, t_env *e);
 int					parser(char **av, t_env *e);
+int					create_objects(t_env *e, char **tab_values);
 
 #endif

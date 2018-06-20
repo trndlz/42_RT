@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:16:36 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/19 12:32:41 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/20 17:10:58 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,4 @@ t_vc	vec_add(t_vc v1, t_vc v2)
 double	vec_dot(t_vc v1, t_vc v2)
 {
 	return (vec_x(v1, v2) / (vec_mod(v1) * vec_mod(v2)));
-}
-
-t_vc	vec_mult(t_vc v, double a)
-{
-	t_vc ret;
-
-	ret.x = v.x * a;
-	ret.y = v.y * a;
-	ret.z = v.z * a;
-	return (ret);
 }

@@ -1,6 +1,6 @@
 #NAME		X		Y		Z		RX	RY	RZ	COLOR		SIZE		SPEC	DIFF	AMB
 #cone 		1000	300		0		0	0	0	0xFF0000	14			0.8		0.9		0.1
-cylinder 	1000	0		0		0	0	1	0x00FF00	40			1		1		0.2
+cylinder 	1000	0		0		0	0	1	0x00FF00	40			0.8		1		0.2
 sphere		750		0		0		1	0	0	0xFF00FF	200			0.4		0.9		0.1
 sphere		157 	-23		-500	1	0	0	0xFF00FF	200			0.4		0.9		0.1
 light		1300	-500		250		0	0	0	0xFFFFFF

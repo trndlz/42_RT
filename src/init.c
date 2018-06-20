@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 15:04:59 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/19 21:26:13 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/20 17:09:24 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,17 @@ t_env		*init_env(void)
 
 	if (!(e = (t_env*)malloc(sizeof(t_env))))
 		return (NULL);
-	if (!(e->mlx = mlx_init()))
-		return (NULL);
-	if (!(e->win = mlx_new_window(e->mlx, WINY, WINZ, "RTv1")))
-		return (NULL);
 	e->nb_eye = 0;
 	return (e);
+}
+
+int			init_mlx(t_env *e)
+{
+	if (!(e->mlx = mlx_init()))
+		return (0);
+	if (!(e->win = mlx_new_window(e->mlx, WINY, WINZ, "RTv1")))
+		return (0);
+	return (1);
 }
 
 t_vc		init_vc(double x, double y, double z)

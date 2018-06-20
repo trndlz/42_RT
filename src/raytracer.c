@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 17:51:01 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/20 17:55:04 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	compute_scene_vectors(t_env *e, t_obj *tmp)
 	int		nb_shadow;
 
 	llst = e->light_link;
-    // on met l'ambiant, on peut multiplier par le nmbre de light
 	color = multiply_color(tmp->col, tmp->coef.z);
 	draw_point(e, e->y, e->z, color);
 	while (llst)

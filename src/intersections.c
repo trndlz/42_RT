@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:03:32 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 17:43:38 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/21 10:42:53 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,14 @@ double			quadratic_solver(t_env *e)
 	t1 = (-e->b + sqrt(d)) / (2.0 * e->a);
 	t2 = (-e->b - sqrt(d)) / (2.0 * e->a);
 	if (t2 > t1 && t1 < 0)
+	{
+		e->smax = t1;
 		t1 = t2;
+	}
 	if (t2 < t1)
+	{
+		e->smax = t1;
 		t1 = t2;
+	}
 	return (t1);
 }

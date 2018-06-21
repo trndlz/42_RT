@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:42:39 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 16:18:44 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/21 10:48:56 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,25 @@ void	normal_vectors(t_env *e, t_obj *obj)
 int		shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *light_obj)
 {
 	double	s;
-	int		nb_cross;
 	t_vc	p;
 	t_vc	light;
 	t_vc	v2;
 
-	nb_cross = 0;
 	v2 = vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom);
 	light = vec_mult(e->lm, -1.0);
 	while (olst)
 	{
-		tmp += 0;
-		light = rot_all_axis(vec_sub(v2, light_obj->pos), olst->rot);
-		p = rot_all_axis(vec_sub(olst->pos, v2), olst->rot);
+		// tmp += 0;
+		light = vec_sub(v2, light_obj->pos);
+		p = vec_sub(olst->pos, v2);
 		s = distance_to_inter(e, olst, light, p);
-		if (s > 0.00001 && s < 0.99999)
+		if (olst == tmp && olst->type != 4)
+			s = e->smax;
+		if (e->y == 533 && e->z == 490 && olst->type == 1)
+		{
+			printf("s %f\n", s);
+		}
+		if (s > 0.000001 && s < 0.99999)
 			return (0);
 		olst = olst->next;
 	}

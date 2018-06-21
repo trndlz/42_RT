@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 17:54:19 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/21 10:49:44 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define WINZ 1000
 # define FOV 1000
 # define TH_NB 50
-# define ALPHA_SPEC 17
+# define ALPHA_SPEC 100
 
 typedef struct		s_vc
 {
@@ -59,6 +59,7 @@ typedef struct		s_env
 	int				y;
 	int				z;
 	int				nb_eye;
+	double			smax;
 	double			t;
 	double			s;
 	double			a;
@@ -139,7 +140,7 @@ int					deal_mouse(int k, int x, int y, t_env *e);
 */
 
 void				normal_vectors(t_env *e, t_obj *obj);
-int					shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *llst);
+int		shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *light_obj);
 
 /*
 ** COLORS

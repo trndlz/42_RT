@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 17:55:04 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/21 10:44:42 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	compute_scene_vectors(t_env *e, t_obj *tmp)
 {
 	t_obj	*llst;
 	int		color;
-	int		nb_shadow;
+	int		is_lit;
 
 	llst = e->light_link;
 	color = multiply_color(tmp->col, tmp->coef.z);
@@ -68,9 +68,15 @@ void	compute_scene_vectors(t_env *e, t_obj *tmp)
 		e->v2 = vec_add(vec_add(vec_mult(e->ray, e->t), e->offset), tmp->pos);
 		e->lm = vec_norm(vec_sub(llst->pos, e->v2));
 		e->cost = vec_dot(e->n, e->lm);
-		nb_shadow = shadows(e, tmp, e->obj_link, llst);
-		if (nb_shadow)
+		is_lit = shadows(e, tmp, e->obj_link, llst);
+		if (is_lit)
+		{
 			color = specular_diffuse(color, llst, tmp, e);
+			if (e->y == 533 && e->z == 490)
+			{
+				printf("lit %d\n", is_lit);
+			}
+		}
 		draw_point(e, e->y, e->z, color);
 		llst = llst->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:55:28 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/21 13:21:46 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/21 18:02:49 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,20 @@
 
 int		name_type(char *str)
 {
-	if (!ft_strcmp(str, "sphere"))
+	if (!ft_strcmp(str, "light"))
 		return (1);
-	else if (!ft_strcmp(str, "cylinder"))
-		return (2);
-	else if (!ft_strcmp(str, "cone"))
-		return (3);
-	else if (!ft_strcmp(str, "plane"))
-		return (4);
-	else if (!ft_strcmp(str, "light"))
-		return (5);
 	else if (!ft_strcmp(str, "eye"))
+		return (2);
+	else if (!ft_strcmp(str, "sphere"))
+		return (3);
+	else if (!ft_strcmp(str, "cylinder"))
+		return (4);
+	else if (!ft_strcmp(str, "cone"))
+		return (5);
+	else if (!ft_strcmp(str, "plane"))
 		return (6);
+	else if (!ft_strcmp(str, "disk"))
+		return (7);
 	else
 		return (0);
 }
@@ -46,10 +48,10 @@ t_obj	*attribute_object(char **tab_values)
 	scene->rot = init_vc((double)ft_atoi(tab_values[4]),
 		(double)ft_atoi(tab_values[5]), (double)ft_atoi(tab_values[6]));
 	scene->next = NULL;
-	if (scene->type == 6)
+	if (scene->type == 2)
 		return (scene);
 	scene->col = ft_htoi(tab_values[7]);
-	if (scene->type == 5)
+	if (scene->type == 1)
 		return (scene);
 	scene->size = (double)ft_atoi(tab_values[8]);
 	scene->coef = init_vc(ft_atof(tab_values[9]),
@@ -63,11 +65,11 @@ int		create_objects(t_env *e, char **tab_values)
 
 	if (!(tmp = attribute_object(tab_values)))
 		return (0);
-	if (tmp->type >= 1 && tmp->type <= 4)
+	if (tmp->type > 2)
 		obj_add(&e->obj_link, tmp);
-	else if (tmp->type == 5)
+	else if (tmp->type == 1)
 		obj_add(&e->light_link, tmp);
-	else if (tmp->type == 6)
+	else if (tmp->type == 2)
 	{
 		e->eye_lookfrom = init_vc(tmp->pos.x, tmp->pos.y, tmp->pos.z);
 		e->eye_rot = init_vc(tmp->rot.x, tmp->rot.y, tmp->rot.z);

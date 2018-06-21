@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/21 12:12:03 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/21 17:08:26 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ double	distance_to_inter(t_env *e, t_obj *obj_list, t_vc ray, t_vc p)
 {
 	double d;
 
-	d = (obj_list->type == 1) ? inter_sph(e, obj_list, ray, p) : -1.0;
-	d = (obj_list->type == 2) ? inter_cyl(e, obj_list, ray, p) : d;
-	d = (obj_list->type == 3) ? inter_cone(e, obj_list, ray, p) : d;
-	d = (obj_list->type == 4) ? inter_plane(ray, p, obj_list) : d;
+	d = (obj_list->type == 3) ? inter_sph(e, obj_list, ray, p) : -1.0;
+	d = (obj_list->type == 4) ? inter_cyl(e, obj_list, ray, p) : d;
+	d = (obj_list->type == 5) ? inter_cone(e, obj_list, ray, p) : d;
+	d = (obj_list->type == 6) ? inter_plane(ray, p, obj_list) : d;
 	return (d);
 }
 

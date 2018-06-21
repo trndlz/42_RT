@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/21 10:44:42 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/21 12:12:03 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	create_ray(t_env *e)
 double	distance_to_inter(t_env *e, t_obj *obj_list, t_vc ray, t_vc p)
 {
 	double d;
+
 	d = (obj_list->type == 1) ? inter_sph(e, obj_list, ray, p) : -1.0;
 	d = (obj_list->type == 2) ? inter_cyl(e, obj_list, ray, p) : d;
 	d = (obj_list->type == 3) ? inter_cone(e, obj_list, ray, p) : d;
@@ -70,13 +71,7 @@ void	compute_scene_vectors(t_env *e, t_obj *tmp)
 		e->cost = vec_dot(e->n, e->lm);
 		is_lit = shadows(e, tmp, e->obj_link, llst);
 		if (is_lit)
-		{
 			color = specular_diffuse(color, llst, tmp, e);
-			if (e->y == 533 && e->z == 490)
-			{
-				printf("lit %d\n", is_lit);
-			}
-		}
 		draw_point(e, e->y, e->z, color);
 		llst = llst->next;
 	}

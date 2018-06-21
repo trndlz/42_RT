@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 17:54:44 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/21 13:21:21 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ int		main(int ac, char **av)
 		exit_message("Problem while creating MLX environment\n");
 	create_image(e);
 	mlx_hook(e->win, 2, 3, deal_key, e);
-	mlx_mouse_hook(e->win, deal_mouse, e);
 	mlx_loop(e->mlx);
+	clear_list(e->obj_link);
+	clear_list(e->light_link);
+	free(e);
 	return (0);
 }

@@ -6,17 +6,17 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/21 10:49:44 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/21 13:17:24 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTV1_H
 # define RTV1_H
 # include <unistd.h>
-# include <stdio.h>
 # include <math.h>
 # include "mlx.h"
 # include "libft.h"
+# include <stdio.h>
 # include <pthread.h>
 # define WINY 1000
 # define WINZ 1000
@@ -132,15 +132,16 @@ double				quadratic_solver(t_env *e);
 */
 
 void				translation(int key, t_env *e);
+void				rotation(int key, t_env *e);
 int					deal_key(int key, t_env *e);
-int					deal_mouse(int k, int x, int y, t_env *e);
 
 /*
 ** LIGHTING
 */
 
 void				normal_vectors(t_env *e, t_obj *obj);
-int		shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *light_obj);
+int					shadows(t_env *e, t_obj *tmp, t_obj *olst,
+					t_obj *light_obj);
 
 /*
 ** COLORS

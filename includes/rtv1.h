@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/21 13:17:24 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/22 16:24:54 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <math.h>
 # include "mlx.h"
 # include "libft.h"
-# include <stdio.h>
 # include <pthread.h>
 # define WINY 1000
 # define WINZ 1000
@@ -39,10 +38,6 @@ typedef struct		s_obj
 	t_vc			coef;
 	int				col;
 	double			size;
-	double			ks;
-	double			ka;
-	double			kd;
-	int				color[3];
 	struct s_obj	*next;
 }					t_obj;
 

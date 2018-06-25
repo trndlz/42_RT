@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/22 16:24:54 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/25 17:38:09 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "mlx.h"
 # include "libft.h"
 # include <pthread.h>
+# include <stdio.h>
 # define WINY 1000
 # define WINZ 1000
 # define FOV 1000
@@ -38,6 +39,7 @@ typedef struct		s_obj
 	t_vc			coef;
 	int				col;
 	double			size;
+	double			height;
 	struct s_obj	*next;
 }					t_obj;
 
@@ -82,7 +84,7 @@ typedef struct		s_env
 ** RAYTRACER
 */
 
-void				create_image(t_env *e);
+int					create_image(t_env *e);
 void				draw_point(t_env *e, int x, int y, unsigned int color);
 void				*scene_plot(void *arg);
 void				create_ray(t_env *e);
@@ -120,6 +122,7 @@ double				inter_cone(t_env *e, t_obj *obj, t_vc ray, t_vc offset);
 double				inter_plane(t_vc ray, t_vc offset, t_obj *obj);
 double				inter_cyl(t_env *e, t_obj *obj, t_vc ray, t_vc offset);
 double				inter_sph(t_env *e, t_obj *obj, t_vc ray, t_vc offset);
+double				inter_disc(t_vc ray, t_vc offset, t_env *e, t_obj *obj);
 double				quadratic_solver(t_env *e);
 
 /*
@@ -129,6 +132,7 @@ double				quadratic_solver(t_env *e);
 void				translation(int key, t_env *e);
 void				rotation(int key, t_env *e);
 int					deal_key(int key, t_env *e);
+int					deal_mouse(int k, int y, int z, t_env *e);
 
 /*
 ** LIGHTING
@@ -162,6 +166,7 @@ t_vc				init_vc(double x, double y, double z);
 
 void				obj_add(t_obj **beg, t_obj *n);
 void				clear_list(t_obj *head);
+t_obj				*disc_for_cylinder(t_obj *cyl, t_vc center);
 
 /*
 ** ERROR MGT

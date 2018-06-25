@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:42:39 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/21 18:02:28 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/25 18:45:56 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,29 @@ void	normal_vectors(t_env *e, t_obj *obj)
 
 	e->v = vec_add(vec_mult(e->ray, e->t), e->offset);
 	e->n = e->v;
-	m = vec_x(e->ray, obj->rot) * e->t + vec_x(e->offset, obj->rot);
 	if (obj->type == 4 || obj->type == 5)
 	{
+		m = vec_x(e->ray, obj->rot) * e->t + vec_x(e->offset, obj->rot);
 		if (obj->type == 5)
-			m *= (1 + car(tan(M_PI * obj->size / 180)));
-		e->n = vec_sub(vec_add(vec_mult(e->ray, e->t), e->offset),
-		vec_mult(obj->rot, m));
+		{
+			if (obj->height == 0.0)
+				m *= 1 + car(tan(M_PI * obj->size / 180));
+			else
+				m *= 1 + car(obj->size / obj->height);
+		}
+		e->n = vec_sub(vec_add(vec_mult(e->ray, e->t), e->offset), vec_mult(obj->rot, m));
 	}
 	if (obj->type == 6)
+	{
 		e->n = obj->rot;
+		// if (vec_x(e->ray, obj->rot) < 0)
+		// 	e->n = vec_mult(e->n, -1);
+	}
+	if (obj->type == 7)
+	{
+		e->n = vec_mult(obj->rot, 1);
+	}
+
 	e->n = vec_norm(e->n);
 }
 
@@ -42,13 +55,19 @@ int		shadows(t_env *e, t_obj *tmp, t_obj *olst, t_obj *light_obj)
 	light = vec_mult(e->lm, -1.0);
 	while (olst)
 	{
-		light = vec_sub(v2, light_obj->pos);
-		p = vec_sub(olst->pos, v2);
-		s = distance_to_inter(e, olst, light, p);
-		if (olst == tmp && olst->type != 6)
-			s = e->smax;
-		if (s > 0.000001 && s < 0.99999)
-			return (0);
+		if (tmp != olst)
+		{
+			light = vec_sub(v2, light_obj->pos);
+			p = vec_sub(olst->pos, v2);
+			s = distance_to_inter(e, olst, light, p);
+			if (olst == tmp && olst->type != 6 && olst->type != 7)
+				s = e->smax;
+			if (s > 0.000001 && s < 0.99999)
+				return (0);
+			if (olst->type == 7 && s != -1.0)
+				printf("s %f \n", s);
+
+		}
 		olst = olst->next;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:55:28 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/21 18:02:49 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/25 17:38:50 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_obj	*attribute_object(char **tab_values)
 	if (scene->type == 1)
 		return (scene);
 	scene->size = (double)ft_atoi(tab_values[8]);
+	scene->height = (double)ft_atoi(tab_values[12]);
 	scene->coef = init_vc(ft_atof(tab_values[9]),
 		ft_atof(tab_values[10]), ft_atof(tab_values[11]));
 	return (scene);
@@ -62,11 +63,30 @@ t_obj	*attribute_object(char **tab_values)
 int		create_objects(t_env *e, char **tab_values)
 {
 	t_obj *tmp;
+	t_vc  disc;
 
 	if (!(tmp = attribute_object(tab_values)))
 		return (0);
 	if (tmp->type > 2)
+	{
 		obj_add(&e->obj_link, tmp);
+		if (tmp->type == 4 && tmp->height > 0.0)
+		{
+			obj_add(&e->obj_link, disc_for_cylinder(tmp, tmp->pos));
+			tmp->rot = vec_norm(tmp->rot);
+			obj_add(&e->obj_link, disc_for_cylinder(tmp, vec_add(vec_mult(tmp->rot, tmp->height), tmp->pos)));
+		}
+		if (tmp->type == 5 && tmp->height > 0.0)
+		{
+			tmp->rot = vec_norm(tmp->rot);
+			printf("pos centre cone x %f y %f z %f \n", tmp->pos.x, tmp->pos.y, tmp->pos.z);
+			disc = vec_add(vec_mult(tmp->rot, tmp->height), tmp->pos);
+			printf("disk centre cone x %f y %f z %f \n", disc.x, disc.y, disc.z);
+			printf("rot vect x %f y %f z %f \n", tmp->rot.x, tmp->rot.y, tmp->rot.z);
+			obj_add(&e->obj_link, disc_for_cylinder(tmp, disc));
+		}
+	}
+
 	else if (tmp->type == 1)
 		obj_add(&e->light_link, tmp);
 	else if (tmp->type == 2)
@@ -123,6 +143,7 @@ int		parser(char **av, t_env *e)
 				free(str);
 		}
 	}
+
 	free(str);
 	close(fd);
 	return (1);

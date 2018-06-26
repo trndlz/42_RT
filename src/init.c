@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 15:04:59 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/25 18:18:17 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/26 16:44:37 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_env		*init_env(void)
 	if (!(e = (t_env*)malloc(sizeof(t_env))))
 		return (NULL);
 	e->nb_eye = 0;
+	e->id = 0;
 	return (e);
 }
 

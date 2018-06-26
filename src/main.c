@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/25 13:28:41 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/26 16:41:50 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		main(int ac, char **av)
 		exit_message("Problem while creating environment structure\n");
 	e->obj_link = NULL;
 	e->light_link = NULL;
+	e->cut_link = NULL;
 	if (!parser(av, e))
 		exit_message("Problem while opening file\n");
 	if (e->nb_eye != 1)
@@ -35,6 +36,7 @@ int		main(int ac, char **av)
 	mlx_loop(e->mlx);
 	clear_list(e->obj_link);
 	clear_list(e->light_link);
+	clear_list(e->cut_link);
 	free(e);
 	return (0);
 }

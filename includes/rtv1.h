@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/25 17:38:09 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/26 16:41:24 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ typedef struct		s_obj
 	t_vc			coef;
 	int				col;
 	double			size;
-	double			height;
+	int				id_cut;
+	int				id_obj;
 	struct s_obj	*next;
 }					t_obj;
 
@@ -56,6 +57,7 @@ typedef struct		s_env
 	int				y;
 	int				z;
 	int				nb_eye;
+	int				id;
 	double			smax;
 	double			t;
 	double			s;
@@ -78,6 +80,7 @@ typedef struct		s_env
 	pthread_t		pth[TH_NB];
 	t_obj			*obj_link;
 	t_obj			*light_link;
+	t_obj			*cut_link;
 }					t_env;
 
 /*
@@ -194,7 +197,7 @@ int					ft_isnumber(char *str);
 int					check_value(char **str);
 int					name_type(char *str);
 void				error_messages(int error);
-t_obj				*attribute_object(char **tab_values);
+t_obj				*attribute_object(char **tab_values, t_env *e);
 char				*tabtospace(char *str);
 int					attribute_scene(char *str, t_env *e);
 int					parser(char **av, t_env *e);

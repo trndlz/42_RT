@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:55:28 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/26 16:45:32 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/26 18:44:00 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,17 @@ int		create_objects(t_env *e, char **tab_values)
 	if (!(tmp = attribute_object(tab_values, e)))
 		return (0);
 	if (tmp->id_cut && tmp->type > 2)
+	{
+		printf("cutter id_cut %d id_obj %d\n", tmp->id_cut, tmp->id_obj);
 		obj_add(&e->cut_link, tmp);
+	}
+
 	else if (!tmp->id_cut && tmp->type > 2)
+	{
+		printf("obj id_cut %d id_obj %d\n", tmp->id_cut, tmp->id_obj);
 		obj_add(&e->obj_link, tmp);
+	}
+
 	else if (tmp->type == 1)
 		obj_add(&e->light_link, tmp);
 	else if (tmp->type == 2)

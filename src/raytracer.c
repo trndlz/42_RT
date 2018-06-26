@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/25 18:40:52 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/26 18:48:04 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,68 @@ double	distance_to_inter(t_env *e, t_obj *obj_list, t_vc ray, t_vc p)
 	return (d);
 }
 
+int		is_cut(t_obj *obj, t_env *e)
+{
+	t_obj *cut;
+
+	cut = e->cut_link;
+	while (cut)
+	{
+		if (cut->id_cut == obj->id_obj)
+			return (1);
+		cut = cut->next;
+	}
+	return (0);
+}
+
 t_obj	*nearest_node(t_env *e)
 {
 	double	t;
+	double	t_cut;
 	t_obj	*near_node;
 	t_obj	*olst;
+	t_obj	*clst;
 
 	e->t = 999999999;
 	near_node = NULL;
 	olst = e->obj_link;
 	while (olst)
 	{
-		e->offset = vec_sub(e->eye_lookfrom, olst->pos);
-		t = distance_to_inter(e, olst, e->ray, e->offset);
-		if (t > 0 && t < e->t)
+		clst = e->cut_link;
+		if (!is_cut(olst, e))
 		{
-			e->t = t;
-			near_node = olst;
+			e->offset = vec_sub(e->eye_lookfrom, olst->pos);
+			t = distance_to_inter(e, olst, e->ray, e->offset);
+			if (t > 0 && t < e->t)
+			{
+				e->t = t;
+				near_node = olst;
+			}
 		}
+
+		else
+			while (clst)
+			{
+				// printf("cutter id %d / obj_id %d", clst->id_cut, olst->id_obj);
+				if (clst->id_cut == olst->id_obj)
+				{
+					e->offset = vec_sub(e->eye_lookfrom, clst->pos);
+					t_cut = distance_to_inter(e, clst, e->ray, e->offset);
+					e->offset = vec_sub(e->eye_lookfrom, olst->pos);
+					t = distance_to_inter(e, olst, e->ray, e->offset);
+					if (t > 0 && t < e->t && e->t1 < t_cut && e->t2 > t_cut)
+					{
+						e->t = t_cut;
+					near_node = clst;
+					}
+					if (t > 0 && t < e->t && e->t1 < t_cut && e->t2 < t_cut)
+					{
+						e->t = t;
+						near_node = olst;
+					}
+				}
+				clst = clst->next;
+			}
 		olst = olst->next;
 	}
 	return (near_node);

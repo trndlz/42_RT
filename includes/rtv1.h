@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/26 16:41:24 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/26 17:57:45 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct		s_env
 	int				id;
 	double			smax;
 	double			t;
+	double			t1;
+	double			t2;
 	double			s;
 	double			a;
 	double			b;

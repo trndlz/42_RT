@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:55:28 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/23 20:21:48 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/27 13:58:45 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		name_type(char *str)
 		return (0);
 }
 
-t_obj	*attribute_object(char **tab_values)
+t_obj	*attribute_object(char **tab_values, t_env *e)
 {
 	t_obj	*scene;
 	int		error;
@@ -54,6 +54,8 @@ t_obj	*attribute_object(char **tab_values)
 	if (scene->type == 1)
 		return (scene);
 	scene->size = (double)ft_atoi(tab_values[8]);
+	scene->id_cut = (!ft_atoi(tab_values[12]) ? 0 : e->id);
+	scene->id_obj = (!ft_atoi(tab_values[12]) ? ++(e->id) : 0);
 	scene->coef = init_vc(ft_atof(tab_values[9]),
 		ft_atof(tab_values[10]), ft_atof(tab_values[11]));
 	return (scene);
@@ -63,10 +65,20 @@ int		create_objects(t_env *e, char **tab_values)
 {
 	t_obj *tmp;
 
-	if (!(tmp = attribute_object(tab_values)))
+	if (!(tmp = attribute_object(tab_values, e)))
 		return (0);
-	if (tmp->type > 2)
+	if (tmp->id_cut && tmp->type > 2)
+	{
+		printf("cutter id_cut %d id_obj %d\n", tmp->id_cut, tmp->id_obj);
+		obj_add(&e->cut_link, tmp);
+	}
+
+	else if (!tmp->id_cut && tmp->type > 2)
+	{
+		printf("obj id_cut %d id_obj %d\n", tmp->id_cut, tmp->id_obj);
 		obj_add(&e->obj_link, tmp);
+	}
+
 	else if (tmp->type == 1)
 		obj_add(&e->light_link, tmp);
 	else if (tmp->type == 2)
@@ -124,6 +136,7 @@ int		parser(char **av, t_env *e)
 				free(str);
 		}
 	}
+
 	free(str);
 	close(fd);
 	return (1);

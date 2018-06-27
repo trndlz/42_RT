@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 15:04:59 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 17:09:24 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/26 16:44:37 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_env		*init_env(void)
 	if (!(e = (t_env*)malloc(sizeof(t_env))))
 		return (NULL);
 	e->nb_eye = 0;
+	e->id = 0;
 	return (e);
 }
 
@@ -29,6 +30,22 @@ int			init_mlx(t_env *e)
 	if (!(e->win = mlx_new_window(e->mlx, WINY, WINZ, "RTv1")))
 		return (0);
 	return (1);
+}
+
+t_obj	*disc_for_cylinder(t_obj *cyl, t_vc center)
+{
+	t_obj	*disc;
+
+	if (!(disc = malloc(sizeof(t_obj))))
+		return (NULL);
+	disc->size = cyl->size;
+	disc->type = 7;
+	disc->pos = center;
+	disc->rot = cyl->rot;
+	disc->col = cyl->col;
+	disc->coef = cyl->coef;
+	disc->next = NULL;
+	return (disc);
 }
 
 t_vc		init_vc(double x, double y, double z)

@@ -6,7 +6,11 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/27 13:01:34 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/27 14:00:12 by jostraye         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+>>>>>>> 8c1f4b19e9f66aec52190d9a5963e5dc2a8c6296
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +43,8 @@ typedef struct		s_obj
 	t_vc			coef;
 	int				col;
 	double			size;
+	int				id_cut;
+	int				id_obj;
 	struct s_obj	*next;
 }					t_obj;
 
@@ -59,6 +65,8 @@ typedef struct		s_env
 	int				filter;
 	double			smax;
 	double			t;
+	double			t1;
+	double			t2;
 	double			s;
 	double			a;
 	double			b;
@@ -79,13 +87,14 @@ typedef struct		s_env
 	pthread_t		pth[TH_NB];
 	t_obj			*obj_link;
 	t_obj			*light_link;
+	t_obj			*cut_link;
 }					t_env;
 
 /*
 ** RAYTRACER
 */
 
-void				create_image(t_env *e);
+int					create_image(t_env *e);
 void				draw_point(t_env *e, int x, int y, unsigned int color);
 void				*scene_plot(void *arg);
 void				create_ray(t_env *e);
@@ -123,6 +132,7 @@ double				inter_cone(t_env *e, t_obj *obj, t_vc ray, t_vc offset);
 double				inter_plane(t_vc ray, t_vc offset, t_obj *obj);
 double				inter_cyl(t_env *e, t_obj *obj, t_vc ray, t_vc offset);
 double				inter_sph(t_env *e, t_obj *obj, t_vc ray, t_vc offset);
+double				inter_disc(t_vc ray, t_vc offset, t_env *e, t_obj *obj);
 double				quadratic_solver(t_env *e);
 
 /*
@@ -132,6 +142,7 @@ double				quadratic_solver(t_env *e);
 void				translation(int key, t_env *e);
 void				rotation(int key, t_env *e);
 int					deal_key(int key, t_env *e);
+int					deal_mouse(int k, int y, int z, t_env *e);
 
 /*
 ** LIGHTING
@@ -168,6 +179,7 @@ t_vc				init_vc(double x, double y, double z);
 
 void				obj_add(t_obj **beg, t_obj *n);
 void				clear_list(t_obj *head);
+t_obj				*disc_for_cylinder(t_obj *cyl, t_vc center);
 
 /*
 ** ERROR MGT
@@ -195,7 +207,7 @@ int					ft_isnumber(char *str);
 int					check_value(char **str);
 int					name_type(char *str);
 void				error_messages(int error);
-t_obj				*attribute_object(char **tab_values);
+t_obj				*attribute_object(char **tab_values, t_env *e);
 char				*tabtospace(char *str);
 int					attribute_scene(char *str, t_env *e);
 int					parser(char **av, t_env *e);

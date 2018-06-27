@@ -48,7 +48,7 @@ void		draw_point(t_env *e, int x, int y, unsigned int color)
 {
 	int i;
 
-	i = (x + ((y * e->s_l) / 4));
+	i = (x + (y * WINZ));
 	if (i >= 0 && i < (WINY * WINZ))
 		e->imgstr[i] = color;
 }

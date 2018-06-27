@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/27 14:02:35 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/27 17:32:17 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ int					create_objects(t_env *e, char **tab_values);
 ** MISCELLANEOUS
 */
 
-void			create_bmp(int *data, unsigned int file_size, t_env *e);
+void			create_bmp_file(t_env *e);
 t_vc			hextorgb(int hex);
 void			stereoscopic(t_env *e);
 void			antialias(t_env *e);

@@ -33,7 +33,7 @@ double	distance_to_inter(t_env *e, t_obj *obj_list, t_vc ray, t_vc p)
 	return (d);
 }
 
-int		is_cut(t_obj *obj, t_env *e)
+int		is_not_cut(t_obj *obj, t_env *e)
 {
 	t_obj *cut;
 
@@ -41,63 +41,73 @@ int		is_cut(t_obj *obj, t_env *e)
 	while (cut)
 	{
 		if (cut->id_cut == obj->id_obj)
-			return (1);
+			return (0);
 		cut = cut->next;
 	}
-	return (0);
+	return (1);
 }
 
+t_obj	*node_no_cutter(t_env *e, t_obj *obj, t_obj *near_node)
+{
+	double	t;
+
+	e->offset = vec_sub(e->eye_lookfrom, obj->pos);
+	t = distance_to_inter(e, obj, e->ray, e->offset);
+	if (t > 0 && t < e->t)
+	{
+		e->t = t;
+		return (obj);
+	}
+	return (near_node);
+}
+
+t_obj	*node_cutter(t_env *e, t_obj *obj, t_obj *near_node)
+{
+	t_obj	*clst;
+	double	t;
+	double	t_cut;
+	t_vc	inter;
+
+	clst = e->cut_link;
+	while (clst)
+	{
+		if (clst->id_cut == obj->id_obj)
+		{
+			e->offset = vec_sub(e->eye_lookfrom, clst->pos);
+			t_cut = distance_to_inter(e, clst, e->ray, e->offset);
+			e->offset = vec_sub(e->eye_lookfrom, obj->pos);
+			t = distance_to_inter(e, obj, e->ray, e->offset);
+			inter = vec_sub(vec_add(vec_mult(e->ray, t), e->eye_lookfrom), clst->pos);
+			if (t > 0 && t < e->t && vec_x(inter, clst->rot) > 0)
+			{
+				e->t = t;
+				return (obj);
+			}
+			if (t > 0 && t_cut < e->t && e->t1 < t_cut && e->t2 > t_cut)
+			{
+				e->t = t_cut;
+				return (clst);
+			}
+		}
+		clst = clst->next;
+	}
+	return (near_node);
+}
 
 t_obj	*nearest_node(t_env *e)
 {
-	double	t;
-	double	t_cut;
 	t_obj	*near_node;
 	t_obj	*olst;
-	t_obj	*clst;
-	t_vc	inter;
 
 	e->t = 999999999;
 	near_node = NULL;
 	olst = e->obj_link;
 	while (olst)
 	{
-		clst = e->cut_link;
-		if (!is_cut(olst, e))
-		{
-			e->offset = vec_sub(e->eye_lookfrom, olst->pos);
-			t = distance_to_inter(e, olst, e->ray, e->offset);
-			if (t > 0 && t < e->t)
-			{
-				e->t = t;
-				near_node = olst;
-			}
-		}
+		if (is_not_cut(olst, e))
+			near_node = node_no_cutter(e, olst, near_node);
 		else
-			while (clst)
-			{
-				if (clst->id_cut == olst->id_obj)
-				{
-					
-					e->offset = vec_sub(e->eye_lookfrom, clst->pos);
-					t_cut = distance_to_inter(e, clst, e->ray, e->offset);
-					e->offset = vec_sub(e->eye_lookfrom, olst->pos);
-					t = distance_to_inter(e, olst, e->ray, e->offset);
-					inter = vec_add(vec_mult(e->ray, t), e->eye_lookfrom);
-					inter = vec_sub(inter, clst->pos);
-					if (t > 0 && t_cut < e->t && e->t1 < t_cut && e->t2 > t_cut)
-					{
-						e->t = t_cut;
-						near_node = clst;
-					}
-					if (t > 0 && t < e->t && vec_x(inter, clst->rot) > 0)
-					{
-						e->t = t;
-						near_node = olst;
-					}
-				}
-				clst = clst->next;
-			}
+			near_node = node_cutter(e, olst, near_node);
 		olst = olst->next;
 	}
 	return (near_node);

@@ -26,16 +26,9 @@ void	normal_vectors(t_env *e, t_obj *obj)
 		e->n = vec_sub(vec_add(vec_mult(e->ray, e->t), e->offset), vec_mult(obj->rot, m));
 	}
 	if (obj->type == 6)
-	{
 		e->n = obj->rot;
-		// if (vec_x(e->ray, obj->rot) < 0)
-		// 	e->n = vec_mult(e->n, -1);
-	}
 	if (obj->type == 7)
-	{
 		e->n = vec_mult(obj->rot, 1);
-	}
-
 	e->n = vec_norm(e->n);
 }
 

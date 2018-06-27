@@ -47,6 +47,7 @@ int		is_cut(t_obj *obj, t_env *e)
 	return (0);
 }
 
+
 t_obj	*nearest_node(t_env *e)
 {
 	double	t;
@@ -54,6 +55,7 @@ t_obj	*nearest_node(t_env *e)
 	t_obj	*near_node;
 	t_obj	*olst;
 	t_obj	*clst;
+	t_vc	inter;
 
 	e->t = 999999999;
 	near_node = NULL;
@@ -71,23 +73,24 @@ t_obj	*nearest_node(t_env *e)
 				near_node = olst;
 			}
 		}
-
 		else
 			while (clst)
 			{
-				// printf("cutter id %d / obj_id %d", clst->id_cut, olst->id_obj);
 				if (clst->id_cut == olst->id_obj)
 				{
+					
 					e->offset = vec_sub(e->eye_lookfrom, clst->pos);
 					t_cut = distance_to_inter(e, clst, e->ray, e->offset);
 					e->offset = vec_sub(e->eye_lookfrom, olst->pos);
 					t = distance_to_inter(e, olst, e->ray, e->offset);
-					if (t > 0 && t < e->t && e->t1 < t_cut && e->t2 > t_cut)
+					inter = vec_add(vec_mult(e->ray, t), e->eye_lookfrom);
+					inter = vec_sub(inter, clst->pos);
+					if (t > 0 && t_cut < e->t && e->t1 < t_cut && e->t2 > t_cut)
 					{
 						e->t = t_cut;
-					near_node = clst;
+						near_node = clst;
 					}
-					if (t > 0 && t < e->t && e->t1 < t_cut && e->t2 < t_cut)
+					if (t > 0 && t < e->t && vec_x(inter, clst->rot) > 0)
 					{
 						e->t = t;
 						near_node = olst;

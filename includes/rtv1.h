@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/22 16:24:54 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/06/27 13:01:34 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "mlx.h"
 # include "libft.h"
 # include <pthread.h>
+# include <stdio.h>
 # define WINY 1000
 # define WINZ 1000
 # define FOV 1000
@@ -46,6 +47,7 @@ typedef struct		s_env
 	void			*mlx;
 	void			*win;
 	void			*image;
+	char			*file_name;
 	int				*imgstr;
 	int				bpp;
 	int				thread_int;
@@ -54,6 +56,7 @@ typedef struct		s_env
 	int				y;
 	int				z;
 	int				nb_eye;
+	int				filter;
 	double			smax;
 	double			t;
 	double			s;
@@ -147,6 +150,9 @@ int					multiply_color(int hex, double mult);
 int					add_color(int hex1, int hex2);
 int					specular_diffuse(int color, t_obj *light,
 					t_obj *obj, t_env *e);
+void				global_filter(t_env *e, int filter);
+int			color_limits(int col);
+
 
 /*
 ** STRUCTURES INITIALIZATION
@@ -194,5 +200,15 @@ char				*tabtospace(char *str);
 int					attribute_scene(char *str, t_env *e);
 int					parser(char **av, t_env *e);
 int					create_objects(t_env *e, char **tab_values);
+
+/*
+** MISCELLANEOUS
+*/
+
+void			create_bmp(int *data, unsigned int file_size, t_env *e);
+t_vc			hextorgb(int hex);
+void			stereoscopic(t_env *e);
+void			antialias(t_env *e);
+
 
 #endif

@@ -6,7 +6,7 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/06/21 13:26:44 by tmervin          ###   ########.fr        #
+#    Updated: 2018/06/26 15:02:22 by jostraye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,10 @@ SRC_NAME	:=	main.c				\
 				free_functions.c	\
 				usage.c				\
 				maths_rot.c			\
-				maths_functions.c
+				maths_functions.c	\
+				create_bmp.c		\
+				filters.c			\
+				antialiasing.c
 
 OBJ_PATH	:= obj
 HEAD_PATH	:= ./includes

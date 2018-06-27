@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 10:47:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/21 13:20:16 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/27 12:59:46 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int		deal_key(int key, t_env *e)
 {
 	if (key == 53)
 	{
+		create_bmp(e->imgstr, (unsigned int)WINY * WINZ, e);
 		mlx_destroy_window(e->mlx, e->win);
 		exit(1);
 	}

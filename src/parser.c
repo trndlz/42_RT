@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:55:28 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/21 18:02:49 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/23 20:21:48 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int		parser(char **av, t_env *e)
 		return (0);
 	else
 	{
+		e->file_name = av[1];
 		while (get_next_line(fd, &str) == 1)
 		{
 			if (!attribute_scene(str, e))

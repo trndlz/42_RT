@@ -1,5 +1,5 @@
 #NAME		X		Y		Z		RX	RY	RZ	COLOR		SIZE		SPEC	DIFF	AMB
-plane		  0		  0		 -600		0 0 1	0xFF00FF	200			0.1		0.9		0.1
+plane		  0		  0		 -600		0 0 1	0xFFFFFF	200			0.1		0.9		0.1
 light		 1200	300	1100			0 0 0	0xFFFFFF
 light		 1200	600	1000		0 0 0	0xFFFFFF
 light		 1200	800	800		0 0 0	0xFFFFFF

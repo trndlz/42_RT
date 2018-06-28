@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/27 14:02:35 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/27 15:10:32 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ double				distance_to_inter(t_env *e, t_obj *obj_list,
 					t_vc ray, t_vc p);
 t_obj				*nearest_node(t_env *e);
 void				compute_scene_vectors(t_env *e, t_obj *tmp);
+int					is_not_cut(t_obj *obj, t_env *e);
 
 /*
 ** MATHS

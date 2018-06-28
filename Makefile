@@ -6,7 +6,7 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/06/26 15:02:22 by jostraye         ###   ########.fr        #
+#    Updated: 2018/06/28 18:34:33 by tmervin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC_NAME	:=	main.c				\
 				maths_functions.c	\
 				create_bmp.c		\
 				filters.c			\
+				texture_parser.c	\
 				antialiasing.c
 
 OBJ_PATH	:= obj

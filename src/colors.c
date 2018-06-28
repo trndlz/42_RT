@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:41:47 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 16:19:59 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/28 18:44:52 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,19 @@ int			add_color(int hex1, int hex2)
 	return (((int)(r & 0xff) << 16) + ((int)(g & 0xff) << 8) + (int)(b & 0xff));
 }
 
+int		get_texture_sphere(t_env *e, t_obj *obj)
+{
+	double	u;
+	double	v;
+	t_vc	sph_pos;
+
+	sph_pos = vec_mult(vec_sub(vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom), obj->pos), (1/obj->size));
+	sph_pos = rot_all_axis(sph_pos, obj->rot);
+	u = 0.5 + atan2(sph_pos.z, sph_pos.x) / (2 * M_PI);
+	v = 0.5 - asin(sph_pos.y) / M_PI;
+	return (obj->texture_tab[(int)(v * obj->texture_size[1])][(int)(u * obj->texture_size[0])]);
+}
+
 int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_env *e)
 {
 	int		color_diff;
@@ -73,7 +86,10 @@ int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_env *e)
 		ALPHA_SPEC));
 	dot_diff = ratio_limits(e->cost);
 	color_spec = multiply_color(light->col, dot_spec * obj->coef.x);
-	color_diff = multiply_color(obj->col, dot_diff * obj->coef.y);
+	if (obj->type == 3 && SPHERE_TEXTURE == 1)
+		color_diff = multiply_color(get_texture_sphere(e, obj), dot_diff * obj->coef.y);
+	else
+		color_diff = multiply_color(obj->col, dot_diff * obj->coef.y);
 	color_spec = add_color(color_spec, color_diff);
 	color_spec = add_color(color_spec, color);
 	return (color_spec);

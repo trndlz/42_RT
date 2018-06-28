@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/27 17:32:17 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/28 18:51:22 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define WINZ 1000
 # define FOV 1000
 # define TH_NB 50
+# define SPHERE_TEXTURE 1
 # define ALPHA_SPEC 100
 
 typedef struct		s_vc
@@ -41,6 +42,8 @@ typedef struct		s_obj
 	double			size;
 	int				id_cut;
 	int				id_obj;
+	int				*texture_size;
+	int				**texture_tab;
 	struct s_obj	*next;
 }					t_obj;
 
@@ -191,6 +194,12 @@ void				exit_message(char *str);
 */
 
 void				free_split(char **split);
+
+/*
+** TEXTURES
+*/
+
+int					load_texture_to_obj(t_env *e, t_obj *obj);
 
 /*
 ** PARSER

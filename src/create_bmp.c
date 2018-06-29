@@ -6,7 +6,7 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/23 19:01:36 by jostraye          #+#    #+#             */
-/*   Updated: 2018/06/27 17:51:10 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/29 16:27:13 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,9 @@ void	create_bmp_file(t_env *e)
 {
 	FILE			*f;
 	unsigned char	*img = NULL;
-	int				filesize;
 	unsigned char 	bmppad[3] = {0,0,0};
 	int				i;
 
-	filesize = 54 + 2 * WINY * WINZ;
 	img = create_bmp_img(e);
 	f = fopen("img.bmp","wb");
 	i = -1;

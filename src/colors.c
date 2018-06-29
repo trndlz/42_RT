@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:41:47 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/29 15:18:55 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/29 16:33:43 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,21 +106,6 @@ int		get_columns_sphere(t_env *e, t_obj *obj)
 		return (multiply_color(obj->col, 0.2));
 }
 
-int		get_checkers_plane(t_env *e, t_obj *obj)
-{
-	t_vc	plane_pos;
-	t_vc	bv1;
-	t_vc	bv2;
-
-	bv1 = vec_norm(init_vc(1, 0, obj->pos.y / obj->pos.z));
-	bv2 = vec_norm(init_vc(0, 1, obj->pos.y / obj->pos.z));
-	plane_pos = vec_sub(vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom), obj->pos);
-	if (((int)(plane_pos.x) + (int)(plane_pos.y)) % 2)
-		return (obj->col);
-	else
-		return (0x000000);
-}
-
 int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_env *e)
 {
 	int		color_diff;
@@ -135,8 +120,6 @@ int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_env *e)
 	color_spec = multiply_color(light->col, dot_spec * obj->coef.x);
 	if (obj->type == 3 && SPHERE_TEXTURE == 1)
 		color_diff = multiply_color(get_texture_sphere(e, obj), dot_diff * obj->coef.y);
-	else if (obj->type == 6 && PLANE_CHECKERS == 1)
-		color_diff = multiply_color(get_checkers_plane(e, obj), dot_diff * obj->coef.y);
 	else
 		color_diff = multiply_color(obj->col, dot_diff * obj->coef.y);
 	color_spec = add_color(color_spec, color_diff);

@@ -37,11 +37,27 @@ SRC_NAME	:=	main.c				\
 OBJ_PATH	:= obj
 HEAD_PATH	:= ./includes
 
-CPPFLAGS	:= -Iincludes -I./libft/includes
+
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S), Linux)
+	MLX_DIR	=	minilibx_linux
+endif
+ifeq ($(UNAME_S), Darwin)
+	MLX_DIR	=	minilibx_macos
+endif
+
+CPPFLAGS	:= -Iincludes -I./libft/includes -I ./$(MLX_DIR)
 
 LDFLAGS		:= -Llibft/
 LDLIBS		:= -lft
-MINILIBX	:= -L ./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit
+ifeq ($(UNAME_S), Linux)
+	MLX_PATH := ./minilibx_linux
+	MINILIBX :=	-L./minilibx_linux -lmlx -lXext -lX11 -lm -pthread
+endif
+ifeq ($(UNAME_S), Darwin)
+	MLX_PATH := ./minilibx_macos
+	MINILIBX	:= -L ./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit
+endif
 
 CC			:= gcc -Werror -Wall -Wextra
 OBJ_NAME	:= $(SRC_NAME:.c=.o)
@@ -55,8 +71,8 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft
-	make -C minilibx_macos/
-	$(CC) $(LDFLAGS) $(LDLIBS) $(MINILIBX) $^ -o $@
+	make -C $(MLX_PATH)
+	$(CC) $^ $(LDFLAGS) $(LDLIBS) $(MINILIBX) -o $@
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
@@ -68,13 +84,12 @@ norm:
 
 clean:
 	make clean -C libft/
-	make clean -C minilibx_macos/
+	make clean -C $(MLX_PATH)
 	rm -fv $(OBJ)
 	@rmdir $(OBJ_PATH) 2> /dev/null || true
 
 fclean: clean
 	make fclean -C libft/
-	make clean -C minilibx_macos/
 	rm -fv $(NAME)
 
 re: fclean all

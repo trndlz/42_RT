@@ -76,11 +76,9 @@ void	create_bmp_file(t_env *e)
 {
 	FILE			*f;
 	unsigned char	*img = NULL;
-	int				filesize;
 	unsigned char 	bmppad[3] = {0,0,0};
 	int				i;
 
-	filesize = 54 + 2 * WINY * WINZ;
 	img = create_bmp_img(e);
 	f = fopen("img.bmp","wb");
 	i = -1;

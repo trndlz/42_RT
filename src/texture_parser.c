@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 18:25:04 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/28 18:48:22 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/29 13:09:42 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,16 @@ int		**create_color_tab(int *imgstr, int *size)
 	int		y;
 	int		i;
 
-	y = 1;
+	y = 0;
 	i = 0;
 	if (!(color_tab = (int **)malloc(sizeof(int*) * size[1])))
 		return (NULL);
-	while (y <= size[1])
+	while (y < size[1])
 	{
 		if (!(color_tab[y] = (int *)malloc(sizeof(int) * size[0])))
 			return (NULL);
-		x = 1;
-		while (x <= size[0])
+		x = 0;
+		while (x < size[0])
 		{
 			color_tab[y][x] = imgstr[i];
 			x++;

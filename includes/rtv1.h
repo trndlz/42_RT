@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/28 18:51:22 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/06/29 13:53:57 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define FOV 1000
 # define TH_NB 50
 # define SPHERE_TEXTURE 1
+# define PLANE_CHECKERS 1
 # define ALPHA_SPEC 100
 
 typedef struct		s_vc
@@ -200,6 +201,7 @@ void				free_split(char **split);
 */
 
 int					load_texture_to_obj(t_env *e, t_obj *obj);
+int					get_texture_sphere(t_env *e, t_obj *obj);
 
 /*
 ** PARSER

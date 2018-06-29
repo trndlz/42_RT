@@ -6,7 +6,7 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/06/28 18:34:33 by tmervin          ###   ########.fr        #
+#    Updated: 2018/06/29 11:50:43 by tmervin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ LDFLAGS		:= -Llibft/
 LDLIBS		:= -lft
 MINILIBX	:= -L ./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit
 
-CC			:= gcc -Werror -Wall -Wextra
+CC			:= gcc -Werror -Wall -Wextra -fsanitize=address
 OBJ_NAME	:= $(SRC_NAME:.c=.o)
 
 SRC			:= $(addprefix $(SRC_PATH)/, $(SRC_NAME))

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:41:47 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/29 16:33:43 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/09 14:02:11 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,23 @@ int		get_columns_sphere(t_env *e, t_obj *obj)
 		return (multiply_color(obj->col, 0.2));
 }
 
+int		checkerboard_plane(t_env *e, t_obj *obj)
+{
+	t_vc	xy_pos;
+	double	teta;
+	int		mod;
+
+	xy_pos = vec_sub(vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom), obj->pos);
+	teta = acos(vec_dot(obj->rot, init_vc(0, 0, 1)));
+	xy_pos = rot_x(xy_pos, (int)(teta * 180 / M_PI));
+	xy_pos = rot_y(xy_pos, (int)(teta * 180 / M_PI));
+	mod = (xy_pos.x * xy_pos.y > 0) ? 1 : 0;
+	if (abs((int)xy_pos.x / 350 - (int)xy_pos.y / 350) % 2 == mod)
+	 	return (obj->col);
+	else
+		return (multiply_color(obj->col, 0.2));
+}
+
 int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_env *e)
 {
 	int		color_diff;
@@ -120,6 +137,8 @@ int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_env *e)
 	color_spec = multiply_color(light->col, dot_spec * obj->coef.x);
 	if (obj->type == 3 && SPHERE_TEXTURE == 1)
 		color_diff = multiply_color(get_texture_sphere(e, obj), dot_diff * obj->coef.y);
+	else if (obj->type == 6 && PLANE_CHECKERS == 1)
+		color_diff = multiply_color(checkerboard_plane(e, obj), dot_diff * obj->coef.y);
 	else
 		color_diff = multiply_color(obj->col, dot_diff * obj->coef.y);
 	color_spec = add_color(color_spec, color_diff);

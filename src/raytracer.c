@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/29 13:42:14 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/09 14:34:02 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ void	compute_scene_vectors(t_env *e, t_obj *tmp)
 	llst = e->light_link;
 	if (tmp->type == 3 && SPHERE_TEXTURE == 1)
 		color = multiply_color(get_texture_sphere(e, tmp), tmp->coef.z);
+	else if (tmp->type == 6 && PLANE_CHECKERS == 1)
+		color = multiply_color(checkerboard_plane(e, tmp), tmp->coef.z);
 	else
 		color = multiply_color(tmp->col, tmp->coef.z);
 	draw_point(e, e->y, e->z, color);

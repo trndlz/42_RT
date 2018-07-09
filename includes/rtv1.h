@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/09 14:09:12 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/09 14:34:55 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ void				free_split(char **split);
 
 int					load_texture_to_obj(t_env *e, t_obj *obj);
 int					get_texture_sphere(t_env *e, t_obj *obj);
+int					checkerboard_plane(t_env *e, t_obj *obj);
 
 /*
 ** PARSER

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/28 11:52:56 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/11 13:52:48 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,12 @@ void	compute_scene_vectors(t_env *e, t_obj *tmp)
 	int		is_lit;
 
 	llst = e->light_link;
-	color = multiply_color(tmp->col, tmp->coef.z);
+	if (tmp->type == 3 && SPHERE_TEXTURE == 1)
+		color = multiply_color(get_texture_sphere(e, tmp), tmp->coef.z);
+	else if (tmp->type == 6 && PLANE_CHECKERS == 1)
+		color = multiply_color(checkerboard_plane(e, tmp), tmp->coef.z);
+	else
+		color = multiply_color(tmp->col, tmp->coef.z);
 	draw_point(e, e->y, e->z, color);
 	while (llst)
 	{
@@ -157,8 +162,8 @@ void	*scene_plot(void *arg)
 			}
 		}
 	}
-	antialias(e);
-	// global_filter(e, 4);
+	// antialias(e);
+	// global_filter(e, 2);
 	// stereoscopic(e);
 	return (NULL);
 }

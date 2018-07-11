@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:41:47 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 16:19:59 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/09 14:02:11 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int			multiply_color(int hex, double mult)
 
 	if (mult < 0)
 		mult = 0;
-	b = (hex % 0X100);
-	g = (hex / 0X100) % 0X100;
-	r = (hex / (0X100 * 0X100)) % 0X100;
+	b = color_limits(hex % 0X100);
+	g = color_limits((hex / 0X100) % 0X100);
+	r = color_limits((hex / (0X100 * 0X100)) % 0X100);
 	hex = (int)(mult * b) + (int)(mult * g) * 0X100 +
 	(int)(mult * r) * 0X100 * 0X100;
 	return (hex);
@@ -61,6 +61,68 @@ int			add_color(int hex1, int hex2)
 	return (((int)(r & 0xff) << 16) + ((int)(g & 0xff) << 8) + (int)(b & 0xff));
 }
 
+int		get_texture_sphere(t_env *e, t_obj *obj)
+{
+	double	u;
+	double	v;
+	t_vc	sph_pos;
+
+	sph_pos = vec_norm(vec_mult(vec_sub(vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom), obj->pos), (1/obj->size)));
+	sph_pos = rot_all_axis(sph_pos, obj->rot);
+	u = 0.5 + atan2(sph_pos.z, sph_pos.y) / (2 * M_PI);
+	v = 0.5 - asin(sph_pos.x) / M_PI;
+	return (obj->texture_tab[(int)(v * obj->texture_size[1])][(int)(u * obj->texture_size[0])]);
+}
+
+int		get_lines_sphere(t_env *e, t_obj *obj)
+{
+	double	u;
+	double	v;
+	t_vc	sph_pos;
+
+	sph_pos = vec_norm(vec_mult(vec_sub(vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom), obj->pos), (1/obj->size)));
+	sph_pos = rot_all_axis(sph_pos, obj->rot);
+	u = 0.5 + atan2(sph_pos.z, sph_pos.y) / (2 * M_PI);
+	v = 0.5 - asin(sph_pos.x) / M_PI;
+	if ((int)(12 * v) % 2)
+		return (obj->col);
+	else
+		return (multiply_color(obj->col, 0.2));
+}
+
+int		get_columns_sphere(t_env *e, t_obj *obj)
+{
+	double	u;
+	double	v;
+	t_vc	sph_pos;
+
+	sph_pos = vec_norm(vec_mult(vec_sub(vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom), obj->pos), (1/obj->size)));
+	sph_pos = rot_all_axis(sph_pos, obj->rot);
+	u = 0.5 + atan2(sph_pos.z, sph_pos.y) / (2 * M_PI);
+	v = 0.5 - asin(sph_pos.x) / M_PI;
+	if ((int)(90 * u) % 2)
+		return (obj->col);
+	else
+		return (multiply_color(obj->col, 0.2));
+}
+
+int		checkerboard_plane(t_env *e, t_obj *obj)
+{
+	t_vc	xy_pos;
+	double	teta;
+	int		mod;
+
+	xy_pos = vec_sub(vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom), obj->pos);
+	teta = acos(vec_dot(obj->rot, init_vc(0, 0, 1)));
+	xy_pos = rot_x(xy_pos, (int)(teta * 180 / M_PI));
+	xy_pos = rot_y(xy_pos, (int)(teta * 180 / M_PI));
+	mod = (xy_pos.x * xy_pos.y > 0) ? 1 : 0;
+	if (abs((int)xy_pos.x / 350 - (int)xy_pos.y / 350) % 2 == mod)
+	 	return (obj->col);
+	else
+		return (multiply_color(obj->col, 0.2));
+}
+
 int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_env *e)
 {
 	int		color_diff;
@@ -73,7 +135,12 @@ int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_env *e)
 		ALPHA_SPEC));
 	dot_diff = ratio_limits(e->cost);
 	color_spec = multiply_color(light->col, dot_spec * obj->coef.x);
-	color_diff = multiply_color(obj->col, dot_diff * obj->coef.y);
+	if (obj->type == 3 && SPHERE_TEXTURE == 1)
+		color_diff = multiply_color(get_texture_sphere(e, obj), dot_diff * obj->coef.y);
+	else if (obj->type == 6 && PLANE_CHECKERS == 1)
+		color_diff = multiply_color(checkerboard_plane(e, obj), dot_diff * obj->coef.y);
+	else
+		color_diff = multiply_color(obj->col, dot_diff * obj->coef.y);
 	color_spec = add_color(color_spec, color_diff);
 	color_spec = add_color(color_spec, color);
 	return (color_spec);

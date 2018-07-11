@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/27 15:10:32 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/11 13:52:55 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define WINZ 1000
 # define FOV 1000
 # define TH_NB 50
+# define SPHERE_TEXTURE 1
+# define PLANE_CHECKERS 1
 # define ALPHA_SPEC 100
 
 typedef struct		s_vc
@@ -41,6 +43,8 @@ typedef struct		s_obj
 	double			size;
 	int				id_cut;
 	int				id_obj;
+	int				*texture_size;
+	int				**texture_tab;
 	struct s_obj	*next;
 }					t_obj;
 
@@ -194,6 +198,14 @@ void				exit_message(char *str);
 void				free_split(char **split);
 
 /*
+** TEXTURES
+*/
+
+int					load_texture_to_obj(t_env *e, t_obj *obj);
+int					get_texture_sphere(t_env *e, t_obj *obj);
+int					checkerboard_plane(t_env *e, t_obj *obj);
+
+/*
 ** PARSER
 */
 
@@ -215,7 +227,7 @@ int					create_objects(t_env *e, char **tab_values);
 ** MISCELLANEOUS
 */
 
-void			create_bmp(int *data, unsigned int file_size, t_env *e);
+void			create_bmp_file(t_env *e);
 t_vc			hextorgb(int hex);
 void			stereoscopic(t_env *e);
 void			antialias(t_env *e);

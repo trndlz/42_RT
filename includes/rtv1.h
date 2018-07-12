@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/11 14:33:02 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/12 15:27:48 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ typedef struct		s_env
 	void			*image;
 	char			*file_name;
 	int				*imgstr;
-	int				bpp;
 	int				thread_int;
-	int				s_l;
-	int				endian;
 	int				y;
 	int				z;
 	int				nb_eye;
@@ -118,6 +115,7 @@ double				distance_to_inter(t_env *e, t_obj *obj_list,
 					t_vc ray, t_vc p);
 t_obj				*nearest_node(t_env *e);
 void				compute_scene_vectors(t_env *e, t_obj *tmp);
+int					is_not_cut(t_obj *obj, t_env *e);
 
 /*
 ** MATHS

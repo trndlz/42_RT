@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/11 18:11:46 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/12 15:25:52 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ int		compute_pixel_color(t_env *e, t_obj *tmp)
 	while (llst)
 	{
 		normal_vectors(e, tmp);
-		e->v2 = vec_add(vec_add(vec_mult(e->ray, e->t), e->offset), tmp->pos);
+		e->v2 = vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom);
 		e->lm = vec_norm(vec_sub(llst->pos, e->v2));
 		e->cost = vec_dot(e->n, e->lm);
 		is_lit = shadows(e, tmp, e->obj_link, llst);
@@ -218,7 +218,8 @@ int		recursive_reflection(t_env *e, int old_color, double r)
 
 	if (e->cpt > 0)
 	{
-		e->ray = e->rm;
+		e->ray = vec_mult(vec_norm(e->ray), -1);
+		e->ray = vec_sub(vec_mult(e->n, 2 * vec_dot(e->ray, e->n)), e->ray);
 		tmp = nearest_node2(e);
 		if (tmp)
 		{
@@ -227,7 +228,7 @@ int		recursive_reflection(t_env *e, int old_color, double r)
 			new_color = add_color(multiply_color(new_color, r), multiply_color(old_color, (1 - r)));
 			e->cpt--;
 			if (e->cpt)
-				new_color = recursive_reflection(e, new_color, r);
+				new_color = recursive_reflection(e, new_color, tmp->r);
 			return (new_color);
 		}
 	}
@@ -247,7 +248,7 @@ void	*scene_plot(void *arg)
 		e->y = -1;
 		while (++(e->y) < WINY)
 		{
-			e->cpt = 1;
+			e->cpt = 6;
 			e->ray = create_ray2(e->y, e->z, e->eye_rot);
 			tmp = nearest_node(e);
 			if (tmp)

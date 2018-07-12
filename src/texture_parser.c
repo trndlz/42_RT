@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 18:25:04 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/10 17:22:55 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/12 15:28:02 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,17 @@ int		load_texture_to_obj(t_env *e, t_obj *obj)
 	void	*mlx;
 	int		*imgstr;
 	int		*size;
+	int 	bpp;
+	int 	s_l;
+	int 	endian;
 
 	if (!(obj->texture_size = get_xpm_size("src/earth.xpm")))
 		return (0);
+	e += 0;
 	size = get_xpm_size("src/earth.xpm");
 	mlx = mlx_init();
 	image = mlx_xpm_file_to_image(mlx, "src/earth.xpm", &size[0], &size[1]);
-	imgstr = (int *)mlx_get_data_addr(image, &e->bpp, &e->s_l, &e->endian);
+	imgstr = (int *)mlx_get_data_addr(image, &bpp, &s_l, &endian);
 	if (!(obj->texture_tab = create_color_tab(imgstr, obj->texture_size)))
 		return (0);
 	return (1);

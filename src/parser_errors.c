@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 21:11:50 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/25 11:24:54 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/11 10:51:57 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ int		check_value(char **str)
 		if ((ft_isnumber(str[i]) && i > 0) && (ft_isnumber(str[i]) && i < 7))
 			return (5);
 	}
-	if ((type > 2 && i != 13) || (type == 1 && i != 8) || (type == 2 && i != 7))
+	if ((type > 2 && i != 14) || (type == 1 && i != 8) || (type == 2 && i != 7))
 		return (1);
 	if (type > 2)
 	{
 		if (ft_atof(str[9]) == -1.0 || ft_atof(str[10]) == -1.0
-		|| ft_atof(str[11]) == -1.0)
+		|| ft_atof(str[11]) == -1.0 || ft_atof(str[13]) == -1.0)
 			return (7);
 		if (ft_iscolor(str[7]))
 			return (3);

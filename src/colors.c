@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:41:47 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/09 14:02:11 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/11 18:11:00 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ int			multiply_color(int hex, double mult)
 
 	if (mult < 0)
 		mult = 0;
-	b = color_limits(hex % 0X100);
-	g = color_limits((hex / 0X100) % 0X100);
-	r = color_limits((hex / (0X100 * 0X100)) % 0X100);
-	hex = (int)(mult * b) + (int)(mult * g) * 0X100 +
-	(int)(mult * r) * 0X100 * 0X100;
+	b = color_limits(hex % 0x100);
+	g = color_limits((hex / 0x100) % 0x100);
+	r = color_limits((hex / (0x100 * 0x100)) % 0x100);
+	hex = (int)(mult * b) + (int)(mult * g) * 0x100 +
+	(int)(mult * r) * 0x100 * 0x100;
 	return (hex);
 }
 
@@ -54,10 +54,10 @@ int			add_color(int hex1, int hex2)
 	int g;
 	int b;
 
-	r = color_limits((hex1 / (0X100 * 0X100)) % 0X100
-		+ (hex2 / (0X100 * 0X100)) % 0X100);
-	g = color_limits((hex1 / 0X100) % 0X100 + (hex2 / 0X100) % 0X100);
-	b = color_limits(hex1 % 0X100 + hex2 % 0X100);
+	r = color_limits((hex1 / (0x100 * 0x100)) % 0x100
+		+ (hex2 / (0x100 * 0x100)) % 0x100);
+	g = color_limits((hex1 / 0x100) % 0x100 + (hex2 / 0x100) % 0x100);
+	b = color_limits(hex1 % 0x100 + hex2 % 0x100);
 	return (((int)(r & 0xff) << 16) + ((int)(g & 0xff) << 8) + (int)(b & 0xff));
 }
 
@@ -87,7 +87,7 @@ int		get_lines_sphere(t_env *e, t_obj *obj)
 	if ((int)(12 * v) % 2)
 		return (obj->col);
 	else
-		return (multiply_color(obj->col, 0.2));
+		return (multiply_color(obj->col, 0.6));
 }
 
 int		get_columns_sphere(t_env *e, t_obj *obj)
@@ -103,7 +103,7 @@ int		get_columns_sphere(t_env *e, t_obj *obj)
 	if ((int)(90 * u) % 2)
 		return (obj->col);
 	else
-		return (multiply_color(obj->col, 0.2));
+		return (multiply_color(obj->col, 0.6));
 }
 
 int		checkerboard_plane(t_env *e, t_obj *obj)
@@ -120,7 +120,7 @@ int		checkerboard_plane(t_env *e, t_obj *obj)
 	if (abs((int)xy_pos.x / 350 - (int)xy_pos.y / 350) % 2 == mod)
 	 	return (obj->col);
 	else
-		return (multiply_color(obj->col, 0.2));
+		return (multiply_color(obj->col, 0.6));
 }
 
 int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_env *e)
@@ -131,7 +131,7 @@ int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_env *e)
 	double	dot_diff;
 
 	e->rm = vec_norm(vec_sub(vec_mult(e->n, 2 * e->cost), e->lm));
-	dot_spec = ratio_limits(pow(vec_dot(e->rm, vec_mult(e->v2, -1.0)),
+	dot_spec = ratio_limits(pow(vec_dot(e->rm, vec_norm(vec_mult(e->v2, -1.0))),
 		ALPHA_SPEC));
 	dot_diff = ratio_limits(e->cost);
 	color_spec = multiply_color(light->col, dot_spec * obj->coef.x);

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/09 14:34:55 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/11 14:33:02 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define WINZ 1000
 # define FOV 1000
 # define TH_NB 50
-# define SPHERE_TEXTURE 1
+# define SPHERE_TEXTURE 0
 # define PLANE_CHECKERS 1
 # define ALPHA_SPEC 100
 
@@ -33,6 +33,14 @@ typedef struct		s_vc
 	double			z;
 }					t_vc;
 
+typedef struct		s_ray
+{
+	t_vc			o;
+	t_vc			dir;
+	int				type;
+}					t_ray;
+
+
 typedef struct		s_obj
 {
 	int				type;
@@ -41,10 +49,13 @@ typedef struct		s_obj
 	t_vc			coef;
 	int				col;
 	double			size;
+	double			r;
 	int				id_cut;
 	int				id_obj;
 	int				*texture_size;
 	int				**texture_tab;
+	t_vc			lm;
+	t_vc			rm;
 	struct s_obj	*next;
 }					t_obj;
 
@@ -64,8 +75,10 @@ typedef struct		s_env
 	int				nb_eye;
 	int				filter;
 	int				id;
+	int				cpt;
 	double			smax;
 	double			t;
+	double			t_p;
 	double			t1;
 	double			t2;
 	double			s;
@@ -75,6 +88,8 @@ typedef struct		s_env
 	double			cost;
 	t_vc			tmp;
 	t_vc			ray;
+	t_vc			ray_r;
+	t_vc			int_pt;
 	t_vc			eye_lookfrom;
 	t_vc			eye_rot;
 	t_vc			plan;
@@ -134,7 +149,7 @@ double				inter_plane(t_vc ray, t_vc offset, t_obj *obj);
 double				inter_cyl(t_env *e, t_obj *obj, t_vc ray, t_vc offset);
 double				inter_sph(t_env *e, t_obj *obj, t_vc ray, t_vc offset);
 double				inter_disc(t_vc ray, t_vc offset, t_env *e, t_obj *obj);
-double				quadratic_solver(t_env *e);
+double				quadratic_solver(t_env *e, t_vc abc);
 
 /*
 ** KEYBOARD / MOUSE
@@ -163,7 +178,7 @@ int					add_color(int hex1, int hex2);
 int					specular_diffuse(int color, t_obj *light,
 					t_obj *obj, t_env *e);
 void				global_filter(t_env *e, int filter);
-int			color_limits(int col);
+int					color_limits(int col);
 
 
 /*

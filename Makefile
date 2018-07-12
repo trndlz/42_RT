@@ -6,7 +6,7 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/07/09 14:07:52 by tmervin          ###   ########.fr        #
+#    Updated: 2018/07/10 12:41:37 by tmervin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ ifeq ($(UNAME_S), Darwin)
 	MINILIBX	:= -L ./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit
 endif
 
-CC			:= gcc -Werror -Wall -Wextra
+CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
 OBJ_NAME	:= $(SRC_NAME:.c=.o)
 
 SRC			:= $(addprefix $(SRC_PATH)/, $(SRC_NAME))

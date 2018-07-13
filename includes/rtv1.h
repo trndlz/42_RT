@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/12 15:27:48 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/13 15:15:19 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef struct		s_vc
 
 typedef struct		s_ray
 {
-	t_vc			o;
-	t_vc			dir;
+	t_vc			origin;
+	t_vc			direction;
 	int				type;
 }					t_ray;
 
@@ -59,6 +59,22 @@ typedef struct		s_obj
 	struct s_obj	*next;
 }					t_obj;
 
+typedef struct		s_hit_rec
+{
+	double			cost;
+	double			t;
+	double			t1;
+	double			t2;
+	double			smax;
+	int				nr;
+	t_vc			n;
+	t_vc			s;
+	t_vc			v2;
+	t_vc			lm;
+	t_vc			hit_inter;
+	t_obj			*hit_obj;
+}					t_hit_rec;
+
 typedef struct		s_env
 {
 	void			*mlx;
@@ -72,31 +88,8 @@ typedef struct		s_env
 	int				nb_eye;
 	int				filter;
 	int				id;
-	int				cpt;
-	double			smax;
-	double			t;
-	double			t_p;
-	double			t1;
-	double			t2;
-	double			s;
-	double			a;
-	double			b;
-	double			c;
-	double			cost;
-	t_vc			tmp;
-	t_vc			ray;
-	t_vc			ray_r;
-	t_vc			int_pt;
 	t_vc			eye_lookfrom;
 	t_vc			eye_rot;
-	t_vc			plan;
-	t_obj			*light;
-	t_vc			n;
-	t_vc			lm;
-	t_vc			rm;
-	t_vc			v;
-	t_vc			v2;
-	t_vc			offset;
 	pthread_t		pth[TH_NB];
 	t_obj			*obj_link;
 	t_obj			*light_link;
@@ -110,10 +103,9 @@ typedef struct		s_env
 int					create_image(t_env *e);
 void				draw_point(t_env *e, int x, int y, unsigned int color);
 void				*scene_plot(void *arg);
-void				create_ray(t_env *e);
-double				distance_to_inter(t_env *e, t_obj *obj_list,
-					t_vc ray, t_vc p);
-t_obj				*nearest_node(t_env *e);
+t_ray				create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin);
+double				distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_vc ray, t_vc p);
+char				nearest_node(t_env *e, t_ray ray, t_hit_rec *hit);
 void				compute_scene_vectors(t_env *e, t_obj *tmp);
 int					is_not_cut(t_obj *obj, t_env *e);
 
@@ -142,12 +134,12 @@ double				vec_dot(t_vc v1, t_vc v2);
 ** SHAPES INTERSECTIONS
 */
 
-double				inter_cone(t_env *e, t_obj *obj, t_vc ray, t_vc offset);
+double				inter_sph(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset);
+double				inter_cone(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset);
 double				inter_plane(t_vc ray, t_vc offset, t_obj *obj);
-double				inter_cyl(t_env *e, t_obj *obj, t_vc ray, t_vc offset);
-double				inter_sph(t_env *e, t_obj *obj, t_vc ray, t_vc offset);
-double				inter_disc(t_vc ray, t_vc offset, t_env *e, t_obj *obj);
-double				quadratic_solver(t_env *e, t_vc abc);
+double				inter_cyl(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset);
+double				quadratic_solver(t_hit_rec *hit, t_vc abc);
+
 
 /*
 ** KEYBOARD / MOUSE
@@ -162,9 +154,8 @@ int					deal_mouse(int k, int y, int z, t_env *e);
 ** LIGHTING
 */
 
-void				normal_vectors(t_env *e, t_obj *obj);
-int					shadows(t_env *e, t_obj *tmp, t_obj *olst,
-					t_obj *light_obj);
+t_vc				normal_vectors(t_hit_rec *hit, t_obj *obj, t_ray ray);
+int					shadows(t_env *e, t_hit_rec *hit, t_obj *light_obj, t_ray ray);
 
 /*
 ** COLORS
@@ -173,8 +164,7 @@ int					shadows(t_env *e, t_obj *tmp, t_obj *olst,
 unsigned long		rgb_to_hexa(t_obj *obj, t_env *e);
 int					multiply_color(int hex, double mult);
 int					add_color(int hex1, int hex2);
-int					specular_diffuse(int color, t_obj *light,
-					t_obj *obj, t_env *e);
+int					specular_diffuse(int color, t_obj *light, t_obj *obj, t_hit_rec *hit, t_ray ray);
 void				global_filter(t_env *e, int filter);
 int					color_limits(int col);
 
@@ -213,9 +203,11 @@ void				free_split(char **split);
 ** TEXTURES
 */
 
-int					load_texture_to_obj(t_env *e, t_obj *obj);
-int					get_texture_sphere(t_env *e, t_obj *obj);
-int					checkerboard_plane(t_env *e, t_obj *obj);
+int					load_texture_to_obj(t_obj *obj);
+int					checkerboard_plane(t_hit_rec *hit, t_ray ray);
+int					get_columns_sphere(t_hit_rec *hit, t_ray ray);
+int					get_lines_sphere(t_hit_rec *hit, t_ray ray);
+int					get_texture_sphere(t_hit_rec *hit, t_ray ray);
 
 /*
 ** PARSER
@@ -239,10 +231,10 @@ int					create_objects(t_env *e, char **tab_values);
 ** MISCELLANEOUS
 */
 
-void			create_bmp_file(t_env *e);
-t_vc			hextorgb(int hex);
-void			stereoscopic(t_env *e);
-void			antialias(t_env *e);
+void				create_bmp_file(t_env *e);
+t_vc				hextorgb(int hex);
+void				stereoscopic(t_env *e);
+void				antialias(t_env *e);
 
 
 #endif

@@ -6,43 +6,36 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/12 15:25:52 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/13 15:14:44 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-void	create_ray(t_env *e)
+t_ray	create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
 {
-	e->ray.x = (double)(FOV);
-	e->ray.y = (double)(WINY / 2 - e->y);
-	e->ray.z = (double)(WINZ / 2 - e->z);
-	e->ray = rot_all_axis(e->ray, e->eye_rot);
-}
+	t_ray ray;
 
-t_vc	create_ray2(int y, int z, t_vc eye_rot)
-{
-	t_vc ray;
-
-	ray.x = (double)(FOV);
-	ray.y = (double)(WINY / 2 - y);
-	ray.z = (double)(WINZ / 2 - z);
-	ray = rot_all_axis(ray, eye_rot);
+	ray.direction.x = (double)(FOV);
+	ray.direction.y = (double)(WINY / 2 - y);
+	ray.direction.z = (double)(WINZ / 2 - z);
+	ray.direction = rot_all_axis(ray.direction, eye_rot);
+	ray.origin = ray_origin;
 	return (ray);
 }
 
-double	distance_to_inter(t_env *e, t_obj *obj_list, t_vc ray, t_vc p)
+double	distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_vc ray, t_vc p)
 {
 	double d;
 
 	d = -1.0;
-	d = (obj_list->type == 3) ? inter_sph(e, obj_list, ray, p) : d;
-	d = (obj_list->type == 4) ? inter_cyl(e, obj_list, ray, p) : d;
-	d = (obj_list->type == 5) ? inter_cone(e, obj_list, ray, p) : d;
+	d = (obj_list->type == 3) ? inter_sph(hit, obj_list, ray, p) : d;
+	d = (obj_list->type == 4) ? inter_cyl(hit, obj_list, ray, p) : d;
+	d = (obj_list->type == 5) ? inter_cone(hit, obj_list, ray, p) : d;
 	d = (obj_list->type == 6) ? inter_plane(ray, p, obj_list) : d;
-	d = (obj_list->type == 7) ? inter_disc(ray, p, e, obj_list) : d;
 	return (d);
 }
+
 
 int		is_not_cut(t_obj *obj, t_env *e)
 {
@@ -58,177 +51,131 @@ int		is_not_cut(t_obj *obj, t_env *e)
 	return (1);
 }
 
-t_obj	*node_no_cutter(t_env *e, t_obj *obj, t_obj *near_node)
+char	hit_not_cut(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {
 	double	t;
+	t_vc	offset;
+	char	hit_anything;
 
-	e->offset = vec_sub(e->eye_lookfrom, obj->pos);
-	t = distance_to_inter(e, obj, e->ray, e->offset);
-	if (t > 0.000001 && t < e->t)
+	hit_anything = 0;
+	offset = vec_sub(ray.origin, obj->pos);
+	t = distance_to_inter(hit, obj, ray.direction, offset);
+	if (t > 0.000001 && t < hit->t)
 	{
-		e->t = t;
-		return (obj);
+		hit->t = t;
+		hit->hit_obj = obj;
+		hit_anything = 1;
 	}
-	return (near_node);
+	return (hit_anything);
 }
 
-t_obj	*node_no_cutter2(t_env *e, t_obj *obj, t_obj *near_node)
-{
-	double	t;
-
-	e->offset = vec_sub(e->int_pt, obj->pos);
-	t = distance_to_inter(e, obj, e->ray, e->offset);
-	if (t > 0.000001 && t < e->t)
-	{
-
-		e->t = t;
-		return (obj);
-	}
-	return (near_node);
-}
-
-t_obj	*node_cutter(t_env *e, t_obj *obj, t_obj *near_node)
+char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 {
 	t_obj	*clst;
 	double	t;
 	double	t_cut;
 	t_vc	inter;
+	char	hit_anything;
 
+	hit_anything = 0;
 	clst = e->cut_link;
 	while (clst)
 	{
 		if (clst->id_cut == obj->id_obj)
 		{
-			t_cut = distance_to_inter(e, clst, e->ray, vec_sub(e->eye_lookfrom, clst->pos));
-			t = distance_to_inter(e, obj, e->ray, vec_sub(e->eye_lookfrom, obj->pos));
-			inter = vec_sub(vec_add(vec_mult(e->ray, t), e->eye_lookfrom), clst->pos);
-			if (t > 0 && t < e->t && vec_x(inter, clst->rot) > 0)
+			t_cut = distance_to_inter(hit, clst, ray.direction, vec_sub(ray.origin, clst->pos));
+			t = distance_to_inter(hit, obj, ray.direction, vec_sub(ray.origin, obj->pos));
+			inter = vec_sub(vec_add(vec_mult(ray.direction, t), ray.origin), clst->pos);
+			if (t > 0 && t < hit->t && vec_x(inter, clst->rot) > 0)
 			{
-				e->t = t;
-				return (obj);
+				hit->t = t;
+				hit->hit_obj = obj;
+				hit_anything = 1;
 			}
-			if (t > 0 && t_cut < e->t && e->t1 < t_cut && e->t2 > t_cut)
+			if (t > 0 && t_cut < hit->t && hit->t1 < t_cut && hit->t2 > t_cut)
 			{
-				e->t = t_cut;
-				return (clst);
+				hit->t = t_cut;
+				hit->hit_obj = clst;
+				hit_anything = 1;
 			}
 		}
 		clst = clst->next;
 	}
-	return (near_node);
+	return (hit_anything);
 }
 
-t_obj	*nearest_node(t_env *e)
+char		nearest_node(t_env *e, t_ray ray, t_hit_rec *hit)
 {
-	t_obj	*near_node;
 	t_obj	*olst;
+	char	hit_anything;
 
-	e->t = 999999999;
-	near_node = NULL;
+	hit_anything = 0;
+	hit->hit_obj = NULL;
+	hit->t = 999999999;
 	olst = e->obj_link;
 	while (olst)
 	{
 		if (is_not_cut(olst, e))
-			near_node = node_no_cutter(e, olst, near_node);
+		{
+			if (hit_not_cut(hit, olst, ray))
+				hit_anything = 1;
+		}
 		else
-			near_node = node_cutter(e, olst, near_node);
+		{
+			if (hit_cut(hit, e, olst, ray))
+				hit_anything = 1;
+		}
 		olst = olst->next;
 	}
-	return (near_node);
+	return (hit_anything);
 }
 
-t_obj	*nearest_node2(t_env *e)
-{
-	t_obj	*near_node;
-	t_obj	*olst;
-
-	e->t = 999999999;
-	near_node = NULL;
-	olst = e->obj_link;
-	while (olst)
-	{
-		if (is_not_cut(olst, e))
-			near_node = node_no_cutter2(e, olst, near_node);
-		else
-			near_node = node_cutter(e, olst, near_node);
-		olst = olst->next;
-	}
-	return (near_node);
-}
-
-void	compute_scene_vectors(t_env *e, t_obj *tmp)
+int		compute_pixel_color(t_env *e, t_ray ray, t_hit_rec *hit)
 {
 	t_obj	*llst;
 	int		color;
 	int		is_lit;
 
 	llst = e->light_link;
-	if (tmp->type == 3 && SPHERE_TEXTURE == 1)
-		color = multiply_color(get_texture_sphere(e, tmp), tmp->coef.z);
-	else if (tmp->type == 6 && PLANE_CHECKERS == 1)
-		color = multiply_color(checkerboard_plane(e, tmp), tmp->coef.z);
+	if (hit->hit_obj->type == 3 && SPHERE_TEXTURE == 1)
+		color = multiply_color(get_texture_sphere(hit, ray), hit->hit_obj->coef.z);
+	else if (hit->hit_obj->type == 6 && PLANE_CHECKERS == 1)
+		color = multiply_color(checkerboard_plane(hit, ray), hit->hit_obj->coef.z);
 	else
-		color = multiply_color(tmp->col, tmp->coef.z);
-	draw_point(e, e->y, e->z, color);
+		color = multiply_color(hit->hit_obj->col, hit->hit_obj->coef.z);
 	while (llst)
 	{
-		normal_vectors(e, tmp);
-		e->v2 = vec_add(vec_add(vec_mult(e->ray, e->t), e->offset), tmp->pos);
-		e->lm = vec_norm(vec_sub(llst->pos, e->v2));
-		e->cost = vec_dot(e->n, e->lm);
-		is_lit = shadows(e, tmp, e->obj_link, llst);
+		hit->n = normal_vectors(hit, hit->hit_obj, ray);
+		hit->v2 = vec_add(vec_mult(ray.direction, hit->t), ray.origin);
+		hit->lm = vec_norm(vec_sub(llst->pos, hit->v2));
+		hit->cost = vec_dot(hit->n, hit->lm);
+		is_lit = shadows(e, hit, llst, ray);
 		if (is_lit)
-			color = specular_diffuse(color, llst, tmp, e);
-		draw_point(e, e->y, e->z, color);
-		llst = llst->next;
-	}
-}
-
-int		compute_pixel_color(t_env *e, t_obj *tmp)
-{
-	t_obj	*llst;
-	int		color;
-	int		is_lit;
-
-	llst = e->light_link;
-	if (tmp->type == 3 && SPHERE_TEXTURE == 1)
-		color = multiply_color(get_texture_sphere(e, tmp), tmp->coef.z);
-	else if (tmp->type == 6 && PLANE_CHECKERS == 1)
-		color = multiply_color(checkerboard_plane(e, tmp), tmp->coef.z);
-	else
-		color = multiply_color(tmp->col, tmp->coef.z);
-	while (llst)
-	{
-		normal_vectors(e, tmp);
-		e->v2 = vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom);
-		e->lm = vec_norm(vec_sub(llst->pos, e->v2));
-		e->cost = vec_dot(e->n, e->lm);
-		is_lit = shadows(e, tmp, e->obj_link, llst);
-		if (is_lit)
-			color = specular_diffuse(color, llst, tmp, e);
+			color = specular_diffuse(color, llst, hit->hit_obj, hit, ray);
 		llst = llst->next;
 	}
 	return (color);
 }
 
-int		recursive_reflection(t_env *e, int old_color, double r)
+int		recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 {
-	t_obj		*tmp;
+	t_ray		r_ray;
 	int			new_color;
+	double		r;
 
-	if (e->cpt > 0)
+	if (hit->nr > 0)
 	{
-		e->ray = vec_mult(vec_norm(e->ray), -1);
-		e->ray = vec_sub(vec_mult(e->n, 2 * vec_dot(e->ray, e->n)), e->ray);
-		tmp = nearest_node2(e);
-		if (tmp)
+		r = hit->hit_obj->r;
+		r_ray.direction = vec_mult(vec_norm(ray.direction), -1);
+		r_ray.direction = vec_sub(vec_mult(hit->n, 2 * vec_dot(r_ray.direction, hit->n)), r_ray.direction);
+		r_ray.origin = vec_add(vec_mult(ray.direction, hit->t), ray.origin);
+		if (nearest_node(e, r_ray, hit))
 		{
-			e->offset = vec_sub(e->int_pt, tmp->pos);
-			new_color = compute_pixel_color(e, tmp);
+			new_color = compute_pixel_color(e, r_ray, hit);
 			new_color = add_color(multiply_color(new_color, r), multiply_color(old_color, (1 - r)));
-			e->cpt--;
-			if (e->cpt)
-				new_color = recursive_reflection(e, new_color, tmp->r);
+			hit->nr--;
+			if (hit->nr)
+				new_color = recursive_reflection(e, new_color, r_ray, hit);
 			return (new_color);
 		}
 	}
@@ -237,9 +184,10 @@ int		recursive_reflection(t_env *e, int old_color, double r)
 
 void	*scene_plot(void *arg)
 {
-	t_obj	*tmp;
-	t_env	*e;
-	int		px_color;
+	t_env		*e;
+	int			px_color;
+	t_ray		ray;
+	t_hit_rec	hit_rec;
 
 	e = (t_env *)arg;
 	e->z = (e->thread_int) * WINZ / TH_NB - 1;
@@ -248,16 +196,14 @@ void	*scene_plot(void *arg)
 		e->y = -1;
 		while (++(e->y) < WINY)
 		{
-			e->cpt = 6;
-			e->ray = create_ray2(e->y, e->z, e->eye_rot);
-			tmp = nearest_node(e);
-			if (tmp)
+			hit_rec.nr = 1;
+			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
+			if (nearest_node(e, ray, &hit_rec))
 			{
-				e->int_pt = vec_add(vec_mult(e->ray, e->t), e->eye_lookfrom);
-				e->offset = vec_sub(e->eye_lookfrom, tmp->pos);
-				px_color = compute_pixel_color(e, tmp);
-				if (tmp->r > 0)
-					px_color = recursive_reflection(e, px_color, tmp->r);
+				hit_rec.hit_inter = vec_add(vec_mult(ray.direction, hit_rec.t), ray.origin);
+				px_color = compute_pixel_color(e, ray, &hit_rec);
+				if (hit_rec.hit_obj->r > 0)
+					px_color = recursive_reflection(e, px_color, ray, &hit_rec);
 				draw_point(e, e->y, e->z, px_color);
 			}
 		}

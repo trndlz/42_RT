@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:55:28 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/12 15:58:58 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/13 15:19:45 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		create_objects(t_env *e, char **tab_values)
 	{
 		if (tmp->type == 3 && SPHERE_TEXTURE == 1)
 		{
-			if (!(load_texture_to_obj(e, tmp)))
+			if (!(load_texture_to_obj(tmp)))
 				return (0);
 		}
 		obj_add(&e->obj_link, tmp);

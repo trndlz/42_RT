@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 18:25:04 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/12 15:28:02 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/12 15:31:12 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		**create_color_tab(int *imgstr, int *size)
 	return (color_tab);
 }
 
-int		load_texture_to_obj(t_env *e, t_obj *obj)
+int		load_texture_to_obj(t_obj *obj)
 {
 	void	*image;
 	void	*mlx;
@@ -94,7 +94,6 @@ int		load_texture_to_obj(t_env *e, t_obj *obj)
 
 	if (!(obj->texture_size = get_xpm_size("src/earth.xpm")))
 		return (0);
-	e += 0;
 	size = get_xpm_size("src/earth.xpm");
 	mlx = mlx_init();
 	image = mlx_xpm_file_to_image(mlx, "src/earth.xpm", &size[0], &size[1]);

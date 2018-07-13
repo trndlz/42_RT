@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 21:11:50 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/11 10:51:57 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/12 15:59:35 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		check_value(char **str)
 		if ((ft_isnumber(str[i]) && i > 0) && (ft_isnumber(str[i]) && i < 7))
 			return (5);
 	}
-	if ((type > 2 && i != 14) || (type == 1 && i != 8) || (type == 2 && i != 7))
+	if ((type > 2 && i != 15) || (type == 1 && i != 8) || (type == 2 && i != 7))
 		return (1);
 	if (type > 2)
 	{

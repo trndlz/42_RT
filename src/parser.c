@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:55:28 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/11 14:42:05 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/12 15:58:58 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_obj	*attribute_object(char **tab_values, t_env *e)
 	scene->coef = init_vc(ft_atof(tab_values[9]),
 		ft_atof(tab_values[10]), ft_atof(tab_values[11]));
 	scene->r = ft_atof(tab_values[13]);
+	scene->tr = ft_atof(tab_values[14]);
 	return (scene);
 }
 

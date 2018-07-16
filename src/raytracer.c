@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/16 13:19:43 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/16 13:26:31 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,8 @@ void	*scene_plot(void *arg)
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))
 			{
-				hit_rec.hit_inter = vec_add(vec_mult(ray.direction, hit_rec.t), ray.origin);
+				hit_rec.hit_inter = vec_add(vec_mult(ray.direction,
+					hit_rec.t), ray.origin);
 				px_color = compute_pixel_color(e, ray, &hit_rec);
 				if (hit_rec.hit_obj->r > 0)
 					px_color = recursive_reflection(e, px_color, ray, &hit_rec);

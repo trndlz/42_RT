@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/13 15:15:19 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/16 11:34:44 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 # define FOV 1000
 # define TH_NB 50
 # define SPHERE_TEXTURE 0
-# define PLANE_CHECKERS 1
+# define PLANE_CHECKERS 0
 # define ALPHA_SPEC 100
+# define SHADOW_BIAS 0.001
 
 typedef struct		s_vc
 {
@@ -50,6 +51,7 @@ typedef struct		s_obj
 	int				col;
 	double			size;
 	double			r;
+	double			tr;
 	int				id_cut;
 	int				id_obj;
 	int				*texture_size;

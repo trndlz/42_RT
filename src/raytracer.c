@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/13 15:14:44 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/16 13:19:43 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ double	distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_vc ray, t_vc p)
 	d = (obj_list->type == 6) ? inter_plane(ray, p, obj_list) : d;
 	return (d);
 }
-
 
 int		is_not_cut(t_obj *obj, t_env *e)
 {
@@ -83,9 +82,12 @@ char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 	{
 		if (clst->id_cut == obj->id_obj)
 		{
-			t_cut = distance_to_inter(hit, clst, ray.direction, vec_sub(ray.origin, clst->pos));
-			t = distance_to_inter(hit, obj, ray.direction, vec_sub(ray.origin, obj->pos));
-			inter = vec_sub(vec_add(vec_mult(ray.direction, t), ray.origin), clst->pos);
+			t_cut = distance_to_inter(hit, clst, ray.direction,
+				vec_sub(ray.origin, clst->pos));
+			t = distance_to_inter(hit, obj, ray.direction,
+				vec_sub(ray.origin, obj->pos));
+			inter = vec_sub(vec_add(vec_mult(ray.direction, t),
+				ray.origin), clst->pos);
 			if (t > 0 && t < hit->t && vec_x(inter, clst->rot) > 0)
 			{
 				hit->t = t;
@@ -138,9 +140,11 @@ int		compute_pixel_color(t_env *e, t_ray ray, t_hit_rec *hit)
 
 	llst = e->light_link;
 	if (hit->hit_obj->type == 3 && SPHERE_TEXTURE == 1)
-		color = multiply_color(get_texture_sphere(hit, ray), hit->hit_obj->coef.z);
+		color = multiply_color(get_texture_sphere(hit, ray),
+		hit->hit_obj->coef.z);
 	else if (hit->hit_obj->type == 6 && PLANE_CHECKERS == 1)
-		color = multiply_color(checkerboard_plane(hit, ray), hit->hit_obj->coef.z);
+		color = multiply_color(checkerboard_plane(hit, ray),
+		hit->hit_obj->coef.z);
 	else
 		color = multiply_color(hit->hit_obj->col, hit->hit_obj->coef.z);
 	while (llst)
@@ -167,17 +171,71 @@ int		recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 	{
 		r = hit->hit_obj->r;
 		r_ray.direction = vec_mult(vec_norm(ray.direction), -1);
-		r_ray.direction = vec_sub(vec_mult(hit->n, 2 * vec_dot(r_ray.direction, hit->n)), r_ray.direction);
+		r_ray.direction = vec_sub(vec_mult(hit->n, 2 *
+			vec_dot(r_ray.direction, hit->n)), r_ray.direction);
 		r_ray.origin = vec_add(vec_mult(ray.direction, hit->t), ray.origin);
 		if (nearest_node(e, r_ray, hit))
 		{
 			new_color = compute_pixel_color(e, r_ray, hit);
-			new_color = add_color(multiply_color(new_color, r), multiply_color(old_color, (1 - r)));
+			new_color = add_color(multiply_color(new_color, r),
+			multiply_color(old_color, (1 - r)));
 			hit->nr--;
 			if (hit->nr)
 				new_color = recursive_reflection(e, new_color, r_ray, hit);
 			return (new_color);
 		}
+	}
+	return (old_color);
+}
+
+char	second_nearest_node(t_env *e, t_ray ray, t_hit_rec *hit, t_hit_rec *new_origin)
+{
+	t_obj	*olst;
+	char	hit_anything;
+
+	hit_anything = 0;
+	hit->hit_obj = NULL;
+	hit->t = 999999999;
+	olst = e->obj_link;
+	while (olst)
+	{
+		if (olst != new_origin->hit_obj)
+		{
+			if (is_not_cut(olst, e))
+			{
+				if (hit_not_cut(hit, olst, ray))
+					hit_anything = 1;
+			}
+			else
+			{
+				if (hit_cut(hit, e, olst, ray))
+					hit_anything = 1;
+			}
+		}
+		olst = olst->next;
+	}
+	return (hit_anything);
+}
+
+int		transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
+{
+	t_ray		r_ray;
+	int			new_color;
+	t_hit_rec	*new_origin;
+	double		tr;
+
+	new_origin = hit;
+	tr = hit->hit_obj->tr;
+	r_ray = ray;
+	r_ray.direction = vec_sub(new_origin->hit_inter, ray.origin);
+	r_ray.origin = vec_sub(new_origin->hit_inter,
+		vec_mult(new_origin->n, SHADOW_BIAS));
+	if (second_nearest_node(e, r_ray, hit, new_origin))
+	{
+		new_color = compute_pixel_color(e, r_ray, hit);
+		new_color = add_color(multiply_color(new_color, tr),
+		multiply_color(old_color, (1 - tr)));
+		return (new_color);
 	}
 	return (old_color);
 }
@@ -204,6 +262,8 @@ void	*scene_plot(void *arg)
 				px_color = compute_pixel_color(e, ray, &hit_rec);
 				if (hit_rec.hit_obj->r > 0)
 					px_color = recursive_reflection(e, px_color, ray, &hit_rec);
+				if (hit_rec.hit_obj->tr > 0)
+					px_color = transparency(e, px_color, ray, &hit_rec);
 				draw_point(e, e->y, e->z, px_color);
 			}
 		}

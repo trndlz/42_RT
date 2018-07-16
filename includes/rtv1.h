@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/16 11:34:44 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/16 15:15:47 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct		s_env
 	t_vc			eye_lookfrom;
 	t_vc			eye_rot;
 	pthread_t		pth[TH_NB];
+	pthread_mutex_t	mutex;
 	t_obj			*obj_link;
 	t_obj			*light_link;
 	t_obj			*cut_link;
@@ -233,7 +234,7 @@ int					create_objects(t_env *e, char **tab_values);
 ** MISCELLANEOUS
 */
 
-void				create_bmp_file(t_env *e);
+void				create_bmp_file(int *imgstr);
 t_vc				hextorgb(int hex);
 void				stereoscopic(t_env *e);
 void				antialias(t_env *e);

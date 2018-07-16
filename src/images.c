@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 13:37:05 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/12 15:26:19 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/16 15:22:14 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		create_image(t_env *e)
 			return (0);
 	multi_threading(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->image, 0, 0);
-	mlx_destroy_image(e->mlx, e->image);
+	// mlx_destroy_image(e->mlx, e->image);
 	return (1);
 }
 
@@ -52,6 +52,8 @@ void		draw_point(t_env *e, int x, int y, unsigned int color)
 	int i;
 
 	i = (x + (y * WINZ));
+	pthread_mutex_lock(&(e->mutex));
 	if (i >= 0 && i < (WINY * WINZ))
 		e->imgstr[i] = color;
+	pthread_mutex_unlock(&(e->mutex));
 }

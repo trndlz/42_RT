@@ -24,7 +24,7 @@ char		get_lines_cylinder(t_hit_rec *hit, t_ray ray)
 	double	x;
 	t_vc	inter;
 
-	l = 80;
+	l = 200;
 	// l parametre a intégrer dans les propriétés objets (taille texture)
 	inter = inter_position(ray, hit->t);
 	p = vec_mod(vec_sub(vec_sub(inter, vec_mult(hit->n, hit->hit_obj->size)),
@@ -50,7 +50,7 @@ char		get_lines_cone(t_hit_rec *hit, t_ray ray)
 	double	r;
 	t_vc	inter;
 
-	l = 720;
+	l = 100;
 	// l parametre a intégrer dans les propriétés objets (taille texture)
 	inter = inter_position(ray, hit->t);
 	r = vec_mod(vec_sub(inter, hit->hit_obj->pos)) * sin(hit->hit_obj->size);

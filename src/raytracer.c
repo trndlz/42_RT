@@ -211,7 +211,7 @@ int		recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 
 	next_hit = *hit;
 	next_hit.nr = hit->nr;
-	r = hit->nr;
+	r = hit->hit_obj->r;
 	r_ray.direction = vec_mult(vec_norm(ray.direction), -1);
 	r_ray.direction = vec_sub(vec_mult(hit->n, 2 * vec_dot(r_ray.direction, hit->n)), r_ray.direction);
 	r_ray.origin = hit->hit_inter;

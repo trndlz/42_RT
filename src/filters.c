@@ -6,7 +6,7 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 15:06:54 by jostraye          #+#    #+#             */
-/*   Updated: 2018/07/12 15:56:23 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/17 19:00:31 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,45 @@
 #include "rtv1.h"
 
 // All filters fo the RT projects will be set here
-
-// void	stereoscopic(t_env *e)
-// {
-// 	int *colorcopy;
-// 	int i;
-// 	t_obj	*tmp;
 //
-// 	i = ((e->thread_int) * WINZ / TH_NB) * WINY - 1;
-// 	colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ);
-// 	global_filter(e, 2);
-// 	e->z = (e->thread_int) * WINZ / TH_NB - 1;
-// 	e->eye_lookfrom.y -= 60;
-// 	while (++(e->z) < ((e->thread_int + 1) * WINZ) / TH_NB)
-// 	{
-// 		e->y = -1;
-// 		while (++(e->y) < WINY)
-// 		{
-// 			colorcopy[e->z * WINY + e->y] = e->imgstr[e->z * WINY + e->y];
-// 			create_ray(e);
-// 			tmp = nearest_node(e);
-// 			if (tmp)
-// 			{
-// 				e->offset = vec_sub(e->eye_lookfrom, tmp->pos);
-// 				compute_scene_vectors(e, tmp);
-// 			}
-// 		}
-// 	}
-// 	global_filter(e, 3);
-// 	while (++i < (((e->thread_int + 1) * WINZ) / TH_NB) * WINY)
-// 		e->imgstr[i] = add_color(e->imgstr[i], colorcopy[i]);
-// }
+void	stereoscopic(t_env *e)
+{
+	int *colorcopy;
+	int			px_color;
+	t_ray		ray;
+	t_hit_rec	hit_rec;
+	int i;
+
+	i= 0;
+	colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ);
+	global_filter(e, 2);
+	e->z = (e->thread_int) * WINZ / TH_NB - 1;
+	e->eye_lookfrom.y -= 60;
+	while (++(e->z) < ((e->thread_int + 1) * WINZ) / TH_NB)
+	{
+		e->y = -1;
+		while (++(e->y) < WINY)
+		{
+			colorcopy[e->z * WINY + e->y] = e->imgstr[e->z * WINY + e->y];
+			hit_rec.nr = 1;
+			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
+			if (nearest_node(e, ray, &hit_rec))
+			{
+				hit_rec.hit_inter = vec_add(vec_mult(ray.direction,
+					hit_rec.t), ray.origin);
+				px_color = compute_pixel_color(e, ray, &hit_rec);
+				if (hit_rec.hit_obj->r > 0)
+					px_color = recursive_reflection(e, px_color, ray, &hit_rec);
+				if (hit_rec.hit_obj->tr > 0)
+					px_color = transparency(e, px_color, ray, &hit_rec);
+				draw_point(e, e->y, e->z, px_color);
+			}
+		}
+	}
+	global_filter(e, 3);
+	while (++i < (((e->thread_int + 1) * WINZ) / TH_NB) * WINY)
+		e->imgstr[i] = add_color(e->imgstr[i], colorcopy[i]);
+}
 
 int	sepia_filter(t_env *e, int i)
 {

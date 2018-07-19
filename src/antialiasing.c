@@ -6,7 +6,7 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 14:26:30 by jostraye          #+#    #+#             */
-/*   Updated: 2018/07/12 17:00:14 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/17 19:14:01 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,19 +113,21 @@ int color_absolute_difference(int col1, int col2)
 	return (ret);
 }
 
-int	average_color(int col1, int col2, int col3)
+int	average_color(int col1, int col2, int col3, int col4)
 {
 	t_vc rgb1;
 	t_vc rgb2;
 	t_vc rgb3;
+	t_vc rgb4;
 	int ret;
 
 	rgb1 = hextorgb(col1);
 	rgb2 = hextorgb(col2);
-	rgb2 = hextorgb(col3);
-	rgb1.x = color_limits(rgb1.x / 2 + rgb2.x / 4 + rgb3.x / 4);
-	rgb1.y = color_limits(rgb1.y / 2 + rgb2.y / 4 + rgb3.y / 4);
-	rgb1.z = color_limits(rgb1.z / 2 + rgb2.z / 4 + rgb3.z / 4);
+	rgb3 = hextorgb(col3);
+	rgb4 = hextorgb(col4);
+	rgb1.x = color_limits(rgb1.x / 4 + rgb2.x / 4 + rgb3.x / 4 + rgb4.x / 4);
+	rgb1.y = color_limits(rgb1.y / 4 + rgb2.y / 4 + rgb3.y / 4 + rgb4.y / 4);
+	rgb1.z = color_limits(rgb1.z / 4 + rgb2.z / 4 + rgb3.z / 4 + rgb4.z / 4);
 	ret = rgb1.x * 0x100 * 0x100 + rgb1.y * 0x100 + rgb1.y;
 	return (ret);
 }
@@ -141,11 +143,12 @@ void	antialias(t_env *e)
 		e->y = -1;
 		while (++(e->y) < WINY)
 		{
-			if (color_absolute_difference(e->imgstr[e->z * WINY + e->y], e->imgstr[e->z * WINY + e->y + 1]) > 20
-			&& color_absolute_difference(e->imgstr[e->z * WINY + e->y], e->imgstr[e->z * WINY + e->y + WINY]) > 20)
-				colorcopy[e->z * WINY + e->y] = multiply_color(e->imgstr[e->z * WINY + e->y],
-					(1 - (1 / (2 * color_absolute_difference(e->imgstr[e->z * WINY + e->y], e->imgstr[e->z * WINY + e->y + 1])))
-					 - (1 / (2 * color_absolute_difference(e->imgstr[e->z * WINY + e->y], e->imgstr[e->z * WINY + e->y + WINY])))));
+			if (color_absolute_difference(e->imgstr[e->z * WINY + e->y], e->imgstr[e->z * WINY + e->y + 1])
+			+ color_absolute_difference(e->imgstr[e->z * WINY + e->y], e->imgstr[e->z * WINY + e->y + WINY])
+			+ color_absolute_difference(e->imgstr[e->z * WINY + e->y], e->imgstr[e->z * WINY + e->y - WINY])
+			+ color_absolute_difference(e->imgstr[e->z * WINY + e->y], e->imgstr[e->z * WINY + e->y - 1 ]) > 200)
+				colorcopy[e->z * WINY + e->y] = average_color(e->imgstr[e->z * WINY + e->y + 1], e->imgstr[e->z * WINY + e->y + WINY],
+				e->imgstr[e->z * WINY + e->y - WINY], e->imgstr[e->z * WINY + e->y - 1 ]);
 			else
 				colorcopy[e->z * WINY + e->y] = e->imgstr[e->z * WINY + e->y];
 		}

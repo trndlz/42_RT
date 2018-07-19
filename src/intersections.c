@@ -12,13 +12,13 @@
 
 #include "rtv1.h"
 
-double			inter_sph(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset)
+double			inter_sph(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x)
 {
 	t_vc abc;
 
 	abc.x = vec_squ_sum(ray);
-	abc.y = 2.0 * vec_x(offset, ray);
-	abc.z = vec_squ_sum(offset) - car(obj->size);
+	abc.y = 2.0 * vec_x(x, ray);
+	abc.z = vec_squ_sum(x) - car(obj->size);
 	return (quadratic_solver(hit, abc));
 }
 
@@ -36,7 +36,7 @@ double			inter_paraboloid(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x)
 	return (quadratic_solver(hit, abc));
 }
 
-double			inter_cone(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset)
+double			inter_cone(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x)
 {
 	double	k;
 	t_vc	abc;
@@ -45,15 +45,15 @@ double			inter_cone(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset)
 	obj->rot = vec_norm(obj->rot);
 	abc.x = vec_x(ray, ray)
 		- k * car(vec_x(ray, obj->rot));
-	abc.y = 2 * (vec_x(ray, offset)
+	abc.y = 2 * (vec_x(ray, x)
 		- k * vec_x(ray, obj->rot)
-		* vec_x(offset, obj->rot));
-	abc.z = vec_x(offset, offset)
-		- k * car(vec_x(offset, obj->rot));
+		* vec_x(x, obj->rot));
+	abc.z = vec_x(x, x)
+		- k * car(vec_x(x, obj->rot));
 	return (quadratic_solver(hit, abc));
 }
 
-double			inter_plane(t_vc ray, t_vc offset, t_obj *obj)
+double			inter_plane(t_vc ray, t_vc x, t_obj *obj)
 {
 	double t;
 	double den;
@@ -61,19 +61,19 @@ double			inter_plane(t_vc ray, t_vc offset, t_obj *obj)
 	den = vec_x(ray, obj->rot);
 	if (den == 0)
 		return (-1);
-	t = -vec_x(offset, obj->rot) / den;
+	t = -vec_x(x, obj->rot) / den;
 	if (t < 0)
 		return (-1);
 	return (t);
 }
 
-// double			inter_disc2(t_vc ray, t_vc offset, t_env *e, t_obj *obj)
+// double			inter_disc2(t_vc ray, t_vc x, t_env *e, t_obj *obj)
 // {
 // 	double	t;
 // 	double	d;
 // 	t_vc	p;
 //
-// 	t = inter_plane(ray, offset, obj);
+// 	t = inter_plane(ray, x, obj);
 // 	if (t > 0)
 // 	{
 // 		p = vec_sub(vec_add(vec_mult(ray, t), e->eye_lookfrom), obj->pos);
@@ -84,16 +84,16 @@ double			inter_plane(t_vc ray, t_vc offset, t_obj *obj)
 // 	return (-1.0);
 // }
 
-double			inter_cyl(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset)
+double			inter_cyl(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x)
 {
 	t_vc abc;
 
 	obj->rot = vec_norm(obj->rot);
 	abc.x = vec_squ_sum(ray) - car(vec_x(ray, obj->rot));
-	abc.y = 2 * (vec_x(ray, offset)
-		- vec_x(ray, obj->rot) * vec_x(offset, obj->rot));
-	abc.z = vec_squ_sum(offset)
-		- car(vec_x(offset, obj->rot)) - car(obj->size);
+	abc.y = 2 * (vec_x(ray, x)
+		- vec_x(ray, obj->rot) * vec_x(x, obj->rot));
+	abc.z = vec_squ_sum(x)
+		- car(vec_x(x, obj->rot)) - car(obj->size);
 	return (quadratic_solver(hit, abc));
 }
 

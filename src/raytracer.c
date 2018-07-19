@@ -33,7 +33,7 @@ int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_hit_rec *hit, t_ra
 	t_vc	rm;
 
 	rm = vec_norm(vec_sub(vec_mult(hit->n, 2 * hit->cost), hit->lm));
-	dot_spec = ratio_limits(pow(vec_dot(rm, vec_norm(vec_mult(hit->v2, -1.0))),
+	dot_spec = ratio_limits(pow(vec_dot(rm, vec_norm(vec_mult(hit->v, -1.0))),
 		ALPHA_SPEC));
 	dot_diff = ratio_limits(hit->cost);
 	color_spec = multiply_color(light->col, dot_spec * obj->coef.x);
@@ -161,20 +161,22 @@ int		phong_lighting(t_env *e, t_ray ray, t_hit_rec *hit)
 	int		is_lit;
 
 	llst = e->light_link;
+	hit->n = normal_vectors(hit, hit->hit_obj, ray);
+	hit->v = inter_position(ray, hit->t);
 	color = multiply_color(hit->hit_obj->col, hit->hit_obj->coef.z);
 	if (!(textures_coef(hit->hit_obj, hit, ray)))
 		color = multiply_color(color, 0.6);
 	while (llst)
 	{
-		hit->n = normal_vectors(hit, hit->hit_obj, ray);
-		hit->v2 = vec_add(vec_mult(ray.direction, hit->t), ray.origin);
-		hit->lm = vec_norm(vec_sub(llst->pos, hit->v2));
+		hit->lm = vec_norm(vec_sub(llst->pos, hit->v));
 		hit->cost = vec_dot(hit->n, hit->lm);
 		is_lit = shadows(e, hit, llst, ray);
-		// if (is_lit)
+		if (is_lit)
 			color = specular_diffuse(color, llst, hit->hit_obj, hit, ray);
 		llst = llst->next;
 	}
+	
+		
 	return (color);
 }
 
@@ -222,7 +224,7 @@ int		recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 		new_color = add_color(multiply_color(new_color, r), multiply_color(old_color, (1 - r)));
 		return (new_color);
 	}
-	return (multiply_color(old_color, r));
+	return (multiply_color(old_color, (1 - r)));
 }
 
 int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray)
@@ -230,10 +232,12 @@ int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray)
 	int	pixel;
 
 	hit->hit_inter = inter_position(ray, hit->t);
+	
 	pixel = phong_lighting(e, ray, hit);
+	
 	if (hit->hit_obj->tr > 0 && hit->nt > 0)
 		pixel = transparency(e, pixel, ray, hit);
-	else if (hit->hit_obj->r > 0 && hit->nr > 0)
+	if (hit->hit_obj->r > 0 && hit->nr > 0)
 		pixel = recursive_reflection(e, pixel, ray, hit);
 	return (pixel);
 }
@@ -253,7 +257,7 @@ void	*scene_plot(void *arg)
 		while (++(e->y) < WINY)
 		{
 			hit_rec.nr = 1;
-			hit_rec.nt = 56;
+			hit_rec.nt = 1;
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))
 			{

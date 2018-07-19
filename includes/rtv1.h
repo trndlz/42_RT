@@ -23,9 +23,9 @@
 # define FOV 1000
 # define TH_NB 50
 # define SPHERE_TEXTURE 1
-# define CONE_TEXTURE 0
+# define CONE_TEXTURE 1
 # define CYLINDER_TEXTURE 1
-# define PLANE_CHECKERS 0
+# define PLANE_CHECKERS 1
 # define ALPHA_SPEC 100
 # define SHADOW_BIAS 0.001
 
@@ -74,7 +74,7 @@ typedef struct		s_hit_rec
 	int				nt;
 	t_vc			n;
 	t_vc			s;
-	t_vc			v2;
+	t_vc			v;
 	t_vc			lm;
 	t_vc			hit_inter;
 	t_obj			*hit_obj;
@@ -141,11 +141,11 @@ t_vc				inter_position(t_ray ray, double t);
 ** SHAPES INTERSECTIONS
 */
 
-double				inter_sph(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset);
-double				inter_cone(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset);
-double				inter_plane(t_vc ray, t_vc offset, t_obj *obj);
-double				inter_cyl(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset);
-double			inter_paraboloid(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x);
+double				inter_sph(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x);
+double				inter_cone(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x);
+double				inter_plane(t_vc ray, t_vc x, t_obj *obj);
+double				inter_cyl(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x);
+double				inter_paraboloid(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x);
 double				quadratic_solver(t_hit_rec *hit, t_vc abc);
 
 

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/16 11:34:44 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/17 16:30:31 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@
 # define WINZ 1000
 # define FOV 1000
 # define TH_NB 50
-# define SPHERE_TEXTURE 0
+# define SPHERE_TEXTURE 1
+# define CONE_TEXTURE 0
+# define CYLINDER_TEXTURE 1
 # define PLANE_CHECKERS 0
 # define ALPHA_SPEC 100
 # define SHADOW_BIAS 0.001
@@ -69,6 +71,7 @@ typedef struct		s_hit_rec
 	double			t2;
 	double			smax;
 	int				nr;
+	int				nt;
 	t_vc			n;
 	t_vc			s;
 	t_vc			v2;
@@ -93,6 +96,7 @@ typedef struct		s_env
 	t_vc			eye_lookfrom;
 	t_vc			eye_rot;
 	pthread_t		pth[TH_NB];
+	pthread_mutex_t	mutex;
 	t_obj			*obj_link;
 	t_obj			*light_link;
 	t_obj			*cut_link;
@@ -131,6 +135,7 @@ double				vec_mod(t_vc v);
 t_vc				vec_norm(t_vc v);
 t_vc				vec_mult(t_vc v, double x);
 double				vec_dot(t_vc v1, t_vc v2);
+t_vc				inter_position(t_ray ray, double t);
 
 /*
 ** SHAPES INTERSECTIONS
@@ -160,15 +165,18 @@ t_vc				normal_vectors(t_hit_rec *hit, t_obj *obj, t_ray ray);
 int					shadows(t_env *e, t_hit_rec *hit, t_obj *light_obj, t_ray ray);
 
 /*
-** COLORS
+** COLOR CALCULATION
 */
 
-unsigned long		rgb_to_hexa(t_obj *obj, t_env *e);
-int					multiply_color(int hex, double mult);
 int					add_color(int hex1, int hex2);
+double				ratio_limits(double i);
+int					multiply_color(int hex, double mult);
+int					color_limits(int col);
+
+
 int					specular_diffuse(int color, t_obj *light, t_obj *obj, t_hit_rec *hit, t_ray ray);
 void				global_filter(t_env *e, int filter);
-int					color_limits(int col);
+
 
 
 /*
@@ -202,14 +210,33 @@ void				exit_message(char *str);
 void				free_split(char **split);
 
 /*
-** TEXTURES
+** TEXTURES CYLINDER / CONE
+*/
+
+char				get_lines_cylinder(t_hit_rec *hit, t_ray ray);
+char				get_lines_cone(t_hit_rec *hit, t_ray ray);
+
+/*
+** TEXTURES SPHERE /PLANE
+*/
+
+char				get_lines_sphere(t_hit_rec *hit, t_ray ray);
+char				get_columns_sphere(t_hit_rec *hit, t_ray ray);
+char				get_checkerboard_sphere(t_hit_rec *hit, t_ray ray);
+int					get_texture_sphere(t_hit_rec *hit, t_ray ray);
+char				checkerboard_plane(t_hit_rec *hit, t_ray ray);
+
+/*
+** TEXTURES CHOSER
+*/
+
+char				textures_coef(t_obj *obj, t_hit_rec *hit, t_ray ray);
+
+/*
+** TEXTURE LOADER
 */
 
 int					load_texture_to_obj(t_obj *obj);
-int					checkerboard_plane(t_hit_rec *hit, t_ray ray);
-int					get_columns_sphere(t_hit_rec *hit, t_ray ray);
-int					get_lines_sphere(t_hit_rec *hit, t_ray ray);
-int					get_texture_sphere(t_hit_rec *hit, t_ray ray);
 
 /*
 ** PARSER
@@ -233,7 +260,7 @@ int					create_objects(t_env *e, char **tab_values);
 ** MISCELLANEOUS
 */
 
-void				create_bmp_file(t_env *e);
+void				create_bmp_file(int *imgstr);
 t_vc				hextorgb(int hex);
 void				stereoscopic(t_env *e);
 void				antialias(t_env *e);

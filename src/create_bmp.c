@@ -6,7 +6,7 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/23 19:01:36 by jostraye          #+#    #+#             */
-/*   Updated: 2018/06/29 16:27:13 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/16 15:29:51 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,18 @@ t_vc						hextorgb(int hex)
 	return (rgb);
 }
 
-static	unsigned char		*create_bmp_img(t_env *e)
+static	unsigned char		*create_bmp_img(int *imgstr)
 {
 	unsigned char	*img;
+	int				o;
+	t_vc			rgb;
 
 	img = (unsigned char*)malloc(sizeof(unsigned char) * 3 * 2 * WINY * WINZ);
-	ft_memset(img, 0, 3 * WINY * WINZ);
-
-	int o;
-	t_vc rgb;
+	ft_memset(img, 0, 3 * 2 * WINY * WINZ);
 	o = 0;
-	while (o <= (WINY * WINZ * 2))
+	while (o < (WINY * WINZ))
 	{
-		rgb = hextorgb(e->imgstr[o]);
+		rgb = hextorgb(imgstr[o]);
 		img[o * 3 + 2] = (unsigned char)rgb.x;
 		img[o * 3 + 1] = (unsigned char)rgb.y;
 		img[o * 3 + 0] = (unsigned char)rgb.z;
@@ -72,14 +71,14 @@ static void					write_info_header(FILE *f)
 	fwrite(bmpinfoheader, 1, 40, f);
 }
 
-void	create_bmp_file(t_env *e)
+void	create_bmp_file(int *imgstr)
 {
 	FILE			*f;
 	unsigned char	*img = NULL;
 	unsigned char 	bmppad[3] = {0,0,0};
 	int				i;
 
-	img = create_bmp_img(e);
+	img = create_bmp_img(imgstr);
 	f = fopen("img.bmp","wb");
 	i = -1;
 	write_file_header(f);

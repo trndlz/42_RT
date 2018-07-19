@@ -83,6 +83,25 @@ double			inter_cyl(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset)
 	return (quadratic_solver(hit, abc));
 }
 
+double			t_calculator(double a, double b)
+{
+	if (a < 0.0000001)
+	{
+		if (b > 0.0000001)
+			return (b);
+		return (-1);
+	}
+	if (b < 0.0000001)
+	{
+		if (a > 0.0000001)
+			return (a);
+		return (-1);
+	}
+	if (a < b)
+		return (a);
+	return (b);
+}
+
 double			quadratic_solver(t_hit_rec *hit, t_vc abc)
 {
 	double d;
@@ -94,17 +113,7 @@ double			quadratic_solver(t_hit_rec *hit, t_vc abc)
 		return (-1);
 	t1 = (-abc.y + sqrt(d)) / (2.0 * abc.x);
 	t2 = (-abc.y - sqrt(d)) / (2.0 * abc.x);
-	hit->t1 = (t1 < t2 ? t1 : t2);
-	hit->t2 = (t1 < t2 ? t2 : t1);
-	if (t2 > t1 && t1 < 0)
-	{
-		hit->smax = t1;
-		t1 = t2;
-	}
-	if (t2 < t1)
-	{
-		hit->smax = t1;
-		t1 = t2;
-	}
-	return (t1);
+	hit->t1 = t1;
+	hit->t2 = t2;
+	return (t_calculator(t1, t2));
 }

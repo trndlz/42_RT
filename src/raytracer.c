@@ -6,7 +6,11 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/17 19:01:08 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/19 13:15:17 by jostraye         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+>>>>>>> 9f9cc057dacddbcb3fd2d0c58d0a6d6e83e3343e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +26,26 @@ t_ray	create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
 	ray.direction = rot_all_axis(ray.direction, eye_rot);
 	ray.origin = ray_origin;
 	return (ray);
+}
+
+int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_hit_rec *hit, t_ray ray)
+{
+	int		color_diff;
+	int		color_spec;
+	double	dot_spec;
+	double	dot_diff;
+	t_vc	rm;
+
+	rm = vec_norm(vec_sub(vec_mult(hit->n, 2 * hit->cost), hit->lm));
+	dot_spec = ratio_limits(pow(vec_dot(rm, vec_norm(vec_mult(hit->v2, -1.0))),
+		ALPHA_SPEC));
+	dot_diff = ratio_limits(hit->cost);
+	color_spec = multiply_color(light->col, dot_spec * obj->coef.x);
+	color_diff = multiply_color(obj->col, dot_diff * obj->coef.y);
+	if (!textures_coef(obj, hit, ray))
+		color_diff = multiply_color(color_diff, 0.6);
+	color_spec = add_color(add_color(color_spec, color_diff), color);
+	return (color_spec);
 }
 
 double	distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_vc ray, t_vc p)
@@ -189,6 +213,7 @@ char	second_nearest_node(t_env *e, t_ray ray, t_hit_rec *hit, t_hit_rec *new_ori
 		}
 		olst = olst->next;
 	}
+
 	return (hit_anything);
 }
 
@@ -216,21 +241,16 @@ int		transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 	return (old_color);
 }
 
-int		compute_pixel_color(t_env *e, t_ray ray, t_hit_rec *hit)
+int		phong_lighting(t_env *e, t_ray ray, t_hit_rec *hit)
 {
 	t_obj	*llst;
 	int		color;
 	int		is_lit;
 
 	llst = e->light_link;
-	if (hit->hit_obj->type == 3 && SPHERE_TEXTURE == 1)
-		color = multiply_color(get_texture_sphere(hit, ray),
-		hit->hit_obj->coef.z);
-	else if (hit->hit_obj->type == 6 && PLANE_CHECKERS == 1)
-		color = multiply_color(checkerboard_plane(hit, ray),
-		hit->hit_obj->coef.z);
-	else
-		color = multiply_color(hit->hit_obj->col, hit->hit_obj->coef.z);
+	color = multiply_color(hit->hit_obj->col, hit->hit_obj->coef.z);
+	if (!(textures_coef(hit->hit_obj, hit, ray)))
+		color = multiply_color(color, 0.6);
 	while (llst)
 	{
 		hit->n = normal_vectors(hit, hit->hit_obj, ray);
@@ -238,7 +258,7 @@ int		compute_pixel_color(t_env *e, t_ray ray, t_hit_rec *hit)
 		hit->lm = vec_norm(vec_sub(llst->pos, hit->v2));
 		hit->cost = vec_dot(hit->n, hit->lm);
 		is_lit = shadows(e, hit, llst, ray);
-		if (is_lit)
+		// if (is_lit)
 			color = specular_diffuse(color, llst, hit->hit_obj, hit, ray);
 		llst = llst->next;
 	}
@@ -249,31 +269,64 @@ int		compute_pixel_color(t_env *e, t_ray ray, t_hit_rec *hit)
 	return (color);
 }
 
+int		recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
+int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
+
+int		transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
+{
+	t_ray		r_ray;
+	int			new_color;
+	t_hit_rec 	next_hit;
+	double		r;
+
+	r = (!(textures_coef(hit->hit_obj, hit, ray))) ? hit->hit_obj->tr : 0;
+	next_hit = *hit;
+	next_hit.nt = hit->nt;
+	r_ray.direction = ray.direction;
+	r_ray.origin = inter_position(ray, hit->t);
+	r_ray.origin = vec_add(r_ray.origin, vec_mult(ray.direction, SHADOW_BIAS));
+	if (nearest_node(e, r_ray, &next_hit))
+	{
+		new_color = compute_point(e, &next_hit, r_ray);
+		new_color = add_color(multiply_color(new_color, r), multiply_color(old_color, (1 - r)));
+		return (new_color);
+	}
+	return (multiply_color(old_color, r));
+}
+
 int		recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 {
 	t_ray		r_ray;
 	int			new_color;
+	t_hit_rec 	next_hit;
 	double		r;
 
-	if (hit->nr > 0)
+	next_hit = *hit;
+	next_hit.nr = hit->nr;
+	r = hit->hit_obj->r;
+	r_ray.direction = vec_mult(vec_norm(ray.direction), -1);
+	r_ray.direction = vec_sub(vec_mult(hit->n, 2 * vec_dot(r_ray.direction, hit->n)), r_ray.direction);
+	r_ray.origin = hit->hit_inter;
+	if (nearest_node(e, r_ray, &next_hit))
 	{
-		r = hit->hit_obj->r;
-		r_ray.direction = vec_mult(vec_norm(ray.direction), -1);
-		r_ray.direction = vec_sub(vec_mult(hit->n, 2 *
-			vec_dot(r_ray.direction, hit->n)), r_ray.direction);
-		r_ray.origin = vec_add(vec_mult(ray.direction, hit->t), ray.origin);
-		if (nearest_node(e, r_ray, hit))
-		{
-			new_color = compute_pixel_color(e, r_ray, hit);
-			new_color = add_color(multiply_color(new_color, r),
-			multiply_color(old_color, (1 - r)));
-			hit->nr--;
-			if (hit->nr)
-				new_color = recursive_reflection(e, new_color, r_ray, hit);
-			return (new_color);
-		}
+		new_color = compute_point(e, &next_hit, r_ray);
+		new_color = add_color(multiply_color(new_color, r), multiply_color(old_color, (1 - r)));
+		return (new_color);
 	}
-	return (old_color);
+	return (multiply_color(old_color, r));
+}
+
+int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray)
+{
+	int	pixel;
+
+	hit->hit_inter = inter_position(ray, hit->t);
+	pixel = phong_lighting(e, ray, hit);
+	if (hit->hit_obj->tr > 0 && hit->nt > 0)
+		pixel = transparency(e, pixel, ray, hit);
+	else if (hit->hit_obj->r > 0 && hit->nr > 0)
+		pixel = recursive_reflection(e, pixel, ray, hit);
+	return (pixel);
 }
 
 void	*scene_plot(void *arg)
@@ -291,16 +344,11 @@ void	*scene_plot(void *arg)
 		while (++(e->y) < WINY)
 		{
 			hit_rec.nr = 1;
+			hit_rec.nt = 56;
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))
 			{
-				hit_rec.hit_inter = vec_add(vec_mult(ray.direction,
-					hit_rec.t), ray.origin);
-				px_color = compute_pixel_color(e, ray, &hit_rec);
-				if (hit_rec.hit_obj->r > 0)
-					px_color = recursive_reflection(e, px_color, ray, &hit_rec);
-				if (hit_rec.hit_obj->tr > 0)
-					px_color = transparency(e, px_color, ray, &hit_rec);
+				px_color = compute_point(e, &hit_rec, ray);
 				draw_point(e, e->y, e->z, px_color);
 			}
 		}

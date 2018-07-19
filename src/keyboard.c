@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 10:47:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/10 12:43:31 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/16 15:16:40 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,25 @@ void	rotation(int key, t_env *e)
 
 int		deal_key(int key, t_env *e)
 {
-	if (key == 53)
+	if (key == 35)
 	{
-		//create_bmp_file(e);
+		pthread_mutex_lock(&(e->mutex));
+		create_bmp_file(e->imgstr);
+		pthread_mutex_unlock(&(e->mutex));
+	}
+	else if (key == 53)
+	{
+		pthread_mutex_lock(&(e->mutex));
+		mlx_destroy_image(e->mlx, e->image);
 		mlx_destroy_window(e->mlx, e->win);
 		exit(1);
 	}
-	translation(key, e);
-	rotation(key, e);
-	create_image(e);
+	else
+	{
+		translation(key, e);
+		rotation(key, e);
+		create_image(e);
+	}
 	return (0);
 }
 

@@ -6,32 +6,35 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/07/10 12:41:37 by tmervin          ###   ########.fr        #
+#    Updated: 2018/07/17 16:54:21 by tmervin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= rtv1
 
 SRC_PATH	:= src
-SRC_NAME	:=	main.c				\
-				images.c			\
-				init.c				\
-				intersections.c		\
-				maths_vectors.c		\
-				lighting.c			\
-				colors.c			\
-				raytracer.c			\
-				keyboard.c			\
-				parser.c			\
-				parser_errors.c		\
-				parser_functions.c	\
-				free_functions.c	\
-				usage.c				\
-				maths_rot.c			\
-				maths_functions.c	\
-				create_bmp.c		\
-				filters.c			\
-				texture_parser.c	\
+SRC_NAME	:=	main.c								\
+				images.c							\
+				init.c								\
+				intersections.c						\
+				maths_vectors.c						\
+				lighting.c							\
+				color_helpers.c						\
+				raytracer.c							\
+				keyboard.c							\
+				parser.c							\
+				parser_errors.c						\
+				parser_functions.c					\
+				free_functions.c					\
+				usage.c								\
+				maths_rot.c							\
+				maths_functions.c					\
+				create_bmp.c						\
+				filters.c							\
+				texture_parser.c					\
+				textures_cylinder_cone.c			\
+				textures_sphere_plane.c				\
+				textures.c							\
 				antialiasing.c
 
 OBJ_PATH	:= obj
@@ -59,7 +62,8 @@ ifeq ($(UNAME_S), Darwin)
 	MINILIBX	:= -L ./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit
 endif
 
-CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
+#CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
+CC			:= gcc -Werror -Wall -Wextra
 OBJ_NAME	:= $(SRC_NAME:.c=.o)
 
 SRC			:= $(addprefix $(SRC_PATH)/, $(SRC_NAME))

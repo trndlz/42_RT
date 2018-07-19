@@ -134,7 +134,7 @@ char		nearest_node(t_env *e, t_ray ray, t_hit_rec *hit)
 
 	hit_anything = 0;
 	hit->hit_obj = NULL;
-	hit->t = 999999999;
+	hit->t = INFINITY;
 	olst = e->obj_link;
 	while (olst)
 	{

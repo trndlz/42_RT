@@ -127,7 +127,7 @@ double			quadratic_solver(t_hit_rec *hit, t_vc abc)
 		return (-1);
 	t1 = (-abc.y + sqrt(d)) / (2.0 * abc.x);
 	t2 = (-abc.y - sqrt(d)) / (2.0 * abc.x);
-	hit->t1 = t1;
-	hit->t2 = t2;
+	hit->t1 = (t1 < t2) ? t1 : t2;
+	hit->t2 = (t1 < t2) ? t2 : t1;
 	return (t_calculator(t1, t2));
 }

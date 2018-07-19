@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/17 16:30:31 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/19 17:18:58 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define PLANE_CHECKERS 0
 # define ALPHA_SPEC 100
 # define SHADOW_BIAS 0.001
+# define AA_S 20
+# define CART_S 20
 
 typedef struct		s_vc
 {
@@ -264,6 +266,10 @@ void				create_bmp_file(int *imgstr);
 t_vc				hextorgb(int hex);
 void				stereoscopic(t_env *e);
 void				antialias(t_env *e);
+int					recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
+int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
+int					transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
+void				cartooning(t_env *e);
 
 
 #endif

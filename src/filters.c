@@ -6,7 +6,7 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 15:06:54 by jostraye          #+#    #+#             */
-/*   Updated: 2018/07/17 19:00:31 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/19 13:27:00 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,11 @@ void	stereoscopic(t_env *e)
 		{
 			colorcopy[e->z * WINY + e->y] = e->imgstr[e->z * WINY + e->y];
 			hit_rec.nr = 1;
+			hit_rec.nt = 56;
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))
 			{
-				hit_rec.hit_inter = vec_add(vec_mult(ray.direction,
-					hit_rec.t), ray.origin);
-				px_color = compute_pixel_color(e, ray, &hit_rec);
-				if (hit_rec.hit_obj->r > 0)
-					px_color = recursive_reflection(e, px_color, ray, &hit_rec);
-				if (hit_rec.hit_obj->tr > 0)
-					px_color = transparency(e, px_color, ray, &hit_rec);
+				px_color = compute_point(e, &hit_rec, ray);
 				draw_point(e, e->y, e->z, px_color);
 			}
 		}

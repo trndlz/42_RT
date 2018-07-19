@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 10:47:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/16 15:16:40 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/19 16:11:43 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	rotation(int key, t_env *e)
 
 int		deal_key(int key, t_env *e)
 {
+	printf("key %d\n", key);
 	if (key == 35)
 	{
 		pthread_mutex_lock(&(e->mutex));

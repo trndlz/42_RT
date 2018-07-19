@@ -6,11 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/19 13:15:17 by jostraye         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
->>>>>>> 9f9cc057dacddbcb3fd2d0c58d0a6d6e83e3343e
+/*   Updated: 2018/07/19 18:28:57 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +26,7 @@ t_ray	create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
 
 int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_hit_rec *hit, t_ray ray)
 {
-	int		color_diff;
+	int		color_                                                                                                                     diff;
 	int		color_spec;
 	double	dot_spec;
 	double	dot_diff;
@@ -56,7 +52,7 @@ double	distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_vc ray, t_vc p)
 	d = (obj_list->type == 3) ? inter_sph(hit, obj_list, ray, p) : d;
 	d = (obj_list->type == 4) ? inter_cyl(hit, obj_list, ray, p) : d;
 	d = (obj_list->type == 5) ? inter_cone(hit, obj_list, ray, p) : d;
-	d = (obj_list->type == 6) ? inter_plane(hit, ray, p, obj_list) : d;
+	d = (obj_list->type == 6) ? inter_plane(ray, p, obj_list) : d;
 	return (d);
 }
 
@@ -92,61 +88,12 @@ char	hit_not_cut(t_hit_rec *hit, t_obj *obj, t_ray ray)
 	return (hit_anything);
 }
 
-char ft_isbetween(double a, double b, double c)
-{
-	if ((a < c && a > b) || (a > c && a < b))
-		return (1);
-	else
-		return (0);
-}
-
-char	hit_hole_plane(t_hit_rec *hit, t_obj *clst, t_obj *obj, t_ray ray)
-{
-		char hit_anything;
-		t_hit_rec cut;
-
-		cut.nr = 1;
-		hit_anything = 0;
-		distance_to_inter(&cut, clst, ray.direction,	vec_sub(ray.origin, clst->pos));
-		distance_to_inter(hit, obj, ray.direction, vec_sub(ray.origin, obj->pos));
-		if (hit->t1 > 0 && !ft_isbetween(hit->t1, cut.t1, cut.t2))
-		{
-			hit->t = hit->t1;
-			hit->hit_obj = obj;
-			hit_anything = 1;
-		}
-		return (hit_anything);
-}
-
-char	hit_cut_plane(t_hit_rec *hit, t_obj *clst, t_obj *obj, t_ray ray)
-{
-	char hit_anything;
-	double	t_cut;
-	double	t;
-	t_vc	inter;
-
-	hit_anything = 0;
-	t_cut = distance_to_inter(hit, clst, ray.direction,	vec_sub(ray.origin, clst->pos));
-	t = distance_to_inter(hit, obj, ray.direction, vec_sub(ray.origin, obj->pos));
-	inter = vec_sub(vec_add(vec_mult(ray.direction, t), ray.origin), clst->pos);
-	if (t > 0 && t < hit->t && vec_x(inter, clst->rot) > 0)
-	{
-		hit->t = t;
-		hit->hit_obj = obj;
-		hit_anything = 1;
-	}
-	if (t > 0 && t_cut < hit->t && hit->t1 < t_cut && hit->t2 > t_cut)
-	{
-		hit->t = t_cut;
-		hit->hit_obj = clst;
-		hit_anything = 1;
-	}
-	return (hit_anything);
-}
-
 char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 {
 	t_obj	*clst;
+	double	t;
+	double	t_cut;
+	t_vc	inter;
 	char	hit_anything;
 
 	hit_anything = 0;
@@ -155,10 +102,24 @@ char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 	{
 		if (clst->id_cut == obj->id_obj)
 		{
-			if (clst->type == 6)
-				hit_anything = hit_cut_plane(hit, clst, obj, ray);
-			else if (clst->type == 3 && obj->type == 6)
-				hit_anything = hit_hole_plane(hit, clst, obj, ray);
+			t_cut = distance_to_inter(hit, clst, ray.direction,
+				vec_sub(ray.origin, clst->pos));
+			t = distance_to_inter(hit, obj, ray.direction,
+				vec_sub(ray.origin, obj->pos));
+			inter = vec_sub(vec_add(vec_mult(ray.direction, t),
+				ray.origin), clst->pos);
+			if (t > 0 && t < hit->t && vec_x(inter, clst->rot) > 0)
+			{
+				hit->t = t;
+				hit->hit_obj = obj;
+				hit_anything = 1;
+			}
+			if (t > 0 && t_cut < hit->t && hit->t1 < t_cut && hit->t2 > t_cut)
+			{
+				hit->t = t_cut;
+				hit->hit_obj = clst;
+				hit_anything = 1;
+			}
 		}
 		clst = clst->next;
 	}
@@ -176,69 +137,20 @@ char		nearest_node(t_env *e, t_ray ray, t_hit_rec *hit)
 	olst = e->obj_link;
 	while (olst)
 	{
-		if (is_not_cut(olst, e) && hit_not_cut(hit, olst, ray))
-			hit_anything = 1;
-		else if (hit_cut(hit, e, olst, ray))
-				hit_anything = 1;
-		olst = olst->next;
-	}
-	return (hit_anything);
-}
-
-
-
-char	second_nearest_node(t_env *e, t_ray ray, t_hit_rec *hit, t_hit_rec *new_origin)
-{
-	t_obj	*olst;
-	char	hit_anything;
-
-	hit_anything = 0;
-	hit->hit_obj = NULL;
-	hit->t = 999999999;
-	olst = e->obj_link;
-	while (olst)
-	{
-		if (olst != new_origin->hit_obj)
+		if (is_not_cut(olst, e))
 		{
-			if (is_not_cut(olst, e))
-			{
-				if (hit_not_cut(hit, olst, ray))
-					hit_anything = 1;
-			}
-			else
-			{
-				if (hit_cut(hit, e, olst, ray))
-					hit_anything = 1;
-			}
+			if (hit_not_cut(hit, olst, ray))
+				hit_anything = 1;
+		}
+		else
+		{
+			if (hit_cut(hit, e, olst, ray))
+				hit_anything = 1;
 		}
 		olst = olst->next;
 	}
 
 	return (hit_anything);
-}
-
-int		transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
-{
-	t_ray		r_ray;
-	int			new_color;
-	t_hit_rec	*new_origin;
-	double		tr;
-
-	new_origin = hit;
-	tr = hit->hit_obj->tr;
-	r_ray = ray;
-	r_ray.direction = vec_sub(new_origin->hit_inter, ray.origin);
-	r_ray.origin = vec_sub(new_origin->hit_inter,
-		vec_mult(new_origin->n, SHADOW_BIAS));
-	if (second_nearest_node(e, r_ray, hit, new_origin))
-	{
-		new_color = compute_pixel_color(e, r_ray, hit);
-		// if (hit->hit_obj->tr > 0)
-		// 	new_color = transparency(e, new_color, r_ray, hit);
-		new_color = add_color(new_color, old_color);
-		return (new_color);
-	}
-	return (old_color);
 }
 
 int		phong_lighting(t_env *e, t_ray ray, t_hit_rec *hit)
@@ -262,10 +174,6 @@ int		phong_lighting(t_env *e, t_ray ray, t_hit_rec *hit)
 			color = specular_diffuse(color, llst, hit->hit_obj, hit, ray);
 		llst = llst->next;
 	}
-	if (hit->hit_obj->tr > 0)
-		color = multiply_color(color, (1 - hit->hit_obj->tr));
-	if(e->z == 579 && e->y == 511)
-	printf("c %f\n",hit->hit_obj->tr);
 	return (color);
 }
 
@@ -291,7 +199,7 @@ int		transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 		new_color = add_color(multiply_color(new_color, r), multiply_color(old_color, (1 - r)));
 		return (new_color);
 	}
-	return (multiply_color(old_color, r));
+	return (multiply_color(old_color, (1 - r)));
 }
 
 int		recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
@@ -313,7 +221,7 @@ int		recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 		new_color = add_color(multiply_color(new_color, r), multiply_color(old_color, (1 - r)));
 		return (new_color);
 	}
-	return (multiply_color(old_color, r));
+	return (multiply_color(old_color, (1 - r)));
 }
 
 int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray)
@@ -353,7 +261,6 @@ void	*scene_plot(void *arg)
 			}
 		}
 	}
-	antialias(e);
 	// global_filter(e, 2);
 	// stereoscopic(e);
 	return (NULL);

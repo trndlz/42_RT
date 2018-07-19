@@ -145,6 +145,7 @@ double				inter_sph(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset);
 double				inter_cone(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset);
 double				inter_plane(t_vc ray, t_vc offset, t_obj *obj);
 double				inter_cyl(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset);
+double			inter_paraboloid(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x);
 double				quadratic_solver(t_hit_rec *hit, t_vc abc);
 
 

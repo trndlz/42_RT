@@ -22,6 +22,20 @@ double			inter_sph(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset)
 	return (quadratic_solver(hit, abc));
 }
 
+double			inter_paraboloid(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x)
+{
+	double	k;
+	t_vc		v;
+	t_vc		abc;
+
+	k = obj->size;
+	v = vec_norm(obj->rot);
+	abc.x = vec_x(ray, ray) - car(vec_x(ray, v));
+	abc.y = 2 * (vec_x(ray, x) - vec_x(ray, v) * (vec_x(x, v) + 2 * k));
+	abc.z = (vec_x(x, x) - vec_x(x, v) * (vec_x(x, v) + 4 * k));
+	return (quadratic_solver(hit, abc));
+}
+
 double			inter_cone(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset)
 {
 	double	k;

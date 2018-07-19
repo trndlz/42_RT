@@ -53,6 +53,7 @@ double	distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_vc ray, t_vc p)
 	d = (obj_list->type == 4) ? inter_cyl(hit, obj_list, ray, p) : d;
 	d = (obj_list->type == 5) ? inter_cone(hit, obj_list, ray, p) : d;
 	d = (obj_list->type == 6) ? inter_plane(ray, p, obj_list) : d;
+	d = (obj_list->type == 8) ? inter_paraboloid(hit, obj_list, ray, p) : d;
 	return (d);
 }
 
@@ -171,7 +172,7 @@ int		phong_lighting(t_env *e, t_ray ray, t_hit_rec *hit)
 		hit->cost = vec_dot(hit->n, hit->lm);
 		is_lit = shadows(e, hit, llst, ray);
 		// if (is_lit)
-			color = specular_diffuse(color, llst, hit->hit_obj, hit, ray);	
+			color = specular_diffuse(color, llst, hit->hit_obj, hit, ray);
 		llst = llst->next;
 	}
 	return (color);
@@ -199,7 +200,7 @@ int		transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 		new_color = add_color(multiply_color(new_color, r), multiply_color(old_color, (1 - r)));
 		return (new_color);
 	}
-	return (multiply_color(old_color, r));
+	return (multiply_color(old_color, (1 - r)));
 }
 
 int		recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)

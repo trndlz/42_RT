@@ -12,26 +12,57 @@
 
 #include "rtv1.h"
 
-t_vc	normal_vectors(t_hit_rec *hit, t_obj *obj, t_ray ray)
+t_vc	normal_cylinder(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {
 	double	m;
-	t_vc	v;
 	t_vc	n;
-	t_vc	offset;
+	t_vc	x;
 
-	if (obj->type == 6 || obj->type == 7)
-		return (vec_norm(obj->rot));
-	offset = vec_sub(ray.origin, obj->pos);
-	v = vec_add(vec_mult(ray.direction, hit->t), offset);
-	n = v;
-	if (obj->type == 4 || obj->type == 5)
-	{
-		m = vec_x(ray.direction, obj->rot) * hit->t + vec_x(offset, obj->rot);
-		if (obj->type == 5)
-				m *= 1 + car(tan(M_PI * obj->size / 180));
-		n = vec_sub(vec_add(vec_mult(ray.direction, hit->t), offset), vec_mult(obj->rot, m));
-	}
+	x = vec_sub(ray.origin, obj->pos);
+	m = vec_x(ray.direction, obj->rot) * hit->t + vec_x(x, obj->rot);
+	n = vec_sub(vec_add(vec_mult(ray.direction, hit->t), x), vec_mult(obj->rot, m));
 	return (vec_norm(n));
+}
+
+t_vc			normal_paraboloid(t_hit_rec *hit, t_obj *obj, t_ray ray)
+{
+	double	k;
+	double	m;
+	t_vc	n;
+	t_vc	x;
+
+	k = obj->size;
+	x = vec_sub(ray.origin, obj->pos);
+	m = vec_x(ray.direction, obj->rot) * hit->t + vec_x(x, obj->rot);
+	n = vec_sub(vec_add(vec_mult(ray.direction, hit->t), x), vec_mult(obj->rot, (m + k)));
+	return (vec_norm(n));
+}
+
+t_vc	normal_cone(t_hit_rec *hit, t_obj *obj, t_ray ray)
+{
+	double	m;
+	t_vc	n;
+	t_vc	x;
+
+	x = vec_sub(ray.origin, obj->pos);
+	m = vec_x(ray.direction, obj->rot) * hit->t + vec_x(x, obj->rot);
+	m *= 1 + car(tan(M_PI * obj->size / 180));
+	n = vec_sub(vec_add(vec_mult(ray.direction, hit->t), x), vec_mult(obj->rot, m));
+	return (vec_norm(n));
+}
+
+t_vc	normal_vectors(t_hit_rec *hit, t_obj *obj, t_ray ray)
+{
+	if (obj->type == 4)
+		return (normal_cylinder(hit, obj, ray));
+	else if (obj->type == 5)
+		return (normal_cone(hit, obj, ray));
+	else if (obj->type == 6 || obj->type == 7)
+		return (vec_norm(obj->rot));
+	else if (obj->type == 8)
+		return (normal_paraboloid(hit, obj, ray));
+	else
+		return (vec_norm(vec_sub(inter_position(ray, hit->t), obj->pos)));
 }
 
 int	shadow_cutter(t_env *e, t_obj *obj, t_hit_rec *hit, t_obj *light_obj, t_ray ray)

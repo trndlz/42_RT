@@ -12,53 +12,61 @@
 
 #include "rtv1.h"
 
-double			inter_sph(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x)
+double			inter_sph(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {
 	t_vc abc;
+	t_vc x;
 
-	abc.x = vec_squ_sum(ray);
-	abc.y = 2.0 * vec_x(x, ray);
+	x = vec_sub(ray.origin, obj->pos);
+	abc.x = vec_squ_sum(ray.direction);
+	abc.y = 2.0 * vec_x(x, ray.direction);
 	abc.z = vec_squ_sum(x) - car(obj->size);
 	return (quadratic_solver(hit, abc));
 }
 
-double			inter_paraboloid(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x)
+double			inter_paraboloid(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {
-	double	k;
+	double		k;
 	t_vc		v;
 	t_vc		abc;
+	t_vc 		x;
 
+	x = vec_sub(ray.origin, obj->pos);
 	k = obj->size;
 	v = vec_norm(obj->rot);
-	abc.x = vec_x(ray, ray) - car(vec_x(ray, v));
-	abc.y = 2 * (vec_x(ray, x) - vec_x(ray, v) * (vec_x(x, v) + 2 * k));
+	abc.x = vec_x(ray.direction, ray.direction) - car(vec_x(ray.direction, v));
+	abc.y = 2 * (vec_x(ray.direction, x) - vec_x(ray.direction, v) * (vec_x(x, v) + 2 * k));
 	abc.z = (vec_x(x, x) - vec_x(x, v) * (vec_x(x, v) + 4 * k));
 	return (quadratic_solver(hit, abc));
 }
 
-double			inter_cone(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x)
+double			inter_cone(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {
 	double	k;
 	t_vc	abc;
+	t_vc 	x;
 
+	x = vec_sub(ray.origin, obj->pos);
 	k = 1 + car(tan(M_PI * obj->size / 180));
 	obj->rot = vec_norm(obj->rot);
-	abc.x = vec_x(ray, ray)
-		- k * car(vec_x(ray, obj->rot));
-	abc.y = 2 * (vec_x(ray, x)
-		- k * vec_x(ray, obj->rot)
+	abc.x = vec_x(ray.direction, ray.direction)
+		- k * car(vec_x(ray.direction, obj->rot));
+	abc.y = 2 * (vec_x(ray.direction, x)
+		- k * vec_x(ray.direction, obj->rot)
 		* vec_x(x, obj->rot));
 	abc.z = vec_x(x, x)
 		- k * car(vec_x(x, obj->rot));
 	return (quadratic_solver(hit, abc));
 }
 
-double			inter_plane(t_vc ray, t_vc x, t_obj *obj)
+double			inter_plane(t_ray ray, t_obj *obj)
 {
-	double t;
-	double den;
+	double 	t;
+	double 	den;
+	t_vc 	x;
 
-	den = vec_x(ray, obj->rot);
+	x = vec_sub(ray.origin, obj->pos);
+	den = vec_x(ray.direction, obj->rot);
 	if (den == 0)
 		return (-1);
 	t = -vec_x(x, obj->rot) / den;
@@ -84,14 +92,16 @@ double			inter_plane(t_vc ray, t_vc x, t_obj *obj)
 // 	return (-1.0);
 // }
 
-double			inter_cyl(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc x)
+double			inter_cyl(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {
 	t_vc abc;
+	t_vc x;
 
+	x = vec_sub(ray.origin, obj->pos);
 	obj->rot = vec_norm(obj->rot);
-	abc.x = vec_squ_sum(ray) - car(vec_x(ray, obj->rot));
-	abc.y = 2 * (vec_x(ray, x)
-		- vec_x(ray, obj->rot) * vec_x(x, obj->rot));
+	abc.x = vec_squ_sum(ray.direction) - car(vec_x(ray.direction, obj->rot));
+	abc.y = 2 * (vec_x(ray.direction, x)
+		- vec_x(ray.direction, obj->rot) * vec_x(x, obj->rot));
 	abc.z = vec_squ_sum(x)
 		- car(vec_x(x, obj->rot)) - car(obj->size);
 	return (quadratic_solver(hit, abc));

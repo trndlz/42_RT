@@ -24,7 +24,7 @@ t_vc	normal_cylinder(t_hit_rec *hit, t_obj *obj, t_ray ray)
 	return (vec_norm(n));
 }
 
-t_vc			normal_paraboloid(t_hit_rec *hit, t_obj *obj, t_ray ray)
+t_vc	normal_paraboloid(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {
 	double	k;
 	double	m;
@@ -65,58 +65,39 @@ t_vc	normal_vectors(t_hit_rec *hit, t_obj *obj, t_ray ray)
 		return (vec_norm(vec_sub(inter_position(ray, hit->t), obj->pos)));
 }
 
-int	shadow_cutter(t_env *e, t_obj *obj, t_hit_rec *hit, t_obj *light_obj, t_ray ray)
+int		shadow_cutter(t_env *e, t_obj *obj, t_hit_rec *hit, t_obj *light_obj, t_ray ray)
 {
 	double	s;
-	t_vc	p;
-	t_vc	light;
-	t_vc	v2;
 	t_vc	inter;
 	t_obj	*clst;
+	t_ray	light_r;
 
-	v2 = vec_add(vec_mult(ray.direction, hit->t), ray.origin);
+	light_r.origin = inter_position(ray, hit->t);
 	clst = e->cut_link;
 	while (clst)
 	{
-		if (hit->hit_obj != obj && clst->id_cut == obj->id_obj)
-		{
-			light = vec_sub(v2, light_obj->pos);
-			p = vec_sub(obj->pos, v2);
-			s = distance_to_inter(hit, obj, light, p);
-			if (obj == hit->hit_obj && obj->type != 6 && obj->type != 7)
-				s = hit->smax;
-			inter = vec_sub(vec_add(vec_mult(light, -s), v2), clst->pos);
-			if (s > 0.000001 && s < 0.99999 && vec_x(inter, clst->rot) > 0)
-				return (0);
-		}
-	clst = clst->next;
+		light_r.direction = vec_sub(light_obj->pos, light_r.origin);
+		s = distance_to_inter(hit, obj, light_r);
+		inter = vec_sub(vec_add(vec_mult(light_r.direction, -s), light_r.origin), clst->pos);
+		if (s > 0.000001 && s < 0.99999 && vec_x(inter, clst->rot) > 0)
+			return (0);
+		clst = clst->next;
 	}
 	return (1);
 }
 
-int	shadow_no_cutter(t_obj *obj, t_hit_rec *hit, t_obj *light_obj, t_ray ray)
+int		shadow_no_cutter(t_obj *obj, t_hit_rec *hit, t_obj *light_obj, t_ray ray)
 {
 	double	s;
-	t_vc	p;
-	t_vc	light;
-	t_vc	v2;
-	t_vc	inter;
+	t_ray	light_r;
 
-	v2 = vec_add(vec_mult(ray.direction, hit->t), ray.origin);
-	if (hit->hit_obj != obj)
-	{
-		light = vec_sub(v2, light_obj->pos);
-		p = vec_sub(obj->pos, v2);
-		s = distance_to_inter(hit, obj, light, p);
-		inter = vec_add(vec_mult(light, s), light_obj->pos);
-		if (obj == hit->hit_obj && obj->type != 6 && obj->type != 7)
-			s = hit->smax;
-		if (s > 0.000001 && s < 0.99999)
-			return (0);
-	}
+	light_r.origin = inter_position(ray, hit->t);
+	light_r.direction = vec_sub(light_obj->pos, light_r.origin);
+	s = distance_to_inter(hit, obj, light_r);
+	if (s > 0.000001 && s < 0.99999)
+		return (0);
 	return (1);
 }
-
 
 int		shadows(t_env *e, t_hit_rec *hit, t_obj *light_obj, t_ray ray)
 {

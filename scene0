@@ -1,14 +1,9 @@
-#NAME		X		Y		Z		RX	RY	RZ	COLOR		SIZE		SPEC	DIFF	AMB
-cylinder 	1000	0		0		0	1	1	0xFFBDD4	40			0.4		1		0.2
-cylinder 	1000	0		-800	0	1	1	0xFFBDD4	40			0.4		1		0.2
-cone 		1000	400		0		0	-1	1	0xFFB400	32			0.8		1		0.2
-cone 		1000	400		0		1	1	1	0xff3400	12			0.8		1		0.2
-sphere		750		0		0		1	0	0	0xcbff00		40			0.4		0.4		0.2
-sphere		750		200		200		1	0	0	0xcbff00		60			0.4		0.4		0.2
-sphere		750		400		400		1	0	0	0xcbff00		80			0.4		0.4		0.2
-sphere		750		700		700		1	0	0	0xcbff00		120			0.4		0.4		0.2
-light		-700	500		700		0	0	0	0xffb400
-light		-1000	-500	0		0	0	0	0xFFFFFF
-plane 		0		100		-500	0	0	1	0xFFFFFF	0			0.2		0.9		0.1
-plane 		1500	0		0		-1	0	0	0x444444	0			0.2		0.9		0.1
-eye			-1000	0		0		0	0	0
+#NAME		X		Y	    Z		RX	RY	RZ	COLOR		LENGTH		SPEC	DIFF	AMB		CUT		REFL		TRANS
+#sphere	    1000   	0	    0		0	70	1	0xFF0000	730			0.5		0.5		0.1		0		0   		1
+plane		3000	0	    0		-1 	0 	0	0x040420	200			0.4		0.9		0.1		0		0.5	 		0
+#sphere	    100   	000	    0		0	70	1	0x01f141	730			0.5		0.5		0.1		0		0   		1
+sphere	    000   	500	    0		0	70	1	0x8421F1	1730			0.5		0.5		0.1		0		0   		0
+plane		-4001	0	    0		1 	0 	0	0x0404A0	200			0.4		0.9		0.1		1		0			0
+light		-4000   	0	    1000	0 	0 	0	0xFFFFFF
+light		2500  	0	0	    0 	0 	0	0xFFFFFF
+eye			-4000	-2000   0		0 	0 	30

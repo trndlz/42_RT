@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/19 17:18:58 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/20 16:33:06 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define SHADOW_BIAS 0.001
 # define AA_S 20
 # define CART_S 20
+# define PALETTE_SIZE 40
 
 typedef struct		s_vc
 {
@@ -270,6 +271,6 @@ int					recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
 int					transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
 void				cartooning(t_env *e);
-
+int					clr_abs_dif(int col1, int col2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/19 18:28:57 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/20 16:13:43 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_ray	create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
 
 int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_hit_rec *hit, t_ray ray)
 {
-	int		color_                                                                                                                     diff;
+	int		color_diff;
 	int		color_spec;
 	double	dot_spec;
 	double	dot_diff;

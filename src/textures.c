@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:41:47 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/20 15:59:50 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/20 16:56:50 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 char		textures_coef(t_obj *obj, t_hit_rec *hit, t_ray ray)
 {
 	if (obj->type == 3 && SPHERE_TEXTURE)
-		return (get_texture_sphere(hit, ray));
+		return (get_checkerboard_sphere(hit, ray));
 	else if (obj->type == 6 && PLANE_CHECKERS)
 		return (checkerboard_plane(hit, ray));
 	else if (obj->type == 4 && CYLINDER_TEXTURE)

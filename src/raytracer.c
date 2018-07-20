@@ -6,13 +6,13 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/20 16:13:43 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/20 16:56:36 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-t_ray	create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
+t_ray		create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
 {
 	t_ray ray;
 
@@ -24,7 +24,7 @@ t_ray	create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
 	return (ray);
 }
 
-int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_hit_rec *hit, t_ray ray)
+int			specular_diffuse(int color, t_obj *light, t_hit_rec *hit)
 {
 	int		color_diff;
 	int		color_spec;
@@ -33,26 +33,25 @@ int			specular_diffuse(int color, t_obj *light, t_obj *obj, t_hit_rec *hit, t_ra
 	t_vc	rm;
 
 	rm = vec_norm(vec_sub(vec_mult(hit->n, 2 * hit->cost), hit->lm));
-	dot_spec = ratio_limits(pow(vec_dot(rm, vec_norm(vec_mult(hit->v2, -1.0))),
+	dot_spec = ratio_limits(pow(vec_dot(rm, vec_norm(vec_mult(hit->v, -1.0))),
 		ALPHA_SPEC));
 	dot_diff = ratio_limits(hit->cost);
-	color_spec = multiply_color(light->col, dot_spec * obj->coef.x);
-	color_diff = multiply_color(obj->col, dot_diff * obj->coef.y);
-	if (!textures_coef(obj, hit, ray))
-		color_diff = multiply_color(color_diff, 0.6);
+	color_spec = multiply_color(light->col, dot_spec * hit->hit_obj->coef.x);
+	color_diff = multiply_color(hit->hit_obj->col, dot_diff * hit->hit_obj->coef.y);
 	color_spec = add_color(add_color(color_spec, color_diff), color);
 	return (color_spec);
 }
 
-double	distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_vc ray, t_vc p)
+double		distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray)
 {
 	double d;
 
 	d = -1.0;
-	d = (obj_list->type == 3) ? inter_sph(hit, obj_list, ray, p) : d;
-	d = (obj_list->type == 4) ? inter_cyl(hit, obj_list, ray, p) : d;
-	d = (obj_list->type == 5) ? inter_cone(hit, obj_list, ray, p) : d;
-	d = (obj_list->type == 6) ? inter_plane(ray, p, obj_list) : d;
+	d = (obj_list->type == 3) ? inter_sph(hit, obj_list, ray) : d;
+	d = (obj_list->type == 4) ? inter_cyl(hit, obj_list, ray) : d;
+	d = (obj_list->type == 5) ? inter_cone(hit, obj_list, ray) : d;
+	d = (obj_list->type == 6) ? inter_plane(ray, obj_list) : d;
+	d = (obj_list->type == 8) ? inter_paraboloid(hit, obj_list, ray) : d;
 	return (d);
 }
 
@@ -73,12 +72,10 @@ int		is_not_cut(t_obj *obj, t_env *e)
 char	hit_not_cut(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {
 	double	t;
-	t_vc	offset;
 	char	hit_anything;
 
 	hit_anything = 0;
-	offset = vec_sub(ray.origin, obj->pos);
-	t = distance_to_inter(hit, obj, ray.direction, offset);
+	t = distance_to_inter(hit, obj, ray);
 	if (t > 0.000001 && t < hit->t)
 	{
 		hit->t = t;
@@ -102,12 +99,9 @@ char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 	{
 		if (clst->id_cut == obj->id_obj)
 		{
-			t_cut = distance_to_inter(hit, clst, ray.direction,
-				vec_sub(ray.origin, clst->pos));
-			t = distance_to_inter(hit, obj, ray.direction,
-				vec_sub(ray.origin, obj->pos));
-			inter = vec_sub(vec_add(vec_mult(ray.direction, t),
-				ray.origin), clst->pos);
+			t_cut = distance_to_inter(hit, clst, ray);
+			t = distance_to_inter(hit, obj, ray);
+			inter = vec_sub(vec_add(vec_mult(ray.direction, t), ray.origin), clst->pos);
 			if (t > 0 && t < hit->t && vec_x(inter, clst->rot) > 0)
 			{
 				hit->t = t;
@@ -133,7 +127,7 @@ char		nearest_node(t_env *e, t_ray ray, t_hit_rec *hit)
 
 	hit_anything = 0;
 	hit->hit_obj = NULL;
-	hit->t = 999999999;
+	hit->t = INFINITY;
 	olst = e->obj_link;
 	while (olst)
 	{
@@ -157,23 +151,28 @@ int		phong_lighting(t_env *e, t_ray ray, t_hit_rec *hit)
 {
 	t_obj	*llst;
 	int		color;
-	int		is_lit;
+	double	s;
 
 	llst = e->light_link;
+	hit->n = normal_vectors(hit, hit->hit_obj, ray);
+	hit->v = inter_position(ray, hit->t);
 	color = multiply_color(hit->hit_obj->col, hit->hit_obj->coef.z);
-	if (!(textures_coef(hit->hit_obj, hit, ray)))
-		color = multiply_color(color, 0.6);
 	while (llst)
 	{
-		hit->n = normal_vectors(hit, hit->hit_obj, ray);
-		hit->v2 = vec_add(vec_mult(ray.direction, hit->t), ray.origin);
-		hit->lm = vec_norm(vec_sub(llst->pos, hit->v2));
+		s = shadows(e, hit, llst, ray);
+		hit->lm = vec_norm(vec_sub(llst->pos, hit->v));
 		hit->cost = vec_dot(hit->n, hit->lm);
-		is_lit = shadows(e, hit, llst, ray);
-		// if (is_lit)
-			color = specular_diffuse(color, llst, hit->hit_obj, hit, ray);
+		hit->lit = (s == 1) ? 1 : 0;
+		if (!hit->lit)
+		{
+			color = specular_diffuse(color, llst, hit);
+			if (s < 1)
+				color = multiply_color(color, (1 - s));
+		}
 		llst = llst->next;
 	}
+	if (!(textures_coef(hit->hit_obj, hit, ray)))
+		color = multiply_color(color, 0.6);
 	return (color);
 }
 
@@ -232,7 +231,7 @@ int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray)
 	pixel = phong_lighting(e, ray, hit);
 	if (hit->hit_obj->tr > 0 && hit->nt > 0)
 		pixel = transparency(e, pixel, ray, hit);
-	else if (hit->hit_obj->r > 0 && hit->nr > 0)
+	if (hit->hit_obj->r > 0 && hit->nr > 0)
 		pixel = recursive_reflection(e, pixel, ray, hit);
 	return (pixel);
 }
@@ -252,7 +251,7 @@ void	*scene_plot(void *arg)
 		while (++(e->y) < WINY)
 		{
 			hit_rec.nr = 1;
-			hit_rec.nt = 56;
+			hit_rec.nt = 5;
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))
 			{

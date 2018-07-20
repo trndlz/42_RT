@@ -22,8 +22,8 @@
 # define WINZ 1000
 # define FOV 1000
 # define TH_NB 50
-# define SPHERE_TEXTURE 1
-# define CONE_TEXTURE 0
+# define SPHERE_TEXTURE 0
+# define CONE_TEXTURE 1
 # define CYLINDER_TEXTURE 1
 # define PLANE_CHECKERS 0
 # define ALPHA_SPEC 100
@@ -72,12 +72,13 @@ typedef struct		s_hit_rec
 	double			t;
 	double			t1;
 	double			t2;
-	double			smax;
+	double			tr_max;
 	int				nr;
 	int				nt;
+	char			lit;
 	t_vc			n;
 	t_vc			s;
-	t_vc			v2;
+	t_vc			v;
 	t_vc			lm;
 	t_vc			hit_inter;
 	t_obj			*hit_obj;
@@ -113,7 +114,7 @@ int					create_image(t_env *e);
 void				draw_point(t_env *e, int x, int y, unsigned int color);
 void				*scene_plot(void *arg);
 t_ray				create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin);
-double				distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_vc ray, t_vc p);
+double				distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray);
 char				nearest_node(t_env *e, t_ray ray, t_hit_rec *hit);
 void				compute_scene_vectors(t_env *e, t_obj *tmp);
 int					is_not_cut(t_obj *obj, t_env *e);
@@ -144,11 +145,13 @@ t_vc				inter_position(t_ray ray, double t);
 ** SHAPES INTERSECTIONS
 */
 
-double				inter_sph(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset);
-double				inter_cone(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset);
-double				inter_plane(t_vc ray, t_vc offset, t_obj *obj);
-double				inter_cyl(t_hit_rec *hit, t_obj *obj, t_vc ray, t_vc offset);
+double				inter_sph(t_hit_rec *hit, t_obj *obj, t_ray ray);
+double				inter_cone(t_hit_rec *hit, t_obj *obj, t_ray ray);
+double				inter_plane(t_ray ray, t_obj *obj);
+double				inter_cyl(t_hit_rec *hit, t_obj *obj, t_ray ray);
+double				inter_paraboloid(t_hit_rec *hit, t_obj *obj, t_ray ray);
 double				quadratic_solver(t_hit_rec *hit, t_vc abc);
+char				hit_not_cut(t_hit_rec *hit, t_obj *obj, t_ray ray);
 
 
 /*
@@ -165,7 +168,7 @@ int					deal_mouse(int k, int y, int z, t_env *e);
 */
 
 t_vc				normal_vectors(t_hit_rec *hit, t_obj *obj, t_ray ray);
-int					shadows(t_env *e, t_hit_rec *hit, t_obj *light_obj, t_ray ray);
+double				shadows(t_env *e, t_hit_rec *hit, t_obj *light_obj, t_ray ray);
 
 /*
 ** COLOR CALCULATION
@@ -177,7 +180,7 @@ int					multiply_color(int hex, double mult);
 int					color_limits(int col);
 
 
-int					specular_diffuse(int color, t_obj *light, t_obj *obj, t_hit_rec *hit, t_ray ray);
+int					specular_diffuse(int color, t_obj *light, t_hit_rec *hit);
 void				global_filter(t_env *e, int filter);
 
 

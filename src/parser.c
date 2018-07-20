@@ -28,6 +28,8 @@ int		name_type(char *str)
 		return (6);
 	else if (!ft_strcmp(str, "disk"))
 		return (7);
+	else if (!ft_strcmp(str, "paraboloid"))
+		return (8);
 	else
 		return (0);
 }

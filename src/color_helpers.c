@@ -60,3 +60,8 @@ int			add_color(int hex1, int hex2)
 	b = color_limits(hex1 % 0x100 + hex2 % 0x100);
 	return (((int)(r & 0xff) << 16) + ((int)(g & 0xff) << 8) + (int)(b & 0xff));
 }
+
+int			mix_colors(int col1, int col2, double coef)
+{
+	return (add_color(multiply_color(col1, coef), multiply_color(col2, (1 - coef))));
+}

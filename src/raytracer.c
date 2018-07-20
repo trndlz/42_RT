@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-t_ray	create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
+t_ray		create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
 {
 	t_ray ray;
 
@@ -24,7 +24,7 @@ t_ray	create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
 	return (ray);
 }
 
-int			specular_diffuse(int color, t_obj *light, t_hit_rec *hit, t_ray ray)
+int			specular_diffuse(int color, t_obj *light, t_hit_rec *hit)
 {
 	int		color_diff;
 	int		color_spec;
@@ -38,13 +38,11 @@ int			specular_diffuse(int color, t_obj *light, t_hit_rec *hit, t_ray ray)
 	dot_diff = ratio_limits(hit->cost);
 	color_spec = multiply_color(light->col, dot_spec * hit->hit_obj->coef.x);
 	color_diff = multiply_color(hit->hit_obj->col, dot_diff * hit->hit_obj->coef.y);
-	if (!textures_coef(hit->hit_obj, hit, ray))
-		color_diff = multiply_color(color_diff, 0.6);
 	color_spec = add_color(add_color(color_spec, color_diff), color);
 	return (color_spec);
 }
 
-double	distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray)
+double		distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray)
 {
 	double d;
 
@@ -74,11 +72,9 @@ int		is_not_cut(t_obj *obj, t_env *e)
 char	hit_not_cut(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {
 	double	t;
-	t_vc	offset;
 	char	hit_anything;
 
 	hit_anything = 0;
-	offset = vec_sub(ray.origin, obj->pos);
 	t = distance_to_inter(hit, obj, ray);
 	if (t > 0.000001 && t < hit->t)
 	{
@@ -155,23 +151,28 @@ int		phong_lighting(t_env *e, t_ray ray, t_hit_rec *hit)
 {
 	t_obj	*llst;
 	int		color;
-	int		is_lit;
+	double	s;
 
 	llst = e->light_link;
 	hit->n = normal_vectors(hit, hit->hit_obj, ray);
 	hit->v = inter_position(ray, hit->t);
 	color = multiply_color(hit->hit_obj->col, hit->hit_obj->coef.z);
-	if (!(textures_coef(hit->hit_obj, hit, ray)))
-		color = multiply_color(color, 0.6);
 	while (llst)
 	{
+		s = shadows(e, hit, llst, ray);
 		hit->lm = vec_norm(vec_sub(llst->pos, hit->v));
 		hit->cost = vec_dot(hit->n, hit->lm);
-		is_lit = shadows(e, hit, llst, ray);
-		if (is_lit)
-			color = specular_diffuse(color, llst, hit, ray);
+		hit->lit = (s == 1) ? 1 : 0;
+		if (!hit->lit)
+		{
+			color = specular_diffuse(color, llst, hit);
+			if (s < 1)
+				color = multiply_color(color, (1 - s));
+		}
 		llst = llst->next;
 	}
+	if (!(textures_coef(hit->hit_obj, hit, ray)))
+		color = multiply_color(color, 0.6);
 	return (color);
 }
 
@@ -250,7 +251,7 @@ void	*scene_plot(void *arg)
 		while (++(e->y) < WINY)
 		{
 			hit_rec.nr = 1;
-			hit_rec.nt = 1;
+			hit_rec.nt = 5;
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))
 			{

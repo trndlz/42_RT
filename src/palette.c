@@ -6,7 +6,7 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 16:31:45 by jostraye          #+#    #+#             */
-/*   Updated: 2018/07/23 16:55:15 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/24 13:47:01 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int		palette_compare(int *palette, int color)
 		int	i;
 
 		i = 0;
-		while (palette[i] != -1 && i < PALETTE_SIZE)
+		while (i < PALETTE_SIZE)
 		{
+			if (palette[i] < 0)
+				return (i);
 			if (clr_abs_dif(color, palette[i]) < CART_S)
 				return (0);
 			if (clr_abs_dif(color, palette[i]) >= CART_S)
@@ -57,16 +59,18 @@ char	init_palette(int *palette)
 char	create_palette(t_env *e, int *palette)
 {
 	int i;
+	int y;
+	int z;
 
 	i = 0;
-	e->z = -1;
-	while (++(e->z) < WINZ)
+	z = -1;
+	while (++z < WINZ)
 	{
-		e->y = -1;
-		while (++(e->y) < WINY)
-		if (palette_compare(palette, e->imgstr[e->z * WINY + e->y]) && i < PALETTE_SIZE)
+		y = -1;
+		while (++y < WINY)
+		if (palette_compare(palette, e->imgstr[z * WINY + y]) && i < PALETTE_SIZE)
 			{
-				palette[i] = palette_add(palette, e->imgstr[e->z * WINY + e->y]);
+				palette[i] = palette_add(palette, e->imgstr[z * WINY + y]);
 				i++;
 			}
 	}

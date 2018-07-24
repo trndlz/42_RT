@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color_helpers.c                                    :+:      :+:    :+:   */
+/*   color_helpers2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/17 14:41:47 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/17 18:16:47 by tmervin          ###   ########.fr       */
+/*   Created: 2018/07/24 10:54:54 by jostraye          #+#    #+#             */
+/*   Updated: 2018/07/24 13:50:08 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int		closest_col(int *palette, int color)
 
 	i = -1;
 	min_diff = 3 * 256;
-	while (palette[++i] != -1 && i < PALETTE_SIZE)
+	while (++i < PALETTE_SIZE)
 		if (clr_abs_dif(color, palette[i]) < min_diff)
 			min_diff = clr_abs_dif(color, palette[i]);
 	i = 0;
-	while (palette[++i] != -1 && i < PALETTE_SIZE)
+	while (++i < PALETTE_SIZE)
 		if (clr_abs_dif(color, palette[i]) == min_diff)
 			return (i);
 	return (0);

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/20 16:31:45 by jostraye          #+#    #+#             */
-/*   Updated: 2018/07/20 16:55:15 by jostraye         ###   ########.fr       */
+/*   Created: 2018/07/24 10:54:45 by jostraye          #+#    #+#             */
+/*   Updated: 2018/07/24 13:52:50 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,34 @@ char	line_condition(int *imgstr, int y, int z)
 
 void	flatten_colors(t_env *e, int *palette)
 {
-	e->z = -1;
-	while (++(e->z) < WINZ)
+	int z;
+	int y;
+
+	z = -1;
+	while (++z < WINZ)
 	{
-		e->y = -1;
-		while (++(e->y) < WINY)
-			e->imgstr[e->z * WINY + e->y] = palette[closest_col(palette, e->imgstr[e->z * WINY + e->y])];
+		y = -1;
+		while (++y < WINY)
+			e->imgstr[z * WINY + y] = palette[closest_col(palette, e->imgstr[z * WINY + y])];
 	}
 }
 
 void	line(t_env *e)
 {
-	e->z = -1;
-	while (++(e->z) < WINZ)
+	int y;
+	int z;
+
+	z = 0;
+	while (++z < WINZ - 1)
 	{
-		e->y = -1;
-		while (++(e->y) < WINY)
+		y = 0;
+		while (++y < WINY - 1)
 		{
-			if(line_condition(e->imgstr, e->y, e->z))
+			if(line_condition(e->imgstr, y, z))
 			{
-				e->imgstr[e->z * WINY + e->y] = 0x000000;
-				e->imgstr[e->z * WINY + e->y - WINY] = 0x000000;
-				e->imgstr[e->z * WINY + e->y - 1] = 0x000000;
+				e->imgstr[z * WINY + y] = 0x000000;
+				e->imgstr[z * WINY + y - WINY] = 0x000000;
+				e->imgstr[z * WINY + y - 1] = 0x000000;
 			}
 		}
 	}
@@ -63,8 +69,10 @@ char	cartooning(t_env *e)
 	int *colorcopy;
 	int *palette;
 
-	palette = (int *)malloc(sizeof(int) * PALETTE_SIZE);
-	colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ);
+	if (!(palette = (int *)malloc(sizeof(int) * PALETTE_SIZE)))
+		return (0);
+	if (!(colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ)))
+		return (0);
 	if (!(init_palette(palette)))
 		return (0);
 	if(!(create_palette(e, palette)))
@@ -73,38 +81,4 @@ char	cartooning(t_env *e)
 	line(e);
 	free(palette);
 	return (1);
-}
-
-double		blinding_condition(t_env *e, t_vc light)
-{
-	double coef;
-	if (light.x == 0 || e->y - light.y == 0)
-		return (1);
-	else
-		coef = 1 / (fabs(e->y - light.y) * sqrt(fabs(e->z - light.z))) * WINY * 100 / light.x +
-		1 / (fabs(e->z - light.z) * sqrt(fabs(e->y - light.y))) * WINZ * 100 / light.x;
-	if (coef > 1)
-		coef = 1;
-	return (coef);
-}
-
-void	blinding_lights(t_env *e)
-{
-	t_vc	light;
-	light.x = 150;
-	light.y = 500;
-	light.z = 500;
-	double		bld_coef;
-	e->z = -1;
-	while (++(e->z) < WINZ)
-	{
-		e->y = -1;
-		while (++(e->y) < WINY)
-		{
-			if((bld_coef = blinding_condition(e, light)))
-			{
-				e->imgstr[e->z * WINY + e->y] = mix_colors(0xFFFFFF, e->imgstr[e->z * WINY + e->y], bld_coef);
-			}
-		}
-	}
 }

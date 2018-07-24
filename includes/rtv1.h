@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/20 16:33:06 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/24 11:27:29 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ typedef struct		s_ray
 	t_vc			direction;
 	int				type;
 }					t_ray;
+
+// typedef struct		s_vclst
+// {
+// 	t_vc			vector;
+// 	struct s_vclist	*next;
+// }					t_vclist;
 
 typedef struct		s_obj
 {
@@ -96,6 +102,7 @@ typedef struct		s_env
 	int				nb_eye;
 	int				filter;
 	int				id;
+	// t_vclist		*b_lights;
 	t_vc			eye_lookfrom;
 	t_vc			eye_rot;
 	pthread_t		pth[TH_NB];
@@ -274,6 +281,10 @@ int					palette_compare(int *palette, int color);
 int					palette_add(int *palette, int color);
 char				init_palette(int *palette);
 char				create_palette(t_env *e, int *palette);
+
+double				blinding_condition(t_env *e, t_vc light);
+// void				vclist_add(t_vclist **beg, t_vclist *n);
+void				blinding_lights(t_env *e);
 
 /*
 ** MISCELLANEOUS

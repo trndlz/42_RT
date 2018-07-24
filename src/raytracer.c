@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/17 18:24:54 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/20 16:56:36 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,6 @@ void	*scene_plot(void *arg)
 			}
 		}
 	}
-	// antialias(e);
 	// global_filter(e, 2);
 	// stereoscopic(e);
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/17 16:30:31 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/20 16:33:06 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # define PLANE_CHECKERS 0
 # define ALPHA_SPEC 100
 # define SHADOW_BIAS 0.001
+# define AA_S 20
+# define CART_S 20
+# define PALETTE_SIZE 40
 
 typedef struct		s_vc
 {
@@ -115,6 +118,7 @@ double				distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray);
 char				nearest_node(t_env *e, t_ray ray, t_hit_rec *hit);
 void				compute_scene_vectors(t_env *e, t_obj *tmp);
 int					is_not_cut(t_obj *obj, t_env *e);
+int					mix_colors(int col1, int col2, double coef);
 
 /*
 ** MATHS
@@ -176,6 +180,8 @@ int					add_color(int hex1, int hex2);
 double				ratio_limits(double i);
 int					multiply_color(int hex, double mult);
 int					color_limits(int col);
+int					closest_col(int *palette, int color);
+int					major_color(int color);
 
 
 int					specular_diffuse(t_obj *light, t_hit_rec *hit);
@@ -262,6 +268,15 @@ int					parser(char **av, t_env *e);
 int					create_objects(t_env *e, char **tab_values);
 
 /*
+** PALETTE
+*/
+
+int					palette_compare(int *palette, int color);
+int					palette_add(int *palette, int color);
+char				init_palette(int *palette);
+char				create_palette(t_env *e, int *palette);
+
+/*
 ** MISCELLANEOUS
 */
 
@@ -269,6 +284,11 @@ void				create_bmp_file(int *imgstr);
 t_vc				hextorgb(int hex);
 void				stereoscopic(t_env *e);
 void				antialias(t_env *e);
-
+int					recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
+int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
+int					transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
+char				cartooning(t_env *e);
+int					clr_abs_dif(int col1, int col2);
+void				blinding_lights(t_env *e);
 
 #endif

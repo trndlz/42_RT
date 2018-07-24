@@ -1,7 +1,7 @@
-#NAME		    X		Y	    Z	    RX	RY	RZ	    COLOR		LENGTH		SPEC	DIFF	AMB		CUT		REFL	TRANS
-plane           550      50      50      -1   0   0     0x0000FF    1           0.7     0.5     0.1     0       0       0
-cone            0       -600       0       0   0   1       0x00FF00    15          0.5     0.8     0.2     0       0       1
-sphere          -500    0       0       0   0    0      0xFF0000    200         0.5     0.8     0.2     0       0       0.7
-plane           -500       0       0      0   1   0     0x0000FF    1           0.7     0.5     0.1     1       0       0.51
-light		    -1000   100	    -100	    0 	0 	0	    0xFFFFFF
-eye			    -2000	-800       0		0 	0 	10
+#NAME		X		Y	    Z		RX	RY	RZ	COLOR		LENGTH		SPEC	DIFF	AMB		CUT		REFL		TRANS
+sphere	    1000   	0	    0		0	70	1	0xFF0000	730			0.5		0.5		0.1		0		0   		1
+plane		3000	0	    0		-1 	0 	0	0x0000FF	200			0.4		0.9		0.1		0		0.5	 		0
+#plane		-4001	0	    0		1 	0 	0	0x0000FF	200			0.4		0.9		0.1		0		0			0
+light		0   	0	    1000	0 	0 	0	0xFFFFFF
+light		2500  	0	0	    0 	0 	0	0xFFFFFF
+eye			-4000	-3400   0		0 	0 	30

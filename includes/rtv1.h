@@ -22,7 +22,7 @@
 # define WINZ 1000
 # define FOV 1000
 # define TH_NB 50
-# define SPHERE_TEXTURE 0
+# define SPHERE_TEXTURE 1
 # define CONE_TEXTURE 1
 # define CYLINDER_TEXTURE 1
 # define PLANE_CHECKERS 0
@@ -149,6 +149,7 @@ double				inter_cyl(t_hit_rec *hit, t_obj *obj, t_ray ray);
 double				inter_paraboloid(t_hit_rec *hit, t_obj *obj, t_ray ray);
 double				quadratic_solver(t_hit_rec *hit, t_vc abc);
 char				hit_not_cut(t_hit_rec *hit, t_obj *obj, t_ray ray);
+char				hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray);
 
 
 /*
@@ -177,7 +178,7 @@ int					multiply_color(int hex, double mult);
 int					color_limits(int col);
 
 
-int					specular_diffuse(int color, t_obj *light, t_hit_rec *hit);
+int					specular_diffuse(t_obj *light, t_hit_rec *hit);
 void				global_filter(t_env *e, int filter);
 
 
@@ -197,6 +198,7 @@ t_vc				init_vc(double x, double y, double z);
 void				obj_add(t_obj **beg, t_obj *n);
 void				clear_list(t_obj *head);
 t_obj				*disc_for_cylinder(t_obj *cyl, t_vc center);
+t_obj				*get_cutter(t_env *e, t_obj *obj);
 
 /*
 ** ERROR MGT

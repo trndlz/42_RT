@@ -24,7 +24,7 @@ t_ray		create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
 	return (ray);
 }
 
-int			specular_diffuse(int color, t_obj *light, t_hit_rec *hit)
+int			specular_diffuse(t_obj *light, t_hit_rec *hit)
 {
 	int		color_diff;
 	int		color_spec;
@@ -38,7 +38,7 @@ int			specular_diffuse(int color, t_obj *light, t_hit_rec *hit)
 	dot_diff = ratio_limits(hit->cost);
 	color_spec = multiply_color(light->col, dot_spec * hit->hit_obj->coef.x);
 	color_diff = multiply_color(hit->hit_obj->col, dot_diff * hit->hit_obj->coef.y);
-	color_spec = add_color(add_color(color_spec, color_diff), color);
+	color_spec = add_color(color_spec, color_diff);
 	return (color_spec);
 }
 
@@ -94,28 +94,21 @@ char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 	char	hit_anything;
 
 	hit_anything = 0;
-	clst = e->cut_link;
-	while (clst)
+	clst = get_cutter(e, obj);
+	t_cut = distance_to_inter(hit, clst, ray);
+	t = distance_to_inter(hit, obj, ray);
+	inter = vec_sub(vec_add(vec_mult(ray.direction, t), ray.origin), clst->pos);
+	if (t > 0 && t < hit->t && vec_x(inter, clst->rot) > 0)
 	{
-		if (clst->id_cut == obj->id_obj)
-		{
-			t_cut = distance_to_inter(hit, clst, ray);
-			t = distance_to_inter(hit, obj, ray);
-			inter = vec_sub(vec_add(vec_mult(ray.direction, t), ray.origin), clst->pos);
-			if (t > 0 && t < hit->t && vec_x(inter, clst->rot) > 0)
-			{
-				hit->t = t;
-				hit->hit_obj = obj;
-				hit_anything = 1;
-			}
-			if (t > 0 && t_cut < hit->t && hit->t1 < t_cut && hit->t2 > t_cut)
-			{
-				hit->t = t_cut;
-				hit->hit_obj = clst;
-				hit_anything = 1;
-			}
-		}
-		clst = clst->next;
+		hit->t = t;
+		hit->hit_obj = obj;
+		hit_anything = 1;
+	}
+	if (t > 0 && t_cut < hit->t && hit->t1 < t_cut && hit->t2 > t_cut)
+	{
+		hit->t = t_cut;
+		hit->hit_obj = clst;
+		hit_anything = 1;
 	}
 	return (hit_anything);
 }
@@ -128,6 +121,8 @@ char		nearest_node(t_env *e, t_ray ray, t_hit_rec *hit)
 	hit_anything = 0;
 	hit->hit_obj = NULL;
 	hit->t = INFINITY;
+	hit->t1 = -1;
+	hit->t2 = -1;
 	olst = e->obj_link;
 	while (olst)
 	{
@@ -143,7 +138,6 @@ char		nearest_node(t_env *e, t_ray ray, t_hit_rec *hit)
 		}
 		olst = olst->next;
 	}
-
 	return (hit_anything);
 }
 
@@ -162,13 +156,7 @@ int		phong_lighting(t_env *e, t_ray ray, t_hit_rec *hit)
 		s = shadows(e, hit, llst, ray);
 		hit->lm = vec_norm(vec_sub(llst->pos, hit->v));
 		hit->cost = vec_dot(hit->n, hit->lm);
-		hit->lit = (s == 1) ? 1 : 0;
-		if (!hit->lit)
-		{
-			color = specular_diffuse(color, llst, hit);
-			if (s < 1)
-				color = multiply_color(color, (1 - s));
-		}
+		color = add_color(multiply_color(specular_diffuse(llst, hit), s), color);
 		llst = llst->next;
 	}
 	if (!(textures_coef(hit->hit_obj, hit, ray)))

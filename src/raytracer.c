@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/20 16:56:36 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/24 13:12:24 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,12 +123,14 @@ char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 char		nearest_node(t_env *e, t_ray ray, t_hit_rec *hit)
 {
 	t_obj	*olst;
+	t_obj	*llst;
 	char	hit_anything;
 
 	hit_anything = 0;
 	hit->hit_obj = NULL;
 	hit->t = INFINITY;
 	olst = e->obj_link;
+	llst = e->light_link;
 	while (olst)
 	{
 		if (is_not_cut(olst, e))
@@ -143,7 +145,12 @@ char		nearest_node(t_env *e, t_ray ray, t_hit_rec *hit)
 		}
 		olst = olst->next;
 	}
-
+	// while (llst)
+	// {
+	// 		if (hit_not_cut(hit, e, llst, ray))
+	// 			hit_anything = 1;
+	// 	llst = llst->next;
+	// }
 	return (hit_anything);
 }
 
@@ -236,6 +243,12 @@ int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray)
 	return (pixel);
 }
 
+// t_vclist	*compute_lights(t_env *e, t_hit_rec *hit_rec, t_ray ray)
+// {
+// 	t_vclist	*b_lights;
+//
+// }
+
 void	*scene_plot(void *arg)
 {
 	t_env		*e;
@@ -255,12 +268,15 @@ void	*scene_plot(void *arg)
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))
 			{
-				px_color = compute_point(e, &hit_rec, ray);
-				draw_point(e, e->y, e->z, px_color);
+				// if (hit_rec->type == 1)
+				// 	vclist_add()
+				// else
+					px_color = compute_point(e, &hit_rec, ray);
+					draw_point(e, e->y, e->z, px_color);
 			}
 		}
 	}
-	// global_filter(e, 2);
+	// blinding_lights(e);
 	// stereoscopic(e);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/07/24 13:54:44 by jostraye         ###   ########.fr        #
+#    Updated: 2018/07/24 18:12:11 by jostraye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ SRC_NAME	:=	main.c								\
 				antialiasing.c						\
 				cartooning.c						\
 				normal_vectors.c					\
-				palette.c
+				palette.c							\
+				blind_lights.c
 
 OBJ_PATH	:= obj
 HEAD_PATH	:= ./includes

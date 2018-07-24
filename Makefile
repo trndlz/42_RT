@@ -20,6 +20,7 @@ SRC_NAME	:=	main.c								\
 				maths_vectors.c						\
 				lighting.c							\
 				color_helpers.c						\
+				color_helpers2.c						\
 				raytracer.c							\
 				keyboard.c							\
 				parser.c							\
@@ -36,7 +37,8 @@ SRC_NAME	:=	main.c								\
 				textures_sphere_plane.c				\
 				textures.c							\
 				antialiasing.c						\
-				cartooning.c
+				cartooning.c							\
+				palette.c
 
 OBJ_PATH	:= obj
 HEAD_PATH	:= ./includes
@@ -63,8 +65,8 @@ ifeq ($(UNAME_S), Darwin)
 	MINILIBX	:= -L ./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit
 endif
 
-CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
-# CC			:= gcc -Werror -Wall -Wextra
+# CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
+CC			:= gcc -Werror -Wall -Wextra
 OBJ_NAME	:= $(SRC_NAME:.c=.o)
 
 SRC			:= $(addprefix $(SRC_PATH)/, $(SRC_NAME))

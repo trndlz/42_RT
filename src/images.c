@@ -42,8 +42,10 @@ int		create_image(t_env *e)
 	if (!(e->imgstr = (int *)mlx_get_data_addr(e->image, &bpp, &s_l, &endian)))
 			return (0);
 	multi_threading(e);
-	cartooning(e);
+	// if((!cartooning(e)))
+	// 	return (0);
 	antialias(e);
+	blinding_lights(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->image, 0, 0);
 	return (1);
 }

@@ -82,7 +82,6 @@ void	antialias(t_env *e)
 
 	e->z = 0;
 	colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ);
-	colorcopy[e->z * WINY + e->y] = e->imgstr[e->z * WINY + e->y];
 	while (++(e->z) < WINZ - 1)
 	{
 		colorcopy[e->z * WINY + e->y] = e->imgstr[e->z * WINY + e->y];
@@ -104,4 +103,5 @@ void	antialias(t_env *e)
 		while (++(e->y) < WINY)
 			e->imgstr[e->z * WINY + e->y] = colorcopy[e->z * WINY + e->y];
 	}
+	free (colorcopy);
 }

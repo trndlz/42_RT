@@ -118,6 +118,7 @@ double				distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray);
 char				nearest_node(t_env *e, t_ray ray, t_hit_rec *hit);
 void				compute_scene_vectors(t_env *e, t_obj *tmp);
 int					is_not_cut(t_obj *obj, t_env *e);
+int					mix_colors(int col1, int col2, double coef);
 
 /*
 ** MATHS
@@ -178,6 +179,8 @@ int					add_color(int hex1, int hex2);
 double				ratio_limits(double i);
 int					multiply_color(int hex, double mult);
 int					color_limits(int col);
+int					closest_col(int *palette, int color);
+int					major_color(int color);
 
 
 int					specular_diffuse(int color, t_obj *light, t_hit_rec *hit);
@@ -263,6 +266,15 @@ int					parser(char **av, t_env *e);
 int					create_objects(t_env *e, char **tab_values);
 
 /*
+** PALETTE
+*/
+
+int					palette_compare(int *palette, int color);
+int					palette_add(int *palette, int color);
+char				init_palette(int *palette);
+char				create_palette(t_env *e, int *palette);
+
+/*
 ** MISCELLANEOUS
 */
 
@@ -273,7 +285,8 @@ void				antialias(t_env *e);
 int					recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
 int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
 int					transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
-void				cartooning(t_env *e);
+char				cartooning(t_env *e);
 int					clr_abs_dif(int col1, int col2);
+void				blinding_lights(t_env *e);
 
 #endif

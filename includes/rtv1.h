@@ -283,7 +283,7 @@ char				create_palette(t_env *e, int *palette);
 void				create_bmp_file(int *imgstr);
 t_vc				hextorgb(int hex);
 void				stereoscopic(t_env *e);
-void				antialias(t_env *e);
+void				antialias(int *imgstr);
 int					recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
 int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
 int					transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);

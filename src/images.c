@@ -44,9 +44,13 @@ int		create_image(t_env *e)
 	multi_threading(e);
 	// if((!cartooning(e)))
 	// 	return (0);
-	antialias(e);
-	blinding_lights(e);
+	
+	// blinding_lights(e);
+	pthread_mutex_lock(&(e->mutex));
+	antialias(e->imgstr);
+	pthread_mutex_unlock(&(e->mutex));
 	mlx_put_image_to_window(e->mlx, e->win, e->image, 0, 0);
+	
 	return (1);
 }
 

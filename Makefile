@@ -6,7 +6,7 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/07/24 13:48:13 by jostraye         ###   ########.fr        #
+#    Updated: 2018/07/24 13:54:44 by jostraye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ SRC_NAME	:=	main.c								\
 				init.c								\
 				intersections.c						\
 				maths_vectors.c						\
-				lighting.c							\
+				shadows.c							\
 				color_helpers.c						\
-				color_helpers2.c						\
+				color_helpers2.c					\
 				raytracer.c							\
 				keyboard.c							\
 				parser.c							\
@@ -37,7 +37,8 @@ SRC_NAME	:=	main.c								\
 				textures_sphere_plane.c				\
 				textures.c							\
 				antialiasing.c						\
-				cartooning.c							\
+				cartooning.c						\
+				normal_vectors.c					\
 				palette.c
 
 OBJ_PATH	:= obj

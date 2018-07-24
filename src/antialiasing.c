@@ -76,32 +76,33 @@ char	aa_condition(int *imgstr, int y, int z, int sensib)
 		return (0);
 }
 
-void	antialias(t_env *e)
+void	antialias(int *imgstr)
 {
 	int *colorcopy;
+	int	z;
+	int	y;
 
-	e->z = 0;
-	colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ);
-	while (++(e->z) < WINZ - 1)
+	z = 0;
+	if (!(colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ)))
+		return ;
+	while (++z < WINZ - 1)
 	{
-		colorcopy[e->z * WINY + e->y] = e->imgstr[e->z * WINY + e->y];
-		e->y = 0;
-		while (++(e->y) < WINY - 1)
+		y = 0;
+		colorcopy[z * WINY + y] = imgstr[z * WINY + y];
+		while (++y < WINY - 1)
 		{
-
-
-			colorcopy[e->z * WINY + e->y] = e->imgstr[e->z * WINY + e->y];
-			if (aa_condition(e->imgstr, e->y, e->z, AA_S))
-				colorcopy[e->z * WINY + e->y] = av_col_two(av_col_four(e->imgstr[e->z * WINY + e->y + 1], e->imgstr[e->z * WINY + e->y + WINY],
-				e->imgstr[e->z * WINY + e->y - WINY], e->imgstr[e->z * WINY + e->y - 1 ]),e->imgstr[e->z * WINY + e->y]);
+			colorcopy[z * WINY + y] = imgstr[z * WINY + y];
+			if (aa_condition(imgstr, y, z, AA_S))
+				colorcopy[z * WINY + y] = av_col_two(av_col_four(imgstr[z * WINY + y + 1], imgstr[z * WINY + y + WINY],
+				imgstr[z * WINY + y - WINY], imgstr[z * WINY + y - 1 ]), imgstr[z * WINY + y]);
 		}
 	}
-	e->z = - 1;
-	while (++e->z < WINZ)
+	z = - 1;
+	while (++z < WINZ)
 	{
-		e->y = -1;
-		while (++(e->y) < WINY)
-			e->imgstr[e->z * WINY + e->y] = colorcopy[e->z * WINY + e->y];
+		y = -1;
+		while (++y < WINY)
+			imgstr[z * WINY + y] = colorcopy[z * WINY + y];
 	}
 	free (colorcopy);
 }

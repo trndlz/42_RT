@@ -29,7 +29,8 @@ static	unsigned char		*create_bmp_img(int *imgstr)
 	int				o;
 	t_vc			rgb;
 
-	img = (unsigned char*)malloc(sizeof(unsigned char) * 3 * 2 * WINY * WINZ);
+	if (!(img = (unsigned char*)malloc(sizeof(unsigned char) * 3 * 2 * WINY * WINZ)))
+		return (0);
 	ft_memset(img, 0, 3 * 2 * WINY * WINZ);
 	o = 0;
 	while (o < (WINY * WINZ))
@@ -78,7 +79,8 @@ void	create_bmp_file(int *imgstr)
 	unsigned char 	bmppad[3] = {0,0,0};
 	int				i;
 
-	img = create_bmp_img(imgstr);
+	if (!(img = create_bmp_img(imgstr)))
+		return ;
 	f = fopen("img.bmp","wb");
 	i = -1;
 	write_file_header(f);

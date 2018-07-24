@@ -46,7 +46,6 @@ typedef struct		s_ray
 	int				type;
 }					t_ray;
 
-
 typedef struct		s_obj
 {
 	int				type;

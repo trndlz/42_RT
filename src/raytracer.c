@@ -98,13 +98,13 @@ char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 	t_cut = distance_to_inter(hit, clst, ray);
 	t = distance_to_inter(hit, obj, ray);
 	inter = vec_sub(vec_add(vec_mult(ray.direction, t), ray.origin), clst->pos);
-	if (t > 0 && t < hit->t && vec_x(inter, clst->rot) > 0)
+	if (t > 0.001 && t < hit->t && vec_x(inter, clst->rot) > 0.001)
 	{
 		hit->t = t;
 		hit->hit_obj = obj;
 		hit_anything = 1;
 	}
-	if (t > 0 && t_cut < hit->t && hit->t1 < t_cut && hit->t2 > t_cut)
+	else if (t > 0.0001 && t_cut < hit->t && hit->t1 < t_cut && hit->t2 > t_cut && t_cut > 0.0001)
 	{
 		hit->t = t_cut;
 		hit->hit_obj = clst;
@@ -175,8 +175,8 @@ int		transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 	double		r;
 
 	r = (!(textures_coef(hit->hit_obj, hit, ray))) ? hit->hit_obj->tr : 0;
+	hit->nt--;
 	next_hit = *hit;
-	next_hit.nt = hit->nt;
 	r_ray.direction = ray.direction;
 	r_ray.origin = inter_position(ray, hit->t);
 	r_ray.origin = vec_add(r_ray.origin, vec_mult(ray.direction, SHADOW_BIAS));
@@ -196,8 +196,8 @@ int		recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 	t_hit_rec 	next_hit;
 	double		r;
 
+	hit->nr--;
 	next_hit = *hit;
-	next_hit.nr = hit->nr;
 	r = hit->hit_obj->r;
 	r_ray.direction = vec_mult(vec_norm(ray.direction), -1);
 	r_ray.direction = vec_sub(vec_mult(hit->n, 2 * vec_dot(r_ray.direction, hit->n)), r_ray.direction);
@@ -215,11 +215,13 @@ int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray)
 {
 	int	pixel;
 
+	hit->nr = 1;
+	hit->nt = 1;
 	hit->hit_inter = inter_position(ray, hit->t);
 	pixel = phong_lighting(e, ray, hit);
 	if (hit->hit_obj->tr > 0 && hit->nt > 0)
 		pixel = transparency(e, pixel, ray, hit);
-	if (hit->hit_obj->r > 0 && hit->nr > 0)
+	if (hit->hit_obj->r > 0.01 && hit->nr > 0)
 		pixel = recursive_reflection(e, pixel, ray, hit);
 	return (pixel);
 }
@@ -238,8 +240,6 @@ void	*scene_plot(void *arg)
 		e->y = -1;
 		while (++(e->y) < WINY)
 		{
-			hit_rec.nr = 1;
-			hit_rec.nt = 5;
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))
 			{

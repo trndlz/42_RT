@@ -71,7 +71,7 @@ double		get_minimum_tr_cut(t_env *e, t_hit_rec hit_s,
 		tr = (!(textures_coef(hit_s.hit_obj, &hit_s, light_r)))
 			? hit_s.hit_obj->tr : 0;
 		tr_max = (tr < tr_max) ? tr : tr_max;
-		if (hit_s.t2 > 0.000001 && hit_s.t2 < 0.999999 && tr > 0)
+		if (hit_s.t2 > 0.00001 && hit_s.t2 < 0.999999 && tr > 0.01)
 		{
 			hit_s.t = hit_s.t2;
 			hit_s.n = normal_vectors(&hit_s, hit_s.hit_obj, light_r);
@@ -102,7 +102,9 @@ double		shadow_calculation(t_env *e, t_ray light_r)
 		}
 		else
 		{
+			
 			tr = get_minimum_tr_cut(e, hit_s, olst, light_r);
+
 			tr_max = (tr < tr_max) ? tr : tr_max;
 		}
 		olst = olst->next;
@@ -123,5 +125,6 @@ double		shadows(t_env *e, t_hit_rec *hit, t_obj *light_obj, t_ray ray)
 
 	light_r.origin = inter_position(ray, hit->t);
 	light_r.direction = vec_sub(light_obj->pos, light_r.origin);
+
 	return (shadow_calculation(e, light_r));
 }

@@ -14,7 +14,7 @@
 
 double		ratio_limits(double i)
 {
-	if (i < 0.00001)
+	if (i < D_ZERO)
 		return (0);
 	if (i > 1.0)
 		return (1.0);

@@ -16,30 +16,30 @@ SRC_PATH	:= src
 SRC_NAME	:=	main.c								\
 				images.c							\
 				init.c								\
-				intersections.c						\
-				maths_vectors.c						\
-				shadows.c							\
-				color_helpers.c						\
-				color_helpers2.c					\
-				raytracer.c							\
+				raytracer/intersections.c			\
+				raytracer/shadows.c					\
+				colors/color_helpers.c				\
+				colors/color_helpers2.c				\
+				raytracer/raytracer.c				\
 				keyboard.c							\
-				parser.c							\
-				parser_errors.c						\
-				parser_functions.c					\
-				free_functions.c					\
-				usage.c								\
-				maths_rot.c							\
-				maths_functions.c					\
+				parser/parser.c						\
+				parser/parser_errors.c				\
+				parser/parser_functions.c			\
+				utils/free_functions.c				\
+				utils/usage.c						\
+				maths/maths_vectors.c				\
+				maths/maths_rot.c					\
+				maths/maths_functions.c				\
 				create_bmp.c						\
-				filters.c							\
-				texture_parser.c					\
-				textures_cylinder_cone.c			\
-				textures_sphere_plane.c				\
-				textures.c							\
-				antialiasing.c						\
-				cartooning.c						\
-				normal_vectors.c					\
-				palette.c
+				filters/antialiasing.c				\
+				filters/cartooning.c				\
+				filters/filters.c					\
+				filters/palette.c					\
+				textures/texture_parser.c			\
+				textures/textures_cylinder_cone.c	\
+				textures/textures_sphere_plane.c	\
+				textures/textures.c					\
+				raytracer/normal_vectors.c					
 
 OBJ_PATH	:= obj
 HEAD_PATH	:= ./includes
@@ -66,8 +66,8 @@ ifeq ($(UNAME_S), Darwin)
 	MINILIBX	:= -L ./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit
 endif
 
-CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
-# CC			:= gcc -Werror -Wall -Wextra
+# CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
+CC			:= gcc -Werror -Wall -Wextra
 OBJ_NAME	:= $(SRC_NAME:.c=.o)
 
 SRC			:= $(addprefix $(SRC_PATH)/, $(SRC_NAME))
@@ -84,6 +84,7 @@ $(NAME): $(OBJ)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
+	@mkdir -p $(@D)
 	$(CC) $(CPPFLAGS) -o $@ -c $<
 
 norm:
@@ -99,8 +100,9 @@ clean:
 fclean: clean
 	make fclean -C libft/
 	rm -fv $(NAME)
+	rm -R $(OBJ_PATH)
 
 re: fclean all
 
 $(OBJ_PATH):
-	@mkdir -p $(OBJ_PATH)
+	@mkdir -p $(@D)

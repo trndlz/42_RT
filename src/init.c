@@ -32,22 +32,6 @@ int			init_mlx(t_env *e)
 	return (1);
 }
 
-t_obj	*disc_for_cylinder(t_obj *cyl, t_vc center)
-{
-	t_obj	*disc;
-
-	if (!(disc = malloc(sizeof(t_obj))))
-		return (NULL);
-	disc->size = cyl->size;
-	disc->type = 7;
-	disc->pos = center;
-	disc->rot = cyl->rot;
-	disc->col = cyl->col;
-	disc->coef = cyl->coef;
-	disc->next = NULL;
-	return (disc);
-}
-
 t_vc		init_vc(double x, double y, double z)
 {
 	t_vc vc;

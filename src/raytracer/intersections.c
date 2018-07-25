@@ -109,15 +109,15 @@ double			inter_cyl(t_hit_rec *hit, t_obj *obj, t_ray ray)
 
 double			t_calculator(double a, double b)
 {
-	if (a < 0.0000001)
+	if (a < D_ZERO)
 	{
-		if (b > 0.0000001)
+		if (b > D_ZERO)
 			return (b);
 		return (-1);
 	}
-	if (b < 0.0000001)
+	if (b < D_ZERO)
 	{
-		if (a > 0.0000001)
+		if (a > D_ZERO)
 			return (a);
 		return (-1);
 	}

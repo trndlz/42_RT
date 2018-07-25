@@ -76,7 +76,7 @@ char	hit_not_cut(t_hit_rec *hit, t_obj *obj, t_ray ray)
 
 	hit_anything = 0;
 	t = distance_to_inter(hit, obj, ray);
-	if (t > 0.000001 && t < hit->t)
+	if (t > D_ZERO && t < hit->t)
 	{
 		hit->t = t;
 		hit->hit_obj = obj;
@@ -98,14 +98,21 @@ char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 	t_cut = distance_to_inter(hit, clst, ray);
 	t = distance_to_inter(hit, obj, ray);
 	inter = vec_sub(vec_add(vec_mult(ray.direction, t), ray.origin), clst->pos);
-	if (t > 0.001 && t < hit->t && vec_x(inter, clst->rot) > 0.001)
+	if (e->y == 543 && e->z == 642)
+		printf("no shadow t %f, t_cut %f, hit->t %f, hit->t1 %f, hit->t2 %f\n", t, t_cut, hit->t, hit->t1, hit->t2);
+	if (e->y == 536 && e->z == 646)
+		printf("shadow t %f, t_cut %f, hit->t %f, hit->t1 %f, hit->t2 %f\n", t, t_cut, hit->t, hit->t1, hit->t2);
+	if (t > D_ZERO && t < hit->t && vec_x(inter, clst->rot) > D_ZERO)
 	{
+		
 		hit->t = t;
 		hit->hit_obj = obj;
 		hit_anything = 1;
 	}
-	else if (t > 0.0001 && t_cut < hit->t && hit->t1 < t_cut && hit->t2 > t_cut && t_cut > 0.0001)
+	else if (t > D_ZERO && t_cut < hit->t && hit->t1 < t_cut && hit->t2 > t_cut && t_cut > D_ZERO)
 	{
+		if (t == 0)
+			printf("t %f\n", t);
 		hit->t = t_cut;
 		hit->hit_obj = clst;
 		hit_anything = 1;

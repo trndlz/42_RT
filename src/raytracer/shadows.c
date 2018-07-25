@@ -20,7 +20,7 @@ double		get_minimum_tr(t_hit_rec hit_s, t_obj *olst, t_ray light_r)
 
 	tr_max = 1;
 	t = distance_to_inter(&hit_s, olst, light_r);
-	if (t > 0.000001 && t < 0.999999)
+	if (t > D_ZERO && t < (1 - D_ZERO))
 	{
 		hit_s.hit_obj = olst;
 		hit_s.t = hit_s.t1;
@@ -29,7 +29,7 @@ double		get_minimum_tr(t_hit_rec hit_s, t_obj *olst, t_ray light_r)
 			? hit_s.hit_obj->tr : 0;
 		tr_max = (tr < tr_max) ? tr : tr_max;
 	}
-	if (hit_s.t2 > 0.000001 && hit_s.t2 < 0.999999 && tr > 0)
+	if (hit_s.t2 > D_ZERO && hit_s.t2 < (1 - D_ZERO) && tr > 0)
 	{
 		hit_s.t = hit_s.t2;
 		hit_s.n = normal_vectors(&hit_s, hit_s.hit_obj, light_r);
@@ -63,6 +63,7 @@ double		get_minimum_tr_cut(t_env *e, t_hit_rec hit_s,
 	t_obj	*cut;
 
 	tr_max = 1;
+	hit_s.t = INFINITY;
 	if (hit_cut(&hit_s, e, olst, light_r))
 	{
 		cut = get_cutter(e, olst);
@@ -71,7 +72,7 @@ double		get_minimum_tr_cut(t_env *e, t_hit_rec hit_s,
 		tr = (!(textures_coef(hit_s.hit_obj, &hit_s, light_r)))
 			? hit_s.hit_obj->tr : 0;
 		tr_max = (tr < tr_max) ? tr : tr_max;
-		if (hit_s.t2 > 0.00001 && hit_s.t2 < 0.999999 && tr > 0.01)
+		if (hit_s.t2 > D_ZERO && hit_s.t2 < (1 - D_ZERO) && tr > 0.01)
 		{
 			hit_s.t = hit_s.t2;
 			hit_s.n = normal_vectors(&hit_s, hit_s.hit_obj, light_r);
@@ -91,8 +92,10 @@ double		shadow_calculation(t_env *e, t_ray light_r)
 	t_obj		*olst;
 
 	tr_max = 1;
+	tr = 1;
 	olst = e->obj_link;
 	hit_s.t2 = -1;
+	
 	while (olst)
 	{
 		if (is_not_cut(olst, e))
@@ -100,15 +103,14 @@ double		shadow_calculation(t_env *e, t_ray light_r)
 			tr = get_minimum_tr(hit_s, olst, light_r);
 			tr_max = (tr < tr_max) ? tr : tr_max;
 		}
-		else
+		if (!is_not_cut(olst, e))
 		{
-			
 			tr = get_minimum_tr_cut(e, hit_s, olst, light_r);
-
 			tr_max = (tr < tr_max) ? tr : tr_max;
 		}
 		olst = olst->next;
 	}
+
 	return (tr_max);
 }
 

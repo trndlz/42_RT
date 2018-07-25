@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 13:37:05 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/24 13:55:09 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/24 17:15:16 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int		create_image(t_env *e)
 			return (0);
 	multi_threading(e);
 	// blinding_lights(e);
-	pthread_mutex_lock(&(e->mutex));
-	if((!cartooning(e)))
-		return (0);
-	antialias(e->imgstr);
-	pthread_mutex_unlock(&(e->mutex));
+	//pthread_mutex_lock(&(e->mutex));
+	//if((!cartooning(e)))
+	//	return (0);
+	//antialias(e->imgstr);
+	//pthread_mutex_unlock(&(e->mutex));
 	mlx_put_image_to_window(e->mlx, e->win, e->image, 0, 0);
 
 	return (1);

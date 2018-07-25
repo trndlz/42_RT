@@ -31,6 +31,7 @@
 # define AA_S 20
 # define CART_S 20
 # define PALETTE_SIZE 40
+# define D_ZERO 0.000001
 
 typedef struct		s_vc
 {

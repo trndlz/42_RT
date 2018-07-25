@@ -23,14 +23,13 @@ int		main(int ac, char **av)
 	e->obj_link = NULL;
 	e->light_link = NULL;
 	e->cut_link = NULL;
+	if (!init_mlx(e))
+		exit_message("Problem while creating MLX environment\n");
 	if (!parser(av, e))
 		exit_message("Problem while opening file\n");
 	pthread_mutex_init(&(e->mutex), NULL);
 	if (e->nb_eye != 1)
 		error_messages(6);
-	if (!init_mlx(e))
-		exit_message("Problem while creating MLX environment\n");
-
 	if (!(create_image(e)))
 		exit_message("Problem while creating image\n");
 	mlx_hook(e->win, 2, 3, deal_key, e);
@@ -40,5 +39,6 @@ int		main(int ac, char **av)
 	clear_list(e->light_link);
 	clear_list(e->cut_link);
 	free(e);
+	pause();
 	return (0);
 }

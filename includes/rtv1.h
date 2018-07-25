@@ -33,6 +33,17 @@
 # define PALETTE_SIZE 40
 # define D_ZERO 0.000001
 
+enum obj_type {
+	LIGHT,
+	EYE,
+	SPHERE,
+	CYLINDER,
+	CONE,
+	PLANE,
+	DISK,
+	PARABOLOID
+};
+
 typedef struct		s_vc
 {
 	double			x;
@@ -56,6 +67,7 @@ typedef struct		s_vclist
 typedef struct		s_obj
 {
 	int				type;
+	enum obj_type	o_type;
 	t_vc			rot;
 	t_vc			pos;
 	t_vc			coef;
@@ -255,7 +267,7 @@ char				textures_coef(t_obj *obj, t_hit_rec *hit, t_ray ray);
 ** TEXTURE LOADER
 */
 
-int					load_texture_to_obj(t_obj *obj);
+int					load_texture_to_obj(t_env *e, t_obj *obj);
 
 /*
 ** PARSER

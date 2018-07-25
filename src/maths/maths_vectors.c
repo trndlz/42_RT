@@ -53,8 +53,3 @@ double	vec_dot(t_vc v1, t_vc v2)
 {
 	return (vec_x(v1, v2) / (vec_mod(v1) * vec_mod(v2)));
 }
-
-t_vc	inter_position(t_ray ray, double t)
-{
-	return (vec_add(vec_mult(ray.direction, t), ray.origin));
-}

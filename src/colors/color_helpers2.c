@@ -17,7 +17,6 @@ int		closest_col(int *palette, int color)
 	int min_diff;
 	int	i;
 
-
 	i = -1;
 	min_diff = 3 * 256;
 	while (++i < PALETTE_SIZE)
@@ -32,14 +31,14 @@ int		closest_col(int *palette, int color)
 
 int		major_color(int color)
 {
-		t_vc rgb;
+	t_vc rgb;
 
-		rgb = hextorgb(color);
-		if (rgb.x > rgb.y && rgb.x > rgb.z)
-			color = 0xFF0000;
-		else if (rgb.y > rgb.x && rgb.y > rgb.z)
-			color = 0x00FF00;
-		else
-			color = 0x0000FF;
-		return (color);
+	rgb = hextorgb(color);
+	if (rgb.x > rgb.y && rgb.x > rgb.z)
+		color = 0xFF0000;
+	else if (rgb.y > rgb.x && rgb.y > rgb.z)
+		color = 0x00FF00;
+	else
+		color = 0x0000FF;
+	return (color);
 }

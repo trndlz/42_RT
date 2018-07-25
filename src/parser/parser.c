@@ -34,6 +34,28 @@ int		name_type(char *str)
 		return (0);
 }
 
+enum obj_type 		name_otype(char *str)
+{
+	if (!ft_strcmp(str, "light"))
+		return (LIGHT);
+	else if (!ft_strcmp(str, "eye"))
+		return (EYE);
+	else if (!ft_strcmp(str, "sphere"))
+		return (SPHERE);
+	else if (!ft_strcmp(str, "cylinder"))
+		return (CYLINDER);
+	else if (!ft_strcmp(str, "cone"))
+		return (CONE);
+	else if (!ft_strcmp(str, "plane"))
+		return (PLANE);
+	else if (!ft_strcmp(str, "disk"))
+		return (DISK);
+	else if (!ft_strcmp(str, "paraboloid"))
+		return (PARABOLOID);
+	else
+		return (0);
+}
+
 t_obj	*attribute_object(char **tab_values, t_env *e)
 {
 	t_obj	*scene;
@@ -45,6 +67,7 @@ t_obj	*attribute_object(char **tab_values, t_env *e)
 	if (check_value(tab_values) > 0)
 		error_messages(error);
 	scene->type = name_type(tab_values[0]);
+	scene->o_type = name_otype(tab_values[0]);
 	scene->pos = init_vc((double)ft_atoi(tab_values[1]),
 		(double)ft_atoi(tab_values[2]), (double)ft_atoi(tab_values[3]));
 	scene->rot = init_vc((double)ft_atoi(tab_values[4]),
@@ -75,9 +98,9 @@ int		create_objects(t_env *e, char **tab_values)
 		obj_add(&e->cut_link, tmp);
 	else if (!tmp->id_cut && tmp->type > 2)
 	{
-		if (tmp->type == 3 && SPHERE_TEXTURE == 1)
+		if (tmp->type == 3 && SPHERE_TEXTURE)
 		{
-			if (!(load_texture_to_obj(tmp)))
+			if (!(load_texture_to_obj(e, tmp)))
 				return (0);
 		}
 		obj_add(&e->obj_link, tmp);
@@ -139,7 +162,6 @@ int		parser(char **av, t_env *e)
 				free(str);
 		}
 	}
-
 	free(str);
 	close(fd);
 	return (1);

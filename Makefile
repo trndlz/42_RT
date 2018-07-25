@@ -6,7 +6,7 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/07/24 18:12:11 by jostraye         ###   ########.fr        #
+#    Updated: 2018/07/25 11:39:15 by tmervin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,8 @@ SRC_PATH	:= src
 SRC_NAME	:=	main.c								\
 				images.c							\
 				init.c								\
-				raytracer/intersections.c			\
-				raytracer/shadows.c					\
 				colors/color_helpers.c				\
 				colors/color_helpers2.c				\
-				raytracer/raytracer.c				\
 				keyboard.c							\
 				parser/parser.c						\
 				parser/parser_errors.c				\
@@ -40,6 +37,10 @@ SRC_NAME	:=	main.c								\
 				textures/textures_cylinder_cone.c	\
 				textures/textures_sphere_plane.c	\
 				textures/textures.c					\
+				raytracer/intersections.c			\
+				raytracer/solver.c					\
+				raytracer/raytracer.c				\
+				raytracer/shadows.c					\
 				raytracer/normal_vectors.c					
 
 OBJ_PATH	:= obj

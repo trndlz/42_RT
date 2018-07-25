@@ -63,5 +63,6 @@ int			add_color(int hex1, int hex2)
 
 int			mix_colors(int col1, int col2, double coef)
 {
-	return (add_color(multiply_color(col1, coef), multiply_color(col2, (1 - coef))));
+	return (add_color(multiply_color(col1, coef),
+		multiply_color(col2, (1 - coef))));
 }

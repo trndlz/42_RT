@@ -95,7 +95,6 @@ double		shadow_calculation(t_env *e, t_ray light_r)
 	tr = 1;
 	olst = e->obj_link;
 	hit_s.t2 = -1;
-	
 	while (olst)
 	{
 		if (is_not_cut(olst, e))
@@ -110,7 +109,6 @@ double		shadow_calculation(t_env *e, t_ray light_r)
 		}
 		olst = olst->next;
 	}
-
 	return (tr_max);
 }
 
@@ -127,6 +125,5 @@ double		shadows(t_env *e, t_hit_rec *hit, t_obj *light_obj, t_ray ray)
 
 	light_r.origin = inter_position(ray, hit->t);
 	light_r.direction = vec_sub(light_obj->pos, light_r.origin);
-
 	return (shadow_calculation(e, light_r));
 }

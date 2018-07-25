@@ -53,13 +53,13 @@ t_vc	normal_cone(t_hit_rec *hit, t_obj *obj, t_ray ray)
 
 t_vc	normal_vectors(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {
-	if (obj->type == 4)
+	if (obj->o_type == CYLINDER)
 		return (normal_cylinder(hit, obj, ray));
-	else if (obj->type == 5)
+	else if (obj->o_type == CONE)
 		return (normal_cone(hit, obj, ray));
-	else if (obj->type == 6 || obj->type == 7)
+	else if (obj->o_type == PLANE || obj->o_type == DISK)
 		return (vec_norm(obj->rot));
-	else if (obj->type == 8)
+	else if (obj->o_type == PARABOLOID)
 		return (normal_paraboloid(hit, obj, ray));
 	else
 		return (vec_norm(vec_sub(inter_position(ray, hit->t), obj->pos)));

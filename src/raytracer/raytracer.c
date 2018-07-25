@@ -47,11 +47,11 @@ double		distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray)
 	double d;
 
 	d = -1.0;
-	d = (obj_list->type == 3) ? inter_sph(hit, obj_list, ray) : d;
-	d = (obj_list->type == 4) ? inter_cyl(hit, obj_list, ray) : d;
-	d = (obj_list->type == 5) ? inter_cone(hit, obj_list, ray) : d;
-	d = (obj_list->type == 6) ? inter_plane(ray, obj_list) : d;
-	d = (obj_list->type == 8) ? inter_paraboloid(hit, obj_list, ray) : d;
+	d = (obj_list->o_type == SPHERE) ? inter_sph(hit, obj_list, ray) : d;
+	d = (obj_list->o_type == CYLINDER) ? inter_cyl(hit, obj_list, ray) : d;
+	d = (obj_list->o_type == CONE) ? inter_cone(hit, obj_list, ray) : d;
+	d = (obj_list->o_type == PLANE) ? inter_plane(ray, obj_list) : d;
+	d = (obj_list->o_type == PARABOLOID) ? inter_paraboloid(hit, obj_list, ray) : d;
 	return (d);
 }
 

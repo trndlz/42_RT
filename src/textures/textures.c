@@ -18,13 +18,13 @@
 
 char		textures_coef(t_obj *obj, t_hit_rec *hit, t_ray ray)
 {
-	if (obj->type == 3 && SPHERE_TEXTURE)
+	if (obj->o_type == SPHERE && SPHERE_TEXTURE)
 		return (get_columns_sphere(hit, ray));
-	else if (obj->type == 6 && PLANE_CHECKERS)
+	else if (obj->o_type == PLANE && PLANE_CHECKERS)
 		return (checkerboard_plane(hit, ray));
-	else if (obj->type == 4 && CYLINDER_TEXTURE)
+	else if (obj->o_type == CYLINDER && CYLINDER_TEXTURE)
 		return (get_lines_cylinder(hit, ray));
-	else if (obj->type == 5 && CONE_TEXTURE)
+	else if (obj->o_type == CONE && CONE_TEXTURE)
 		return (get_lines_cone(hit, ray));
 	else
 		return (0);

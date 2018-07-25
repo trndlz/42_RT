@@ -14,9 +14,9 @@
 
 int		clr_abs_dif(int col1, int col2)
 {
-	t_vc rgb1;
-	t_vc rgb2;
-	int ret;
+	t_vc	rgb1;
+	t_vc	rgb2;
+	int		ret;
 
 	rgb1 = hextorgb(col1);
 	rgb2 = hextorgb(col2);
@@ -27,12 +27,12 @@ int		clr_abs_dif(int col1, int col2)
 
 int		av_col_four(int col1, int col2, int col3, int col4)
 {
-	t_vc rgb;
-	t_vc rgb1;
-	t_vc rgb2;
-	t_vc rgb3;
-	t_vc rgb4;
-	int ret;
+	t_vc	rgb;
+	t_vc	rgb1;
+	t_vc	rgb2;
+	t_vc	rgb3;
+	t_vc	rgb4;
+	int 	ret;
 
 	rgb1 = hextorgb(col1);
 	rgb2 = hextorgb(col2);

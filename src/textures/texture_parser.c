@@ -30,12 +30,10 @@ int		*get_xpm_size(char *file)
 	char	*str;
 	char	**split;
 
-	fd = open(file, O_RDONLY);
 	line = 0;
-	if (!(wh = (int *)malloc(sizeof(int) * 2)))
+	fd = open(file, O_RDONLY);
+	if (!(wh = (int *)malloc(sizeof(int) * 2)) || fd < 0)
 		return (NULL);
-	if (fd < 0)
-		return (0);
 	while (get_next_line(fd, &str) == 1 && line <= 4)
 	{
 		line++;
@@ -68,6 +66,7 @@ int		**create_color_tab(int *imgstr, int *size)
 		return (NULL);
 	while (y < size[1])
 	{
+		
 		if (!(color_tab[y] = (int *)malloc(sizeof(int) * size[0])))
 			return (NULL);
 		x = 0;
@@ -79,25 +78,22 @@ int		**create_color_tab(int *imgstr, int *size)
 		}
 		y++;
 	}
+	
 	return (color_tab);
 }
 
-int		load_texture_to_obj(t_obj *obj)
+int		load_texture_to_obj(t_env *e, t_obj *obj)
 {
 	void	*image;
-	void	*mlx;
 	int		*imgstr;
 	int		*size;
-	int 	bpp;
-	int 	s_l;
-	int 	endian;
+	int		a[3];
 
-	if (!(obj->texture_size = get_xpm_size("src/earth.xpm")))
+	if (!(size = get_xpm_size("src/earth.xpm")))
 		return (0);
-	size = get_xpm_size("src/earth.xpm");
-	mlx = mlx_init();
-	image = mlx_xpm_file_to_image(mlx, "src/earth.xpm", &size[0], &size[1]);
-	imgstr = (int *)mlx_get_data_addr(image, &bpp, &s_l, &endian);
+	obj->texture_size = size;
+	image = mlx_xpm_file_to_image(e->mlx, "src/earth.xpm", &size[0], &size[1]);
+	imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2]);
 	if (!(obj->texture_tab = create_color_tab(imgstr, obj->texture_size)))
 		return (0);
 	return (1);

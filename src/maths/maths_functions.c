@@ -36,3 +36,8 @@ t_vc	vec_mult(t_vc v, double a)
 	ret.z = v.z * a;
 	return (ret);
 }
+
+t_vc	inter_position(t_ray ray, double t)
+{
+	return (vec_add(vec_mult(ray.direction, t), ray.origin));
+}

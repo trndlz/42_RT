@@ -75,6 +75,7 @@ typedef struct		s_obj
 	double			size;
 	double			r;
 	double			tr;
+	double			rfr;
 	int				id_cut;
 	int				id_obj;
 	int				*texture_size;
@@ -138,6 +139,14 @@ char				nearest_node(t_env *e, t_ray ray, t_hit_rec *hit);
 void				compute_scene_vectors(t_env *e, t_obj *tmp);
 int					is_not_cut(t_obj *obj, t_env *e);
 int					mix_colors(int col1, int col2, double coef);
+int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
+
+/*
+** DESCARTES LAWS
+*/
+
+int					transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
+int					reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
 
 /*
 ** MATHS

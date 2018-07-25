@@ -98,10 +98,6 @@ char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 	t_cut = distance_to_inter(hit, clst, ray);
 	t = distance_to_inter(hit, obj, ray);
 	inter = vec_sub(vec_add(vec_mult(ray.direction, t), ray.origin), clst->pos);
-	if (e->y == 543 && e->z == 642)
-		printf("no shadow t %f, t_cut %f, hit->t %f, hit->t1 %f, hit->t2 %f\n", t, t_cut, hit->t, hit->t1, hit->t2);
-	if (e->y == 536 && e->z == 646)
-		printf("shadow t %f, t_cut %f, hit->t %f, hit->t1 %f, hit->t2 %f\n", t, t_cut, hit->t, hit->t1, hit->t2);
 	if (t > D_ZERO && t < hit->t && vec_x(inter, clst->rot) > D_ZERO)
 	{
 		
@@ -111,8 +107,6 @@ char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 	}
 	else if (t > D_ZERO && t_cut < hit->t && hit->t1 < t_cut && hit->t2 > t_cut && t_cut > D_ZERO)
 	{
-		if (t == 0)
-			printf("t %f\n", t);
 		hit->t = t_cut;
 		hit->hit_obj = clst;
 		hit_anything = 1;
@@ -179,53 +173,6 @@ int		phong_lighting(t_env *e, t_ray ray, t_hit_rec *hit)
 	return (color);
 }
 
-int		recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
-int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
-
-int		transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
-{
-	t_ray		r_ray;
-	int			new_color;
-	t_hit_rec 	next_hit;
-	double		r;
-
-	r = (!(textures_coef(hit->hit_obj, hit, ray))) ? hit->hit_obj->tr : 0;
-	hit->nt--;
-	next_hit = *hit;
-	r_ray.direction = ray.direction;
-	r_ray.origin = inter_position(ray, hit->t);
-	r_ray.origin = vec_add(r_ray.origin, vec_mult(ray.direction, SHADOW_BIAS));
-	if (nearest_node(e, r_ray, &next_hit))
-	{
-		new_color = compute_point(e, &next_hit, r_ray);
-		new_color = add_color(multiply_color(new_color, r), multiply_color(old_color, (1 - r)));
-		return (new_color);
-	}
-	return (multiply_color(old_color, (1 - r)));
-}
-
-int		recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
-{
-	t_ray		r_ray;
-	int			new_color;
-	t_hit_rec 	next_hit;
-	double		r;
-
-	hit->nr--;
-	next_hit = *hit;
-	r = hit->hit_obj->r;
-	r_ray.direction = vec_mult(vec_norm(ray.direction), -1);
-	r_ray.direction = vec_sub(vec_mult(hit->n, 2 * vec_dot(r_ray.direction, hit->n)), r_ray.direction);
-	r_ray.origin = hit->hit_inter;
-	if (nearest_node(e, r_ray, &next_hit))
-	{
-		new_color = compute_point(e, &next_hit, r_ray);
-		new_color = add_color(multiply_color(new_color, r), multiply_color(old_color, (1 - r)));
-		return (new_color);
-	}
-	return (multiply_color(old_color, (1 - r)));
-}
-
 int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray)
 {
 	int	pixel;
@@ -237,7 +184,7 @@ int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray)
 	if (hit->hit_obj->tr > 0 && hit->nt > 0)
 		pixel = transparency(e, pixel, ray, hit);
 	if (hit->hit_obj->r > 0.01 && hit->nr > 0)
-		pixel = recursive_reflection(e, pixel, ray, hit);
+		pixel = reflection(e, pixel, ray, hit);
 	return (pixel);
 }
 

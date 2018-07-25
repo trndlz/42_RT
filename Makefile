@@ -41,6 +41,7 @@ SRC_NAME	:=	main.c								\
 				raytracer/solver.c					\
 				raytracer/raytracer.c				\
 				raytracer/shadows.c					\
+				raytracer/descartes.c				\
 				raytracer/normal_vectors.c					
 
 OBJ_PATH	:= obj

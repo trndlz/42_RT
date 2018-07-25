@@ -6,7 +6,7 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/07/24 13:54:44 by jostraye         ###   ########.fr        #
+#    Updated: 2018/07/24 18:12:11 by jostraye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC_NAME	:=	main.c								\
 				maths/maths_rot.c					\
 				maths/maths_functions.c				\
 				create_bmp.c						\
+				filters/blind_lights.c				\
 				filters/antialiasing.c				\
 				filters/cartooning.c				\
 				filters/filters.c					\

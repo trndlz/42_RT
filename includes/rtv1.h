@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/24 18:10:33 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/26 19:08:36 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct		s_obj
 	double			r;
 	double			tr;
 	double			rfr;
+	int				perturb;
 	int				id_cut;
 	int				id_obj;
 	int				*texture_size;

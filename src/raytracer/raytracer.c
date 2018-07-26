@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/24 13:55:25 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/26 19:12:19 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 	inter = vec_sub(vec_add(vec_mult(ray.direction, t), ray.origin), clst->pos);
 	if (t > D_ZERO && t < hit->t && vec_x(inter, clst->rot) > D_ZERO)
 	{
-		
+
 		hit->t = t;
 		hit->hit_obj = obj;
 		hit_anything = 1;
@@ -150,6 +150,30 @@ char		nearest_node(t_env *e, t_ray ray, t_hit_rec *hit)
 	return (hit_anything);
 }
 
+void	perturb_norm(t_hit_rec *hit)
+{
+	if (hit->hit_obj->perturb == 0)
+		return;
+	else if (hit->hit_obj->perturb == 1)
+	{
+		hit->n.z += 0.1 * tan(0.05 * hit->hit_inter.y);
+		hit->n.z += 0.1 * tan(0.05 * hit->hit_inter.z);
+	}
+	else if (hit->hit_obj->perturb == 2)
+		hit->n.z += 0.3 * sin(0.05 * hit->hit_inter.z);
+	else if (hit->hit_obj->perturb == 3)
+	{
+		hit->n.z += 0.1 * tan(0.1 * hit->hit_inter.y);
+		hit->n.z += 0.1 * tan(0.1 * hit->hit_inter.z);
+	}
+	else if (hit->hit_obj->perturb == 4)
+		hit->n.z += 0.2 * sin(0.8 * hit->hit_inter.z);
+	else
+		return;
+	hit->n = vec_norm(hit->n);
+	return;
+}
+
 int		phong_lighting(t_env *e, t_ray ray, t_hit_rec *hit)
 {
 	t_obj	*llst;
@@ -158,6 +182,7 @@ int		phong_lighting(t_env *e, t_ray ray, t_hit_rec *hit)
 
 	llst = e->light_link;
 	hit->n = normal_vectors(hit, hit->hit_obj, ray);
+	perturb_norm(hit);
 	hit->v = inter_position(ray, hit->t);
 	color = multiply_color(hit->hit_obj->col, hit->hit_obj->coef.z);
 	while (llst)

@@ -6,11 +6,18 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:55:28 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/17 17:07:33 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/07/26 19:11:08 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
+
+t_vc	parallel_light(t_obj *scene)
+{
+	t_vc	pos;
+	pos = vec_mult(scene->rot, -12500000000);
+	return (pos);
+}
 
 int		name_type(char *str)
 {
@@ -72,6 +79,8 @@ t_obj	*attribute_object(char **tab_values, t_env *e)
 		(double)ft_atoi(tab_values[2]), (double)ft_atoi(tab_values[3]));
 	scene->rot = init_vc((double)ft_atoi(tab_values[4]),
 		(double)ft_atoi(tab_values[5]), (double)ft_atoi(tab_values[6]));
+	if ((scene->rot.x != 0 || scene->rot.y != 0 || scene->rot.z != 0) && scene->type == 1)
+		scene->pos = parallel_light(scene);
 	scene->next = NULL;
 	if (scene->type == 2)
 		return (scene);
@@ -85,6 +94,7 @@ t_obj	*attribute_object(char **tab_values, t_env *e)
 		ft_atof(tab_values[10]), ft_atof(tab_values[11]));
 	scene->r = ft_atof(tab_values[13]);
 	scene->tr = ft_atof(tab_values[14]);
+	scene->perturb = ft_atoi(tab_values[15]);
 	return (scene);
 }
 

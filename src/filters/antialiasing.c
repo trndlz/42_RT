@@ -6,7 +6,7 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 14:26:30 by jostraye          #+#    #+#             */
-/*   Updated: 2018/07/20 16:43:04 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/26 19:10:02 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,17 @@ int		clr_abs_dif(int col1, int col2)
 
 int		av_col_four(int col1, int col2, int col3, int col4)
 {
-	t_vc	rgb;
-	t_vc	rgb1;
-	t_vc	rgb2;
-	t_vc	rgb3;
-	t_vc	rgb4;
+	t_vc rgb[5];
 	int 	ret;
 
-	rgb1 = hextorgb(col1);
-	rgb2 = hextorgb(col2);
-	rgb3 = hextorgb(col3);
-	rgb4 = hextorgb(col4);
-	rgb.x = color_limits((rgb1.x + rgb2.x + rgb3.x + rgb4.x) / 4);
-	rgb.y = color_limits((rgb1.y + rgb2.y + rgb3.y + rgb4.y) / 4);
-	rgb.z = color_limits((rgb1.z + rgb2.z + rgb3.z + rgb4.z) / 4);
-	ret = rgb.x * 0x100 * 0x100 + rgb.y * 0x100 + rgb.z;
+	rgb[1] = hextorgb(col1);
+	rgb[2] = hextorgb(col2);
+	rgb[3] = hextorgb(col3);
+	rgb[4] = hextorgb(col4);
+	rgb[0].x = color_limits((rgb[1].x + rgb[2].x + rgb[3].x + rgb[4].x) / 4);
+	rgb[0].y = color_limits((rgb[1].y + rgb[2].y + rgb[3].y + rgb[4].y) / 4);
+	rgb[0].z = color_limits((rgb[1].z + rgb[2].z + rgb[3].z + rgb[4].z) / 4);
+	ret = rgb[0].x * 0x100 * 0x100 + rgb[0].y * 0x100 + rgb[0].z;
 	return (ret);
 }
 

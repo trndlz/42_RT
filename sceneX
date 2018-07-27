@@ -29,6 +29,8 @@
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 0 0 1
 	[perturbation] 2
+	[texture] CHECKERBOARD
+	[texture_size] 15
 
 <sphere>
 	[position] 800 0 0
@@ -36,10 +38,9 @@
 	[color] 0xb7fffa
 	[size] 200
 	[Spec/Diff/Amb] 0.4 0.9 0.1
-	[R/T/Rf] 0 1 1
-	[perturbation] 4
-	<cutter>
-		[position] 800 0 0
+	[R/T/Rf] 0 0 1
+	[texture] EARTH
+	[perturbation] 2
 
 <cone>
 	[position] 1000 -300 -400
@@ -48,7 +49,8 @@
 	[size] 15
 	[Spec/Diff/Amb] 0.8 0.9 0.1
 	[R/T/Rf] 0 0 1
-	[perturbation] 2
+	[perturbation] 0
+
 
 <cylinder>
 	[position] 1000 -300 200

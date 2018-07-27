@@ -116,11 +116,11 @@ char			*parse_double(char *file, double *d)
 	return (file);
 }
 
-char			*parse_int(char *file, int *d)
+char			*parse_int(char *file, unsigned int *d)
 {
 	int		check;
 
-	if ((check = sscanf(file, "%*s %d \n", (d)) != 1))
+	if ((check = sscanf(file, "%*s %u \n", (d)) != 1))
 		return (parser_error("Invalid value !\n", file));
 	if (!(file = ft_strchr(file, '\n')))
 		return (NULL);

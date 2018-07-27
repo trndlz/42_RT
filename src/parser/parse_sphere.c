@@ -30,9 +30,11 @@ char		*objects_items(t_obj *sphere, char *file, enum obj_type obj)
 		else if (ft_strncmp("[R/T/Rf] ", file, 9) == 0)
 			file = parse_descartes(file, &(sphere->descartes));
 		else if (ft_strncmp("[Spec/Diff/Amb] ", file, 16) == 0)
-			file = parse_phong(file, &(sphere->coef));
+			file = parse_phong(file, &(sphere->phong));
 		else if (ft_strncmp("[perturbation] ", file, 15) == 0)
 			file = parse_int(file, &(sphere->perturb));
+		else if (ft_strncmp("[texture_size] ", file, 15) == 0)
+			file = parse_int(file, &(sphere->txt_size));
 		else if (ft_strncmp("<cutter>\n", file, 9) == 0)
 			file = parse_cutter(sphere, file + 9);
 		else
@@ -47,6 +49,8 @@ char		*parse_sphere(t_env *e, char *file)
 
 	sphere = default_sphere();
 	file = objects_items(sphere, file, SPHERE);
+	if (sphere->texture == EARTH)
+		load_texture_to_obj(e, sphere);
 	obj_add(&(e->obj_link), sphere);
 	return (file);
 }
@@ -58,7 +62,6 @@ char		*parse_cylinder(t_env *e, char *file)
 	cylinder = default_cylinder();
 	file = objects_items(cylinder, file, CYLINDER);
 	obj_add(&e->obj_link, cylinder);
-
 	return (file);
 }
 

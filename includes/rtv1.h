@@ -25,10 +25,6 @@
 # define LEG 400
 # define FOV 1000
 # define TH_NB 50
-# define SPHERE_TEXTURE 1
-# define CONE_TEXTURE 1
-# define CYLINDER_TEXTURE 1
-# define PLANE_CHECKERS 0
 # define ALPHA_SPEC 100
 # define SHADOW_BIAS 0.001
 # define AA_S 20
@@ -76,21 +72,26 @@ typedef struct		s_vclist
 	struct s_vclist	*next;
 }					t_vclist;
 
+typedef struct		s_file_texture
+{
+	int				*size;
+	int				**tab;
+}					t_file_texture;
+
 typedef struct		s_obj
 {
 	enum obj_type	o_type;
-	enum texture	texture;
 	t_vc			rot;
 	t_vc			pos;
-	t_vc			coef;
 	t_vc			phong;
 	t_vc			descartes;
 	struct s_obj	*cut;
 	int				col;
-	int				perturb;
+	unsigned int	perturb;
+	enum texture	texture;
+	unsigned int	txt_size;
+	t_file_texture	file_txt;
 	double			size;
-	int				*texture_size;
-	int				**texture_tab;
 	t_vc			lm;
 	t_vc			rm;
 	struct s_obj	*next;
@@ -210,11 +211,12 @@ char				*parse_phong(char *file, t_vc *v);
 char				*parse_double(char *file, double *d);
 char				*parse_color(char *file, int *col);
 enum texture		texture_converter(char *str, enum obj_type obj);
-char				*parse_texture(char *file, enum texture *texture, enum obj_type obj);
+char			*parse_texture(char *file, enum texture *texture,
+				enum obj_type obj);
 void				print_vc(t_vc v);
 char				*parse_eye(t_env *e, char *file);
 char				*parse_light(t_env *e, char *file);
-char				*parse_int(char *file, int *d);
+char				*parse_int(char *file, unsigned int *d);
 
 t_obj				*default_sphere(void);
 t_obj				*default_cone(void);
@@ -307,7 +309,7 @@ int					closest_col(int *palette, int color);
 int					major_color(int color);
 
 
-int					specular_diffuse(t_obj *light, t_hit_rec *hit);
+int					specular_diffuse(t_obj *light, t_hit_rec *hit, t_ray ray);
 void				global_filter(t_env *e, int filter);
 
 

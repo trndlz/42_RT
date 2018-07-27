@@ -24,9 +24,11 @@ t_obj		*default_sphere(void)
 	sphere->size = 100;
 	sphere->col = ft_htoi("0xFF5733");
 	sphere->texture = NONE;
+	sphere->txt_size = 12;
 	sphere->descartes = (t_vc){0, 0, 1.0};
-	sphere->coef = (t_vc){0.5, 0.5, 0.2};
+	sphere->phong = (t_vc){0.5, 0.5, 0.2};
 	sphere->cut = NULL;
+	sphere->perturb = 0;
 	return (sphere);
 }
 
@@ -42,9 +44,11 @@ t_obj		*default_cone(void)
 	cone->size = 15;
 	cone->col = ft_htoi("0xFFC300");
 	cone->texture = NONE;
+	cone->txt_size = 100;
 	cone->descartes = (t_vc){0, 0, 1.0};
-	cone->coef = (t_vc){0.5, 0.5, 0.2};
+	cone->phong = (t_vc){0.5, 0.5, 0.2};
 	cone->cut = NULL;
+	cone->perturb = 0;
 	return (cone);
 }
 
@@ -60,9 +64,11 @@ t_obj		*default_cylinder(void)
 	cylinder->size = 150;
 	cylinder->col = ft_htoi("0x900C3F");
 	cylinder->texture = NONE;
+	cylinder->txt_size = 200;
 	cylinder->descartes = (t_vc){0, 0, 1.0};
-	cylinder->coef = (t_vc){0.5, 0.5, 0.2};
+	cylinder->phong = (t_vc){0.5, 0.5, 0.2};
 	cylinder->cut = NULL;
+	cylinder->perturb = 0;
 	return (cylinder);
 }
 
@@ -77,9 +83,11 @@ t_obj		*default_plane(void)
 	plane->rot = (t_vc){-1, 0, 0};
 	plane->col = ft_htoi("0xDAF7A6");
 	plane->texture = NONE;
+	plane->txt_size = 320;
 	plane->descartes = (t_vc){0, 0, 1.0};
-	plane->coef = (t_vc){0.5, 0.5, 0.2};
+	plane->phong = (t_vc){0.5, 0.5, 0.2};
 	plane->cut = NULL;
+	plane->perturb = 0;
 	return (plane);
 }
 
@@ -94,8 +102,10 @@ t_obj		*default_cutter(void)
 	cut->rot = (t_vc){0, 0, 1};
 	cut->col = ft_htoi("0xFF5733");
 	cut->texture = NONE;
+	cut->txt_size = 12;
 	cut->descartes = (t_vc){0, 0, 1.0};
-	cut->coef = (t_vc){0.5, 0.5, 0.2};
+	cut->phong = (t_vc){0.5, 0.5, 0.2};
 	cut->cut = NULL;
+	cut->perturb = 0;
 	return (cut);
 }

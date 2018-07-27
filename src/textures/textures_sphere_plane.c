@@ -76,8 +76,8 @@ int			get_texture_sphere(t_hit_rec *hit, t_ray ray)
 {
 	double	u;
 	double	v;
-	int		a;
-	int		b;
+	// int		a;
+	// int		b;
 	t_vc	sph_pos;
 
 	sph_pos = vec_norm(vec_mult(vec_sub(inter_position(ray, hit->t),
@@ -85,8 +85,8 @@ int			get_texture_sphere(t_hit_rec *hit, t_ray ray)
 	sph_pos = rot_all_axis(sph_pos, hit->hit_obj->rot);
 	u = 0.5 + atan2(sph_pos.z, sph_pos.y) / (2 * M_PI);
 	v = 0.5 - asin(sph_pos.x) / M_PI;
-	a = (int)(v * hit->hit_obj->texture_size[1]);
-	b = (int)(u * hit->hit_obj->texture_size[0]);
+	// a = (int)(v * hit->hit_obj->texture_size[1]);
+	// b = (int)(u * hit->hit_obj->texture_size[0]);
 	return (hit->hit_obj->texture_tab[(int)(v * hit->hit_obj->texture_size[1])][(int)(u * hit->hit_obj->texture_size[0])]);
 }
 

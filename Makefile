@@ -19,9 +19,6 @@ SRC_NAME	:=	main.c								\
 				colors/color_helpers.c				\
 				colors/color_helpers2.c				\
 				keyboard.c							\
-				parser/parser.c						\
-				parser/parser_errors.c				\
-				parser/parser_functions.c			\
 				utils/free_functions.c				\
 				utils/usage.c						\
 				maths/maths_vectors.c				\
@@ -37,12 +34,18 @@ SRC_NAME	:=	main.c								\
 				textures/textures_cylinder_cone.c	\
 				textures/textures_sphere_plane.c	\
 				textures/textures.c					\
+				parser/default_objects.c			\
+				parser/parse_cutter.c				\
+				parser/parse_functions.c			\
+				parser/parse_lights_eye.c			\
+				parser/parse_sphere.c				\
+				parser/scene_reader.c				\
 				raytracer/intersections.c			\
 				raytracer/solver.c					\
 				raytracer/raytracer.c				\
 				raytracer/shadows.c					\
 				raytracer/descartes.c				\
-				raytracer/normal_vectors.c					
+				raytracer/normal_vectors.c
 
 OBJ_PATH	:= obj
 HEAD_PATH	:= ./includes
@@ -69,8 +72,8 @@ ifeq ($(UNAME_S), Darwin)
 	MINILIBX	:= -L ./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit
 endif
 
-# CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
-CC			:= gcc -Werror -Wall -Wextra
+CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
+# CC			:= gcc -Werror -Wall -Wextra
 OBJ_NAME	:= $(SRC_NAME:.c=.o)
 
 SRC			:= $(addprefix $(SRC_PATH)/, $(SRC_NAME))

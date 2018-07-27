@@ -25,7 +25,7 @@ char	nearest_light(t_env *e, t_ray ray, t_hit_rec *hit)
 	olst = e->light_link;
 	while (olst)
 	{
-		if (is_not_cut(olst, e))
+		if (olst->cut)
 		{
 			if (hit_not_cut(hit, olst, ray))
 				hit_anything = 1;

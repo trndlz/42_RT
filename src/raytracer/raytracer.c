@@ -55,20 +55,6 @@ double		distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray)
 	return (d);
 }
 
-int		is_not_cut(t_obj *obj, t_env *e)
-{
-	t_obj *cut;
-
-	cut = e->cut_link;
-	while (cut)
-	{
-		if (cut->id_cut == obj->id_obj)
-			return (0);
-		cut = cut->next;
-	}
-	return (1);
-}
-
 char	hit_not_cut(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {
 	double	t;
@@ -85,7 +71,7 @@ char	hit_not_cut(t_hit_rec *hit, t_obj *obj, t_ray ray)
 	return (hit_anything);
 }
 
-char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
+char	hit_cut(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {
 	t_obj	*clst;
 	double	t;
@@ -94,13 +80,12 @@ char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 	char	hit_anything;
 
 	hit_anything = 0;
-	clst = get_cutter(e, obj);
+	clst = obj->cut;
 	t_cut = distance_to_inter(hit, clst, ray);
 	t = distance_to_inter(hit, obj, ray);
 	inter = vec_sub(vec_add(vec_mult(ray.direction, t), ray.origin), clst->pos);
 	if (t > D_ZERO && t < hit->t && vec_x(inter, clst->rot) > D_ZERO)
 	{
-
 		hit->t = t;
 		hit->hit_obj = obj;
 		hit_anything = 1;
@@ -117,7 +102,6 @@ char	hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray)
 char		nearest_node(t_env *e, t_ray ray, t_hit_rec *hit)
 {
 	t_obj	*olst;
-	t_obj	*llst;
 	char	hit_anything;
 
 	hit_anything = 0;
@@ -126,27 +110,20 @@ char		nearest_node(t_env *e, t_ray ray, t_hit_rec *hit)
 	hit->t1 = -1;
 	hit->t2 = -1;
 	olst = e->obj_link;
-	llst = e->light_link;
 	while (olst)
 	{
-		if (is_not_cut(olst, e))
+		if (!olst->cut)
 		{
 			if (hit_not_cut(hit, olst, ray))
 				hit_anything = 1;
 		}
 		else
 		{
-			if (hit_cut(hit, e, olst, ray))
+			if (hit_cut(hit, olst, ray))
 				hit_anything = 1;
 		}
 		olst = olst->next;
 	}
-	// while (llst)
-	// {
-	// 		if (hit_not_cut(hit, e, llst, ray))
-	// 			hit_anything = 1;
-	// 	llst = llst->next;
-	// }
 	return (hit_anything);
 }
 
@@ -206,18 +183,12 @@ int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray)
 	hit->nt = 1;
 	hit->hit_inter = inter_position(ray, hit->t);
 	pixel = phong_lighting(e, ray, hit);
-	if (hit->hit_obj->tr > 0 && hit->nt > 0)
+	if (hit->hit_obj->descartes.y > 0 && hit->nt > 0)
 		pixel = transparency(e, pixel, ray, hit);
-	if (hit->hit_obj->r > 0.01 && hit->nr > 0)
+	if (hit->hit_obj->descartes.x > 0.01 && hit->nr > 0)
 		pixel = reflection(e, pixel, ray, hit);
 	return (pixel);
 }
-
-// t_vclist	*compute_lights(t_env *e, t_hit_rec *hit_rec, t_ray ray)
-// {
-// 	t_vclist	*b_lights;
-//
-// }
 
 void	*scene_plot(void *arg)
 {
@@ -236,11 +207,8 @@ void	*scene_plot(void *arg)
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))
 			{
-				// if (hit_rec->type == 1)
-				// 	vclist_add()
-				// else
-					px_color = compute_point(e, &hit_rec, ray);
-					draw_point(e, e->y, e->z, px_color);
+				px_color = compute_point(e, &hit_rec, ray);
+				draw_point(e, e->y, e->z, px_color);
 			}
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/26 19:08:36 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/07/25 16:04:29 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@
 # include "libft.h"
 # include <pthread.h>
 # include <stdio.h>
+# include <stdlib.h>
+// # include "X11.h"
 # define WINY 1000
 # define WINZ 1000
+# define LEG 400
 # define FOV 1000
 # define TH_NB 50
 # define SPHERE_TEXTURE 1
@@ -44,6 +47,15 @@ enum obj_type {
 	PARABOLOID
 };
 
+enum texture {
+	NONE,
+	LINES,
+	COLUMNS,
+	CHECKERBOARD,
+	EARTH
+};
+
+
 typedef struct		s_vc
 {
 	double			x;
@@ -66,19 +78,17 @@ typedef struct		s_vclist
 
 typedef struct		s_obj
 {
-	int				type;
 	enum obj_type	o_type;
+	enum texture	texture;
 	t_vc			rot;
 	t_vc			pos;
 	t_vc			coef;
+	t_vc			phong;
+	t_vc			descartes;
+	struct s_obj	*cut;
 	int				col;
-	double			size;
-	double			r;
-	double			tr;
-	double			rfr;
 	int				perturb;
-	int				id_cut;
-	int				id_obj;
+	double			size;
 	int				*texture_size;
 	int				**texture_tab;
 	t_vc			lm;
@@ -104,11 +114,54 @@ typedef struct		s_hit_rec
 	t_obj			*hit_obj;
 }					t_hit_rec;
 
+typedef struct 		s_img
+{
+void				*pic;
+char				*info;
+int					bpp;
+int					s_l;
+int					endian;
+
+}					t_img;
+//
+// typedef struct		s_uvect2
+// {
+//     int				x;
+//     int				y;
+// }					t_uvect2;
+//
+// typedef struct		s_cursor
+// {
+//     t_uvect2		start_pos;
+//     t_uvect2		end_pos;
+//     t_uvect2		cursor_vect;
+//     int				height;
+//     int				width;
+// }					t_cursor;
+//
+// typedef struct		s_slider
+// {
+//     int				pos_tmp;
+//     int				pos_x;
+//     int				pos_x_zero;
+//     int				pos_x_max;
+//     int				pos_x_length;
+//     int				pos_y;
+// }					t_slider;
+
 typedef struct		s_env
 {
 	void			*mlx;
 	void			*win;
 	void			*image;
+	int				key[256];
+	t_img			img;
+	// t_slider		slider_r;
+	// t_slider		slider_g;
+	// t_slider		slider_b;
+    // t_cursor		cursor_r;
+	// t_cursor		cursor_g;
+	// t_cursor		cursor_b;
 	char			*file_name;
 	int				*imgstr;
 	int				thread_int;
@@ -141,6 +194,46 @@ void				compute_scene_vectors(t_env *e, t_obj *tmp);
 int					is_not_cut(t_obj *obj, t_env *e);
 int					mix_colors(int col1, int col2, double coef);
 int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
+
+/*
+** PARSER
+*/
+
+char				*read_scene(int fd, char **av);
+char				*parser_error(char *message, char *line);
+void				create_scene(t_env *e, char *file);
+int					parser(t_env *e, int ac, char **av);
+char				*skip_whitespace(char *file);
+char				*parse_vc(char *file, t_vc *v);
+char				*parse_descartes(char *file, t_vc *v);
+char				*parse_phong(char *file, t_vc *v);
+char				*parse_double(char *file, double *d);
+char				*parse_color(char *file, int *col);
+enum texture		texture_converter(char *str, enum obj_type obj);
+char				*parse_texture(char *file, enum texture *texture, enum obj_type obj);
+void				print_vc(t_vc v);
+char				*parse_eye(t_env *e, char *file);
+char				*parse_light(t_env *e, char *file);
+char				*parse_int(char *file, int *d);
+
+t_obj				*default_sphere(void);
+t_obj				*default_cone(void);
+t_obj				*default_cylinder(void);
+t_obj				*default_cutter(void);
+t_obj				*default_plane(void);
+
+
+char				*objects_items(t_obj *sphere, char *file, enum obj_type obj);
+char				*parse_sphere(t_env *e, char *file);
+char				*parse_cylinder(t_env *e, char *file);
+char				*parse_cone(t_env *e, char *file);
+char				*parse_plane(t_env *e, char *file);
+char				*parse_paraboloid(t_env *e, char *file);
+char				*parse_cutter(t_obj *cut, char *file);
+int					ft_htod(char c);
+int					ft_htoi(char *str);
+
+
 
 /*
 ** DESCARTES LAWS
@@ -183,7 +276,7 @@ double				inter_cyl(t_hit_rec *hit, t_obj *obj, t_ray ray);
 double				inter_paraboloid(t_hit_rec *hit, t_obj *obj, t_ray ray);
 double				quadratic_solver(t_hit_rec *hit, t_vc abc);
 char				hit_not_cut(t_hit_rec *hit, t_obj *obj, t_ray ray);
-char				hit_cut(t_hit_rec *hit, t_env *e, t_obj *obj, t_ray ray);
+char				hit_cut(t_hit_rec *hit, t_obj *obj, t_ray ray);
 
 
 /*
@@ -234,7 +327,6 @@ t_vc				init_vc(double x, double y, double z);
 void				obj_add(t_obj **beg, t_obj *n);
 void				clear_list(t_obj *head);
 t_obj				*disc_for_cylinder(t_obj *cyl, t_vc center);
-t_obj				*get_cutter(t_env *e, t_obj *obj);
 
 /*
 ** ERROR MGT
@@ -279,23 +371,6 @@ char				textures_coef(t_obj *obj, t_hit_rec *hit, t_ray ray);
 
 int					load_texture_to_obj(t_env *e, t_obj *obj);
 
-/*
-** PARSER
-*/
-
-int					ft_htod(char c);
-int					ft_htoi(char *str);
-double				ft_atof(char *c);
-int					ft_iscolor(char *str);
-int					ft_isnumber(char *str);
-int					check_value(char **str);
-int					name_type(char *str);
-void				error_messages(int error);
-t_obj				*attribute_object(char **tab_values, t_env *e);
-char				*tabtospace(char *str);
-int					attribute_scene(char *str, t_env *e);
-int					parser(char **av, t_env *e);
-int					create_objects(t_env *e, char **tab_values);
 
 /*
 ** PALETTE
@@ -320,5 +395,24 @@ int					transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
 char				cartooning(t_env *e);
 int					clr_abs_dif(int col1, int col2);
 void				blinding_lights(t_env *e);
+
+/*
+** LEGEND
+*/
+
+void				put_pixel(t_env *e, int color, int x, int y);
+int					draw_slider_r(t_env *e);
+int					draw_cursor_r(t_env *e);
+int					draw_slider_g(t_env *e);
+int					draw_cursor_g(t_env *e);
+int					draw_slider_b(t_env *e);
+int					draw_cursor_b(t_env *e);
+void				legend(t_env *e);
+int					mouse(int x, int y, t_env *e);
+int					mouse_press(int button, int x, int y, t_env *e);
+int					mouse_release(int button, int x, int y, t_env *e);
+int					mykeyhook(int keycode, t_env* e);
+int					init_slider(t_env *e);
+void				put_in_color(t_env *e);
 
 #endif

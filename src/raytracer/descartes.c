@@ -19,7 +19,7 @@ int		transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 	t_hit_rec	next_hit;
 	double		r;
 
-	r = (!(textures_coef(hit->hit_obj, hit, ray))) ? hit->hit_obj->tr : 0;
+	r = (!(textures_coef(hit->hit_obj, hit, ray))) ? hit->hit_obj->descartes.y : 0;
 	hit->nt--;
 	next_hit = *hit;
 	r_ray.direction = ray.direction;
@@ -43,7 +43,7 @@ int		reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 
 	hit->nr--;
 	next_hit = *hit;
-	r = hit->hit_obj->r;
+	r = hit->hit_obj->descartes.x;
 	r_ray.direction = vec_mult(vec_norm(ray.direction), -1);
 	r_ray.direction = vec_sub(vec_mult(hit->n, 2 * vec_dot(r_ray.direction, hit->n)), r_ray.direction);
 	r_ray.origin = hit->hit_inter;

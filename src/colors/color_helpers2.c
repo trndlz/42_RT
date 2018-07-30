@@ -42,3 +42,13 @@ int		major_color(int color)
 		color = 0x0000FF;
 	return (color);
 }
+
+t_vc						hextorgb(int hex)
+{
+	t_vc rgb;
+
+	rgb.x = (int)((hex / (0x100 * 0x100)) % 0x100);
+	rgb.y = (int)((hex / 0x100) % 0x100);
+	rgb.z = (int)(hex % 0x100);
+	return (rgb);
+}

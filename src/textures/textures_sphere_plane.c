@@ -93,7 +93,7 @@ char		checkerboard_plane(t_hit_rec *hit, t_ray ray)
 
 	xy_pos = vec_sub(vec_add(vec_mult(ray.direction, hit->t),
 		ray.origin), hit->hit_obj->pos);
-	teta = acos(vec_dot(hit->hit_obj->rot, init_vc(0, 0, 1)));
+	teta = acos(vec_dot(hit->hit_obj->rot, (t_vc){0, 0, 1}));
 	xy_pos = rot_x(xy_pos, (int)(teta * 180 / M_PI));
 	xy_pos = rot_y(xy_pos, (int)(teta * 180 / M_PI));
 	mod = (xy_pos.x * xy_pos.y > 0) ? 1 : 0;

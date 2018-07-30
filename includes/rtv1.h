@@ -210,10 +210,39 @@ void				*scene_plot(void *arg);
 t_ray				create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin);
 double				distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray);
 char				nearest_node(t_env *e, t_ray ray, t_hit_rec *hit);
-void				compute_scene_vectors(t_env *e, t_obj *tmp);
 int					is_not_cut(t_obj *obj, t_env *e);
-int					mix_colors(int col1, int col2, double coef);
 int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
+
+/*
+** COLOR CALCULATION
+*/
+
+int					phong_lighting(t_env *e, t_ray ray, t_hit_rec *hit);
+void				perturb_norm(t_hit_rec *hit);
+int					specular_diffuse(t_obj *light, t_hit_rec *hit, t_ray ray);
+
+/*
+** COLOR FUNCTIONS
+*/
+
+int					add_color(int hex1, int hex2);
+int					multiply_color(int hex, double mult);
+int					color_limits(int col);
+int					closest_col(int *palette, int color);
+int					major_color(int color);
+int					mix_colors(int col1, int col2, double coef);
+double				ratio_limits(double i);
+t_vc				hextorgb(int hex);
+
+/*
+** FILTERS
+*/
+
+void				create_red_blue_img(t_env *e, int *colorcopy);
+void				stereoscopic(t_env *e);
+int					sepia(int color);
+int					apply_filter(t_env *e, int color);
+
 
 /*
 ** PARSER
@@ -320,30 +349,11 @@ t_vc				normal_vectors(t_hit_rec *hit, t_obj *obj, t_ray ray);
 double				shadows(t_env *e, t_hit_rec *hit, t_obj *light_obj, t_ray ray);
 
 /*
-** COLOR CALCULATION
-*/
-
-int					add_color(int hex1, int hex2);
-double				ratio_limits(double i);
-int					multiply_color(int hex, double mult);
-int					color_limits(int col);
-int					closest_col(int *palette, int color);
-int					major_color(int color);
-
-
-int					specular_diffuse(t_obj *light, t_hit_rec *hit, t_ray ray);
-void				global_filter(t_env *e, int filter);
-int					apply_filter(t_env *e, int color);
-
-
-
-/*
 ** STRUCTURES INITIALIZATION
 */
 
 t_env				*init_env(void);
 int					init_mlx(t_mlx *i_mlx);
-t_vc				init_vc(double x, double y, double z);
 
 /*
 ** OBJECTS
@@ -351,7 +361,6 @@ t_vc				init_vc(double x, double y, double z);
 
 void				obj_add(t_obj **beg, t_obj *n);
 void				clear_list(t_obj *head);
-t_obj				*disc_for_cylinder(t_obj *cyl, t_vc center);
 
 /*
 ** ERROR MGT
@@ -368,16 +377,11 @@ void				exit_message(char *str);
 void				free_split(char **split);
 
 /*
-** TEXTURES CYLINDER / CONE
+** TEXTURES OBJECTS
 */
 
 char				get_lines_cylinder(t_hit_rec *hit, t_ray ray);
 char				get_lines_cone(t_hit_rec *hit, t_ray ray);
-
-/*
-** TEXTURES SPHERE /PLANE
-*/
-
 char				get_lines_sphere(t_hit_rec *hit, t_ray ray);
 char				get_columns_sphere(t_hit_rec *hit, t_ray ray);
 char				get_checkerboard_sphere(t_hit_rec *hit, t_ray ray);
@@ -385,39 +389,28 @@ int					get_texture_sphere(t_hit_rec *hit, t_ray ray);
 char				checkerboard_plane(t_hit_rec *hit, t_ray ray);
 
 /*
-** TEXTURES CHOSER
+** TEXTURES FUNCTIONS
 */
 
 char				textures_coef(t_obj *obj, t_hit_rec *hit, t_ray ray);
-
-/*
-** TEXTURE LOADER
-*/
-
 int					load_texture_to_obj(t_env *e, t_obj *obj);
 
-
 /*
-** PALETTE
+** CARTOONING
 */
 
 int					palette_compare(int *palette, int color);
 int					palette_add(int *palette, int color);
 char				init_palette(int *palette);
 char				create_palette(t_env *e, int *palette);
+char				cartooning(t_env *e);
 
 /*
 ** MISCELLANEOUS
 */
 
 void				create_bmp_file(int *imgstr);
-t_vc				hextorgb(int hex);
-void				stereoscopic(t_env *e);
 void				antialias(int *imgstr);
-int					recursive_reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
-int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
-int					transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
-char				cartooning(t_env *e);
 int					clr_abs_dif(int col1, int col2);
 void				blinding_lights(t_env *e);
 

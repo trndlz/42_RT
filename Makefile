@@ -14,17 +14,17 @@ NAME		:= rt
 
 SRC_PATH	:= src
 SRC_NAME	:=	main.c								\
-				images.c							\
-				init.c								\
+				mlx/images.c						\
+				mlx/init.c							\
+				mlx/keyboard.c						\
+				mlx/create_bmp.c					\
 				colors/color_helpers.c				\
 				colors/color_helpers2.c				\
-				keyboard.c							\
 				utils/free_functions.c				\
 				utils/usage.c						\
 				maths/maths_vectors.c				\
 				maths/maths_rot.c					\
 				maths/maths_functions.c				\
-				create_bmp.c						\
 				filters/blind_lights.c				\
 				filters/antialiasing.c				\
 				filters/cartooning.c				\
@@ -46,6 +46,8 @@ SRC_NAME	:=	main.c								\
 				raytracer/solver.c					\
 				raytracer/raytracer.c				\
 				raytracer/shadows.c					\
+				raytracer/colors.c					\
+				raytracer/object_hit.c				\
 				raytracer/descartes.c				\
 				raytracer/normal_vectors.c
 
@@ -74,8 +76,8 @@ ifeq ($(UNAME_S), Darwin)
 	MINILIBX	:= -L ./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit
 endif
 
-# CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
-CC			:= gcc -Werror -Wall -Wextra
+CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
+# CC			:= gcc -Werror -Wall -Wextra
 OBJ_NAME	:= $(SRC_NAME:.c=.o)
 
 SRC			:= $(addprefix $(SRC_PATH)/, $(SRC_NAME))

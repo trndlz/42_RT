@@ -13,18 +13,31 @@
 
 #include "rtv1.h"
 
+void	create_red_blue_img(t_env *e, int *colorcopy)
+{
+	t_hit_rec 	hit_rec;
+	t_ray		ray;
+	int			px_color;
+
+	colorcopy[e->z * WINY + e->y] = ((e->imgstr[e->z * WINY + e->y]
+		/ (0x100 * 0x100)) % 0x100) * (0x100 * 0x100);
+	ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
+	if (nearest_node(e, ray, &hit_rec))
+	{
+		px_color = compute_point(e, &hit_rec, ray);
+		px_color = px_color % 0x100 + ((px_color / 0x100) % 0x100) * 0x100;
+		draw_point(e, e->y, e->z, px_color);
+	}
+}
+
 void	stereoscopic(t_env *e)
 {
 	int 		*colorcopy;
-	int			px_color;
-	t_ray		ray;
-	t_hit_rec	hit_rec;
 	int			i;
 
 	i = 0;
 	if (!(colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ)))
 		return ;
-	global_filter(e, 2);
 	e->z = (e->thread_int) * WINZ / TH_NB - 1;
 	e->eye_lookfrom.y -= 60;
 	while (++(e->z) < ((e->thread_int + 1) * WINZ) / TH_NB)
@@ -32,20 +45,12 @@ void	stereoscopic(t_env *e)
 		e->y = -1;
 		while (++(e->y) < WINY)
 		{
-			colorcopy[e->z * WINY + e->y] = e->imgstr[e->z * WINY + e->y];
-			hit_rec.nr = 1;
-			hit_rec.nt = 56;
-			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
-			if (nearest_node(e, ray, &hit_rec))
-			{
-				px_color = compute_point(e, &hit_rec, ray);
-				draw_point(e, e->y, e->z, px_color);
-			}
+			create_red_blue_img(e, colorcopy);
 		}
 	}
-	global_filter(e, 3);
 	while (++i < (((e->thread_int + 1) * WINZ) / TH_NB) * WINY)
 		e->imgstr[i] = add_color(e->imgstr[i], colorcopy[i]);
+	free(colorcopy);
 }
 
 int		sepia(int color)
@@ -78,28 +83,4 @@ int		apply_filter(t_env *e, int color)
 		return (sepia(color));
 	else
 		return (color);
-}
-
-void global_filter(t_env *e, int filter)
-{
-	int i;
-
-	i = ((e->thread_int) * WINZ / TH_NB) * WINY - 1;
-	if (filter == -1 || !filter)
-		exit (0);
-	if (filter == 0)
-	while(++i < (((e->thread_int + 1) * WINZ) / TH_NB) * WINY)
-		e->imgstr[i] = e->imgstr[i] % 0X100;
-	if (filter == 1)
-	while(++i < (((e->thread_int + 1) * WINZ) / TH_NB) * WINY)
-		e->imgstr[i] = ((e->imgstr[i] / 0X100) % 0X100) * 0X100;
-	if (filter == 2)
-	while(++i < (((e->thread_int + 1) * WINZ) / TH_NB) * WINY)
-		e->imgstr[i] = ((e->imgstr[i] / (0X100 * 0X100)) % 0X100) * (0X100 * 0X100);
-	if (filter == 3)
-	while(++i < (((e->thread_int + 1) * WINZ) / TH_NB) * WINY)
-		e->imgstr[i] = e->imgstr[i] % 0X100 + ((e->imgstr[i] / 0X100) % 0X100) * 0X100;
-	if (filter == 4)
-		while(++i < (((e->thread_int + 1) * WINZ) / TH_NB) * WINY)
-			e->imgstr[i] = sepia(e->imgstr[i]);
 }

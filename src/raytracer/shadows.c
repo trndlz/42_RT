@@ -39,35 +39,16 @@ double		get_minimum_tr(t_hit_rec hit_s, t_obj *olst, t_ray light_r)
 	}
 	return (tr_max);
 }
-//
-// t_obj		*get_cutter(t_env *e, t_obj *obj)
-// {
-// 	t_obj *cut;
-//
-// 	cut = e->cut_link;
-// 	while (cut)
-// 	{
-// 		if (cut->id_cut == obj->id_obj)
-// 			return (cut);
-// 		cut = cut->next;
-// 	}
-// 	return (NULL);
-// }
 
 double		get_minimum_tr_cut(t_hit_rec hit_s, t_obj *olst, t_ray light_r)
 {
 	double	tr;
 	double	tr_max;
-	// t_vc	inter;
-	// t_obj	*cut;
 
 	tr_max = 1;
 	hit_s.t = INFINITY;
 	if (hit_cut(&hit_s, olst, light_r))
 	{
-		// cut = get_cutter(e, olst);
-		// inter = vec_sub(vec_add(vec_mult(light_r.direction, hit_s.t),
-		// 	light_r.origin), cut->pos);
 		tr = (!(textures_coef(hit_s.hit_obj, &hit_s, light_r)))
 			? hit_s.hit_obj->descartes.y : 0;
 		tr_max = (tr < tr_max) ? tr : tr_max;

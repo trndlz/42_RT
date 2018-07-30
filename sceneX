@@ -31,7 +31,6 @@
 	[perturbation] 2
 	[texture] CHECKERBOARD 5
 
-
 <sphere>
 	[position] 800 0 0
 	[rotation] 0 0 0
@@ -48,9 +47,9 @@
 	[color] 0xffc39a
 	[size] 15
 	[Spec/Diff/Amb] 0.8 0.9 0.1
-	[R/T/Rf] 0 0 1
-	[perturbation] 0
-
+	[R/T/Rf] 0 0.6 1
+	[texture] LINES
+	[texture_size] 60
 
 <cylinder>
 	[position] 1000 -300 200
@@ -63,4 +62,3 @@
 
 <scene>
 	+blinding_lights
-	[filter] STEREOSCOPIC

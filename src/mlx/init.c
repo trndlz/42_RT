@@ -39,16 +39,6 @@ int			init_mlx(t_mlx *i_mlx)
 }
 
 
-t_vc		init_vc(double x, double y, double z)
-{
-	t_vc vc;
-
-	vc.x = (double)x;
-	vc.y = (double)y;
-	vc.z = (double)z;
-	return (vc);
-}
-
 void		obj_add(t_obj **beg, t_obj *n)
 {
 	if (!beg || !n)

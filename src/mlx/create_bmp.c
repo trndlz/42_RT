@@ -13,16 +13,6 @@
 #include "rtv1.h"
 #include <stdio.h>
 
-t_vc						hextorgb(int hex)
-{
-	t_vc rgb;
-
-	rgb.x = (int)((hex / (0x100 * 0x100)) % 0x100);
-	rgb.y = (int)((hex / 0x100) % 0x100);
-	rgb.z = (int)(hex % 0x100);
-	return (rgb);
-}
-
 static	unsigned char		*create_bmp_img(int *imgstr)
 {
 	unsigned char	*img;

@@ -92,7 +92,7 @@ int		load_texture_to_obj(t_env *e, t_obj *obj)
 	if (!(size = get_xpm_size("src/earth.xpm")))
 		return (0);
 	obj->file_txt.size = size;
-	image = mlx_xpm_file_to_image(e->mlx, "src/earth.xpm", &size[0], &size[1]);
+	image = mlx_xpm_file_to_image(e->mlx.mlx, "src/earth.xpm", &size[0], &size[1]);
 	imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2]);
 	if (!(obj->file_txt.tab = create_color_tab(imgstr, obj->file_txt.size)))
 		return (0);

@@ -20,21 +20,16 @@ int		main(int ac, char **av)
 		ft_usage();
 	if (!(e = init_env()))
 		exit_message("Problem while creating environment structure\n");
-	e->obj_link = NULL;
-	e->light_link = NULL;
-	e->cut_link = NULL;
-	if (!init_mlx(e))
+	if (!init_mlx(&(e->mlx)))
 		exit_message("Problem while creating MLX environment\n");
 	if (!parser(e, ac, av))
 		return (0);
 	pthread_mutex_init(&(e->mutex), NULL);
-	// if (e->nb_eye != 1)
-	// 	error_messages(6);
 	if (!(create_image(e)))
 		exit_message("Problem while creating image\n");
-	mlx_hook(e->win, 2, 3, deal_key, e);
-	mlx_mouse_hook(e->win, deal_mouse, e);
-	mlx_loop(e->mlx);
+	mlx_hook(e->mlx.win, 2, 3, deal_key, e);
+	mlx_mouse_hook(e->mlx.win, deal_mouse, e);
+	mlx_loop(e->mlx.mlx);
 	clear_list(e->obj_link);
 	clear_list(e->light_link);
 	clear_list(e->cut_link);

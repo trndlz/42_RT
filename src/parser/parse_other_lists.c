@@ -12,14 +12,8 @@
 
 #include "rtv1.h"
 
-/*
-** Eye par défaut à créer autre part !
-*/
-
 char		*parse_eye(t_env *e, char *file)
 {
-	e->eye_lookfrom = (t_vc){-1000, 0, 0};
-	e->eye_rot = (t_vc){0, 0, 0};
 	while (file && *file && file[1] != '-')
 	{
 		file = skip_whitespace(file);
@@ -55,5 +49,30 @@ char		*parse_light(t_env *e, char *file)
 			break ;
 	}
 	obj_add(&e->light_link, light);
+	return (file);
+}
+
+char		*parse_cutter(t_obj *obj, char *file)
+{
+	t_obj *cutter;
+
+	cutter = default_cutter();
+	while (file && *file && file[1] != '-')
+	{
+		file = skip_whitespace(file);
+		if (ft_strncmp("[position] ", file, 11) == 0)
+			file = parse_vc(file, &(cutter->pos));
+		else if (ft_strncmp("[rotation] ", file, 11) == 0)
+			file = parse_vc(file, &(cutter->rot));
+		else if (ft_strncmp("[color] ", file, 8) == 0)
+			file = parse_color(file, &(cutter->col));
+		else if (ft_strncmp("[R/T/Rf] ", file, 9) == 0)
+			file = parse_descartes(file, &(cutter->descartes));
+		else if (ft_strncmp("[Spec/Diff/Amb] ", file, 16) == 0)
+			file = parse_phong(file, &(cutter->phong));
+		else
+			break ;
+	}
+	obj->cut = cutter;
 	return (file);
 }

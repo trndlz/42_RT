@@ -36,20 +36,20 @@ int		create_image(t_env *e)
 	int s_l;
 	int endian;
 
-	mlx_clear_window(e->mlx, e->win);
-	if (!(e->image = mlx_new_image(e->mlx, WINY, WINZ)))
+	mlx_clear_window(e->mlx.mlx, e->mlx.win);
+	if (!(e->mlx.image = mlx_new_image(e->mlx.mlx, WINY, WINZ)))
 		return (0);
-	if (!(e->imgstr = (int *)mlx_get_data_addr(e->image, &bpp, &s_l, &endian)))
+	if (!(e->imgstr = (int *)mlx_get_data_addr(e->mlx.image, &bpp, &s_l, &endian)))
 			return (0);
 	multi_threading(e);
-	// blinding_lights(e);
-	//pthread_mutex_lock(&(e->mutex));
-	//if((!cartooning(e)))
-	//	return (0);
-	//antialias(e->imgstr);
-	//pthread_mutex_unlock(&(e->mutex));
-	mlx_put_image_to_window(e->mlx, e->win, e->image, 0, 0);
-
+	if (e->scene.blinding_lights)
+		blinding_lights(e);
+	if (e->scene.antialias)
+		antialias(e->imgstr);
+	if (e->scene.filter == CARTOON)
+		if((!cartooning(e)))
+			return (0);
+	mlx_put_image_to_window(e->mlx.mlx, e->mlx.win, e->mlx.image, 0, 0);
 	return (1);
 }
 

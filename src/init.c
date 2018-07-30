@@ -18,19 +18,26 @@ t_env		*init_env(void)
 
 	if (!(e = (t_env*)malloc(sizeof(t_env))))
 		return (NULL);
-	e->nb_eye = 0;
-	e->id = 0;
+	e->eye_lookfrom = (t_vc){-1000, 0, 0};
+	e->eye_rot = (t_vc){0, 0, 0};
+	e->obj_link = NULL;
+	e->light_link = NULL;
+	e->cut_link = NULL;
+	e->scene.filter = NO_FILTER;
+	e->scene.antialias = 0;
+	e->scene.blinding_lights = 0;
 	return (e);
 }
 
-int			init_mlx(t_env *e)
+int			init_mlx(t_mlx *i_mlx)
 {
-	if (!(e->mlx = mlx_init()))
+	if (!(i_mlx->mlx = mlx_init()))
 		return (0);
-	if (!(e->win = mlx_new_window(e->mlx, WINY, WINZ, "RTv1")))
+	if (!(i_mlx->win = mlx_new_window(i_mlx->mlx, WINY, WINZ, "RT")))
 		return (0);
 	return (1);
 }
+
 
 t_vc		init_vc(double x, double y, double z)
 {

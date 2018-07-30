@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:= rtv1
+NAME		:= rt
 
 SRC_PATH	:= src
 SRC_NAME	:=	main.c								\
@@ -35,10 +35,12 @@ SRC_NAME	:=	main.c								\
 				textures/textures_sphere_plane.c	\
 				textures/textures.c					\
 				parser/default_objects.c			\
-				parser/parse_cutter.c				\
 				parser/parse_functions.c			\
-				parser/parse_lights_eye.c			\
-				parser/parse_sphere.c				\
+				parser/parse_items.c				\
+				parser/parse_items2.c				\
+				parser/parse_objects.c				\
+				parser/parse_other_lists.c			\
+				parser/parse_textures_filters.c		\
 				parser/scene_reader.c				\
 				raytracer/intersections.c			\
 				raytracer/solver.c					\
@@ -72,8 +74,8 @@ ifeq ($(UNAME_S), Darwin)
 	MINILIBX	:= -L ./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit
 endif
 
-CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
-# CC			:= gcc -Werror -Wall -Wextra
+# CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
+CC			:= gcc -Werror -Wall -Wextra
 OBJ_NAME	:= $(SRC_NAME:.c=.o)
 
 SRC			:= $(addprefix $(SRC_PATH)/, $(SRC_NAME))
@@ -106,7 +108,6 @@ clean:
 fclean: clean
 	make fclean -C libft/
 	rm -fv $(NAME)
-	rm -R $(OBJ_PATH)
 
 re: fclean all
 

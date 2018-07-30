@@ -216,11 +216,12 @@ void	*scene_plot(void *arg)
 			if (nearest_node(e, ray, &hit_rec))
 			{
 				px_color = compute_point(e, &hit_rec, ray);
+				px_color = apply_filter(e, px_color);
 				draw_point(e, e->y, e->z, px_color);
 			}
 		}
 	}
-	// blinding_lights(e);
-	// stereoscopic(e);
+	if (e->scene.filter == STEREOSCOPIC)
+		stereoscopic(e);
 	return (NULL);
 }

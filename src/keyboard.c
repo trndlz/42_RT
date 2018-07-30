@@ -70,8 +70,8 @@ int		deal_key(int key, t_env *e)
 	else if (key == 53)
 	{
 		pthread_mutex_lock(&(e->mutex));
-		mlx_destroy_image(e->mlx, e->image);
-		mlx_destroy_window(e->mlx, e->win);
+		mlx_destroy_image(e->mlx.mlx, e->mlx.image);
+		mlx_destroy_window(e->mlx.mlx, e->mlx.win);
 		exit(1);
 	}
 	else

@@ -56,6 +56,33 @@ char		*parser_error(char *message, char *line)
 	return (NULL);
 }
 
+
+
+char		*parse_scene(t_env *e, char *file)
+{
+	while (file && *file && file[1] != '-')
+	{
+		file = skip_whitespace(file);
+		if (ft_strncmp("+antialias\n", file, 11) == 0)
+		{
+			e->scene.antialias = 1;
+			file = file + 11;
+		}
+
+		else if (ft_strncmp("+blinding_lights\n", file, 17) == 0)
+		{
+			e->scene.blinding_lights = 1;
+			file = file + 17;
+		}
+		else if (ft_strncmp("[filter] ", file, 9) == 0)
+			file = parse_filter(file, &(e->scene.filter));
+		else
+			break ;
+	}
+	return (file);
+}
+
+
 void		create_scene(t_env *e, char *file)
 {
 	while (file && *file)
@@ -75,6 +102,8 @@ void		create_scene(t_env *e, char *file)
 			file = parse_plane(e, file + 8);
 		else if (ft_strncmp("<paraboloid>\n", file, 13) == 0)
 			file = parse_paraboloid(e, file + 13);
+		else if (ft_strncmp("<scene>\n", file, 8) == 0)
+			file = parse_scene(e, file + 8);
 		else
 		{
 			file = ft_strchr(file, '\n');

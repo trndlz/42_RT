@@ -44,11 +44,22 @@ enum obj_type {
 };
 
 enum texture {
-	NONE,
+	NO_TEXTURE,
 	LINES,
 	COLUMNS,
 	CHECKERBOARD,
 	EARTH
+};
+
+enum filter {
+	NO_FILTER,
+	CARTOON,
+	SEPIA,
+	RED,
+	GREEN,
+	BLUE,
+	CYAN,
+	STEREOSCOPIC
 };
 
 
@@ -97,6 +108,13 @@ typedef struct		s_obj
 	struct s_obj	*next;
 }					t_obj;
 
+typedef struct		s_scene
+{
+	enum filter		filter;
+	char			antialias;
+	char			blinding_lights;
+}					t_scene;
+
 typedef struct		s_hit_rec
 {
 	double			cost;
@@ -117,12 +135,11 @@ typedef struct		s_hit_rec
 
 typedef struct 		s_img
 {
-void				*pic;
-char				*info;
-int					bpp;
-int					s_l;
-int					endian;
-
+	void			*pic;
+	char			*info;
+	int				bpp;
+	int				s_l;
+	int				endian;
 }					t_img;
 //
 // typedef struct		s_uvect2
@@ -150,27 +167,28 @@ int					endian;
 //     int				pos_y;
 // }					t_slider;
 
-typedef struct		s_env
+typedef struct		s_mlx
 {
 	void			*mlx;
 	void			*win;
 	void			*image;
-	int				key[256];
-	t_img			img;
+}					t_mlx;
+
+typedef struct		s_env
+{
+	t_mlx			mlx;
+	int				*imgstr;
+	// int				key[256];
+	// t_img			img;
 	// t_slider		slider_r;
 	// t_slider		slider_g;
 	// t_slider		slider_b;
     // t_cursor		cursor_r;
 	// t_cursor		cursor_g;
 	// t_cursor		cursor_b;
-	char			*file_name;
-	int				*imgstr;
 	int				thread_int;
 	int				y;
 	int				z;
-	int				nb_eye;
-	int				filter;
-	int				id;
 	t_vclist		*b_lights;
 	t_vc			eye_lookfrom;
 	t_vc			eye_rot;
@@ -179,6 +197,7 @@ typedef struct		s_env
 	t_obj			*obj_link;
 	t_obj			*light_link;
 	t_obj			*cut_link;
+	t_scene			scene;
 }					t_env;
 
 /*
@@ -200,42 +219,45 @@ int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
 ** PARSER
 */
 
-char				*read_scene(int fd, char **av);
-char				*parser_error(char *message, char *line);
-void				create_scene(t_env *e, char *file);
-int					parser(t_env *e, int ac, char **av);
-char				*skip_whitespace(char *file);
-char				*parse_vc(char *file, t_vc *v);
-char				*parse_descartes(char *file, t_vc *v);
-char				*parse_phong(char *file, t_vc *v);
-char				*parse_double(char *file, double *d);
-char				*parse_color(char *file, int *col);
-enum texture		texture_converter(char *str, enum obj_type obj);
-char			*parse_texture(char *file, enum texture *texture,
-				enum obj_type obj);
-void				print_vc(t_vc v);
-char				*parse_eye(t_env *e, char *file);
-char				*parse_light(t_env *e, char *file);
-char				*parse_int(char *file, unsigned int *d);
-
 t_obj				*default_sphere(void);
 t_obj				*default_cone(void);
 t_obj				*default_cylinder(void);
 t_obj				*default_cutter(void);
 t_obj				*default_plane(void);
 
+char				*skip_whitespace(char *file);
+int					ft_htod(char c);
+int					ft_htoi(char *str);
 
-char				*objects_items(t_obj *sphere, char *file, enum obj_type obj);
+char				*objects_items(t_obj *nobj, char *file, enum obj_type obj);
+char				*parse_descartes(char *file, t_vc *v);
+char				*parse_phong(char *file, t_vc *v);
+
+char				*parse_vc(char *file, t_vc *v);
+char				*parse_double(char *file, double *d);
+char				*parse_int(char *file, unsigned int *d);
+char				*parse_color(char *file, int *col);
+
 char				*parse_sphere(t_env *e, char *file);
 char				*parse_cylinder(t_env *e, char *file);
 char				*parse_cone(t_env *e, char *file);
 char				*parse_plane(t_env *e, char *file);
 char				*parse_paraboloid(t_env *e, char *file);
+
+char				*parse_eye(t_env *e, char *file);
+char				*parse_light(t_env *e, char *file);
 char				*parse_cutter(t_obj *cut, char *file);
-int					ft_htod(char c);
-int					ft_htoi(char *str);
 
+enum texture		texture_converter(char *str, enum obj_type obj);
+enum filter			filter_converter(char *str);
+char				*parse_texture(char *file, enum texture *texture, enum obj_type obj);
+char				*parse_filter(char *file, enum filter *filter);
 
+char				*read_scene(int fd, char **av);
+char				*parser_error(char *message, char *line);
+char				*parse_scene(t_env *e, char *file);
+void				create_scene(t_env *e, char *file);
+int					parser(t_env *e, int ac, char **av);
 
 /*
 ** DESCARTES LAWS
@@ -311,6 +333,7 @@ int					major_color(int color);
 
 int					specular_diffuse(t_obj *light, t_hit_rec *hit, t_ray ray);
 void				global_filter(t_env *e, int filter);
+int					apply_filter(t_env *e, int color);
 
 
 
@@ -319,7 +342,7 @@ void				global_filter(t_env *e, int filter);
 */
 
 t_env				*init_env(void);
-int					init_mlx(t_env *e);
+int					init_mlx(t_mlx *i_mlx);
 t_vc				init_vc(double x, double y, double z);
 
 /*

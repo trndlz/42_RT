@@ -20,6 +20,11 @@ char		*parse_sphere(t_env *e, char *file)
 	file = objects_items(sphere, file, SPHERE);
 	if (sphere->texture == EARTH)
 		load_texture_to_obj(e, sphere);
+	if (sphere->texture == NEARTH)
+	{
+		load_texture_to_obj(e, sphere);
+		load_tex_height_to_obj(e, sphere);
+	}
 	obj_add(&(e->obj_link), sphere);
 	return (file);
 }

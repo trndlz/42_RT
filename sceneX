@@ -41,6 +41,16 @@
 	[texture] EARTH
 	[perturbation] 2
 
+<sphere>
+	[position] 200 0 0
+	[rotation] 0 0 0
+	[color] 0xb7fffa
+	[size] 200
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+	[texture] NEARTH
+	[perturbation] 2
+
 <cone>
 	[position] 1000 -300 -400
 	[rotation] 0 1 1

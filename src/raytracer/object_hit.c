@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-double		distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray)
+double	distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray)
 {
 	double d;
 
@@ -21,7 +21,8 @@ double		distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray)
 	d = (obj_list->o_type == CYLINDER) ? inter_cyl(hit, obj_list, ray) : d;
 	d = (obj_list->o_type == CONE) ? inter_cone(hit, obj_list, ray) : d;
 	d = (obj_list->o_type == PLANE) ? inter_plane(ray, obj_list) : d;
-	d = (obj_list->o_type == PARABOLOID) ? inter_paraboloid(hit, obj_list, ray) : d;
+	d = (obj_list->o_type == PARABOLOID)
+		? inter_paraboloid(hit, obj_list, ray) : d;
 	return (d);
 }
 
@@ -60,7 +61,8 @@ char	hit_cut(t_hit_rec *hit, t_obj *obj, t_ray ray)
 		hit->hit_obj = obj;
 		hit_anything = 1;
 	}
-	else if (t > D_ZERO && t_cut < hit->t && hit->t1 < t_cut && hit->t2 > t_cut && t_cut > D_ZERO)
+	else if (t > D_ZERO && t_cut < hit->t
+		&& hit->t1 < t_cut && hit->t2 > t_cut && t_cut > D_ZERO)
 	{
 		hit->t = t_cut;
 		hit->hit_obj = clst;
@@ -69,7 +71,7 @@ char	hit_cut(t_hit_rec *hit, t_obj *obj, t_ray ray)
 	return (hit_anything);
 }
 
-char		nearest_node(t_env *e, t_ray ray, t_hit_rec *hit)
+char	nearest_node(t_env *e, t_ray ray, t_hit_rec *hit)
 {
 	t_obj	*olst;
 	char	hit_anything;

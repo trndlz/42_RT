@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-char			*skip_whitespace(char *file)
+char	*skip_whitespace(char *file)
 {
 	while (*file == ' ' || *file == '\t')
 		file++;

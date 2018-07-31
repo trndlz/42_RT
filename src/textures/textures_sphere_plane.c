@@ -57,7 +57,8 @@ char		get_checkerboard_sphere(t_hit_rec *hit, t_ray ray)
 	sph_pos = rot_all_axis(sph_pos, hit->hit_obj->rot);
 	u = 0.5 + atan2(sph_pos.z, sph_pos.y) / (2 * M_PI);
 	v = 0.5 - asin(sph_pos.x) / M_PI;
-	if (((int)(hit->hit_obj->txt_size * u) % 2 + (int)(hit->hit_obj->txt_size * v)) % 2)
+	if (((int)(hit->hit_obj->txt_size * u) % 2
+			+ (int)(hit->hit_obj->txt_size * v)) % 2)
 		return (0);
 	else
 		return (1);
@@ -97,7 +98,8 @@ char		checkerboard_plane(t_hit_rec *hit, t_ray ray)
 	xy_pos = rot_x(xy_pos, (int)(teta * 180 / M_PI));
 	xy_pos = rot_y(xy_pos, (int)(teta * 180 / M_PI));
 	mod = (xy_pos.x * xy_pos.y > 0) ? 1 : 0;
-	if (abs((int)xy_pos.x / hit->hit_obj->txt_size - (int)xy_pos.y / hit->hit_obj->txt_size) % 2 == mod)
+	if (abs((int)((int)xy_pos.x / hit->hit_obj->txt_size
+				- (int)xy_pos.y / hit->hit_obj->txt_size)) % 2 == mod)
 		return (0);
 	else
 		return (1);

@@ -56,8 +56,6 @@ char		*parser_error(char *message, char *line)
 	return (NULL);
 }
 
-
-
 char		*parse_scene(t_env *e, char *file)
 {
 	while (file && *file && file[1] != '-')
@@ -68,7 +66,6 @@ char		*parse_scene(t_env *e, char *file)
 			e->scene.antialias = 1;
 			file = file + 11;
 		}
-
 		else if (ft_strncmp("+blinding_lights\n", file, 17) == 0)
 		{
 			e->scene.blinding_lights = 1;
@@ -81,7 +78,6 @@ char		*parse_scene(t_env *e, char *file)
 	}
 	return (file);
 }
-
 
 void		create_scene(t_env *e, char *file)
 {
@@ -107,8 +103,7 @@ void		create_scene(t_env *e, char *file)
 		else
 		{
 			file = ft_strchr(file, '\n');
-			if (file)
-				file++;
+			(file) ? file++ : 0;
 		}
 	}
 }

@@ -10,12 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "rtv1.h"
 
 void	create_red_blue_img(t_env *e, int *colorcopy)
 {
-	t_hit_rec 	hit_rec;
+	t_hit_rec	hit_rec;
 	t_ray		ray;
 	int			px_color;
 
@@ -32,8 +31,8 @@ void	create_red_blue_img(t_env *e, int *colorcopy)
 
 void	stereoscopic(t_env *e)
 {
-	int 		*colorcopy;
-	int			i;
+	int	*colorcopy;
+	int	i;
 
 	i = 0;
 	if (!(colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ)))
@@ -65,7 +64,6 @@ int		sepia(int color)
 	return (color_limits(sepiargb.x) * 256 * 256 +
 	color_limits(sepiargb.y) * 256 + color_limits(sepiargb.z));
 }
-
 
 int		apply_filter(t_env *e, int color)
 {

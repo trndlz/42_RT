@@ -34,6 +34,7 @@ SRC_NAME	:=	main.c								\
 				textures/textures_cylinder_cone.c	\
 				textures/textures_sphere_plane.c	\
 				textures/textures.c					\
+				textures/bump_map.c					\
 				parser/default_objects.c			\
 				parser/parse_functions.c			\
 				parser/parse_items.c				\

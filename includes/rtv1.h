@@ -48,7 +48,8 @@ enum texture {
 	LINES,
 	COLUMNS,
 	CHECKERBOARD,
-	EARTH
+	EARTH,
+	NEARTH
 };
 
 enum filter {
@@ -102,6 +103,7 @@ typedef struct		s_obj
 	enum texture	texture;
 	unsigned int	txt_size;
 	t_file_texture	file_txt;
+	t_file_texture	file_height;
 	double			size;
 	t_vc			lm;
 	t_vc			rm;
@@ -394,6 +396,7 @@ char				checkerboard_plane(t_hit_rec *hit, t_ray ray);
 
 char				textures_coef(t_obj *obj, t_hit_rec *hit, t_ray ray);
 int					load_texture_to_obj(t_env *e, t_obj *obj);
+int					load_tex_height_to_obj(t_env *e, t_obj *obj);
 
 /*
 ** CARTOONING
@@ -432,5 +435,11 @@ int					mouse_release(int button, int x, int y, t_env *e);
 int					mykeyhook(int keycode, t_env* e);
 int					init_slider(t_env *e);
 void				put_in_color(t_env *e);
+
+/*
+** BUMP_MAP
+*/
+
+t_vc				bump_map(t_ray ray, t_hit_rec *hit);
 
 #endif

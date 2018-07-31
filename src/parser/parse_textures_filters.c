@@ -24,6 +24,8 @@ enum texture	texture_converter(char *str, enum obj_type obj)
 		return (CHECKERBOARD);
 	else if (!ft_strcmp(str, "EARTH") && obj == SPHERE)
 		return (EARTH);
+	else if (!ft_strcmp(str, "NEARTH") && obj == SPHERE)
+		return (NEARTH);
 	else
 		return (NO_TEXTURE);
 }

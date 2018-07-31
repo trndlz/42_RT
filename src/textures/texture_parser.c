@@ -66,7 +66,6 @@ int		**create_color_tab(int *imgstr, int *size)
 		return (NULL);
 	while (y < size[1])
 	{
-
 		if (!(color_tab[y] = (int *)malloc(sizeof(int) * size[0] * 2)))
 			return (NULL);
 		x = 0;
@@ -78,7 +77,6 @@ int		**create_color_tab(int *imgstr, int *size)
 		}
 		y++;
 	}
-
 	return (color_tab);
 }
 
@@ -92,9 +90,29 @@ int		load_texture_to_obj(t_env *e, t_obj *obj)
 	if (!(size = get_xpm_size("xpm/earth.xpm")))
 		return (0);
 	obj->file_txt.size = size;
-	image = mlx_xpm_file_to_image(e->mlx.mlx, "xpm/earth.xpm", &size[0], &size[1]);
+	image = mlx_xpm_file_to_image(e->mlx.mlx, "xpm/earth.xpm",
+			&size[0], &size[1]);
 	imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2]);
 	if (!(obj->file_txt.tab = create_color_tab(imgstr, obj->file_txt.size)))
+		return (0);
+	return (1);
+}
+
+int		load_tex_height_to_obj(t_env *e, t_obj *obj)
+{
+	void	*image;
+	int		*imgstr;
+	int		*size;
+	int		a[3];
+
+	if (!(size = get_xpm_size("xpm/earth_height.xpm")))
+		return (0);
+	obj->file_height.size = size;
+	image = mlx_xpm_file_to_image(e->mlx.mlx,
+			"xpm/earth_height.xpm", &size[0], &size[1]);
+	imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2]);
+	if (!(obj->file_height.tab = create_color_tab(imgstr,
+				obj->file_height.size)))
 		return (0);
 	return (1);
 }

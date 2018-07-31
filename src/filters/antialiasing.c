@@ -27,8 +27,8 @@ int		clr_abs_dif(int col1, int col2)
 
 int		av_col_four(int col1, int col2, int col3, int col4)
 {
-	t_vc rgb[5];
-	int 	ret;
+	t_vc	rgb[5];
+	int		ret;
 
 	rgb[1] = hextorgb(col1);
 	rgb[2] = hextorgb(col2);
@@ -43,10 +43,10 @@ int		av_col_four(int col1, int col2, int col3, int col4)
 
 int		av_col_two(int col1, int col2)
 {
-	t_vc rgb;
-	t_vc rgb1;
-	t_vc rgb2;
-	int ret;
+	t_vc	rgb;
+	t_vc	rgb1;
+	t_vc	rgb2;
+	int		ret;
 
 	rgb1 = hextorgb(col1);
 	rgb2 = hextorgb(col2);
@@ -90,15 +90,15 @@ void	antialias(int *imgstr)
 			colorcopy[z * WINY + y] = imgstr[z * WINY + y];
 			if (aa_condition(imgstr, y, z, AA_S))
 				colorcopy[z * WINY + y] = av_col_two(av_col_four(imgstr[z * WINY + y + 1], imgstr[z * WINY + y + WINY],
-				imgstr[z * WINY + y - WINY], imgstr[z * WINY + y - 1 ]), imgstr[z * WINY + y]);
+				imgstr[z * WINY + y - WINY], imgstr[z * WINY + y - 1]), imgstr[z * WINY + y]);
 		}
 	}
-	z = - 1;
+	z = -1;
 	while (++z < WINZ)
 	{
 		y = -1;
 		while (++y < WINY)
 			imgstr[z * WINY + y] = colorcopy[z * WINY + y];
 	}
-	free (colorcopy);
+	free(colorcopy);
 }

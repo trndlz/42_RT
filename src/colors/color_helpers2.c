@@ -43,7 +43,7 @@ int		major_color(int color)
 	return (color);
 }
 
-t_vc						hextorgb(int hex)
+t_vc	hextorgb(int hex)
 {
 	t_vc rgb;
 

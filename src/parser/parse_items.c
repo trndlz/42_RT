@@ -43,7 +43,7 @@ char		*objects_items(t_obj *nobj, char *file, enum obj_type obj)
 	return (file);
 }
 
-char			*parse_descartes(char *file, t_vc *v)
+char		*parse_descartes(char *file, t_vc *v)
 {
 	int		check;
 	t_vc	descartes;
@@ -64,7 +64,7 @@ char			*parse_descartes(char *file, t_vc *v)
 	return (file);
 }
 
-char			*parse_phong(char *file, t_vc *v)
+char		*parse_phong(char *file, t_vc *v)
 {
 	int		check;
 	t_vc	phong;

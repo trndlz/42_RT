@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-t_ray		create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
+t_ray	create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
 {
 	t_ray ray;
 

@@ -25,17 +25,23 @@ char		*parse_sphere(t_env *e, char *file)
 		load_texture_to_obj(e, sphere);
 		load_tex_height_to_obj(e, sphere);
 	}
-	obj_add(&(e->obj_link), sphere);
+	if (sphere->cut && (sphere->descartes.y > 0 || sphere->cut->descartes.y))
+		ft_putstr("Transparent <sphere> objects can't be cut !\n");
+	else
+		obj_add(&(e->obj_link), sphere);
 	return (file);
 }
 
 char		*parse_cylinder(t_env *e, char *file)
 {
-	t_obj *cylinder;
+	t_obj *cyl;
 
-	cylinder = default_cylinder();
-	file = objects_items(cylinder, file, CYLINDER);
-	obj_add(&e->obj_link, cylinder);
+	cyl = default_cylinder();
+	file = objects_items(cyl, file, CYLINDER);
+	if (cyl->cut && (cyl->descartes.y > 0 || cyl->cut->descartes.y))
+		ft_putstr("Transparent <cylinder> can't be cut !\n");
+	else
+		obj_add(&(e->obj_link), cyl);
 	return (file);
 }
 
@@ -45,7 +51,10 @@ char		*parse_cone(t_env *e, char *file)
 
 	cone = default_cone();
 	file = objects_items(cone, file, CONE);
-	obj_add(&e->obj_link, cone);
+	if (cone->cut && (cone->descartes.y > 0 || cone->cut->descartes.y))
+		ft_putstr("Transparent <cone> objects can't be cut !\n");
+	else
+		obj_add(&e->obj_link, cone);
 	return (file);
 }
 

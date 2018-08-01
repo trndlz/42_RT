@@ -1,0 +1,12 @@
+<eye>
+
+<light>
+	[position] -500 0 0
+<plane>
+	[texture] CHECKERBOARD 2000
+<sphere>
+	[texture] CHECKERBOARD 0
+	[R/T/Rf] 0 0.5 1
+		<cutter>
+			[rotation] -1 1 1
+			[R/T/Rf] 0 0.5 1

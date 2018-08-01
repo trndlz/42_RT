@@ -29,7 +29,7 @@ int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray)
 	int	pixel;
 
 	hit->nr = 1;
-	hit->nt = 1;
+	hit->nt = 5;
 	hit->hit_inter = inter_position(ray, hit->t);
 	pixel = phong_lighting(e, ray, hit);
 	if (hit->hit_obj->descartes.y > 0 && hit->nt > 0)

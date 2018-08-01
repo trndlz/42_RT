@@ -31,3 +31,13 @@ void		exit_message(char *str)
 	ft_putstr_fd(str, 2);
 	exit(1);
 }
+
+void		replace_char(char *str)
+{
+	while (*str)
+	{
+		if (!ft_isspace(*str) && !ft_isdigit(*str))
+			*str = ' ';
+		str++;
+	}
+}

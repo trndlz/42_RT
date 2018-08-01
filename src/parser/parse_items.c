@@ -12,31 +12,29 @@
 
 #include "rtv1.h"
 
-char		*objects_items(t_obj *nobj, char *file, enum obj_type obj)
+char		*objects_items(t_obj *o, char *file, enum e_obj obj)
 {
 	while (file && *file && file[1] != '-')
 	{
 		file = skip_whitespace(file);
 		if (ft_strncmp("[position] ", file, 11) == 0)
-			file = parse_vc(file, &(nobj->pos));
+			file = parse_vc(file, &(o->pos));
 		else if (ft_strncmp("[rotation] ", file, 11) == 0)
-			file = parse_vc(file, &(nobj->rot));
+			file = parse_vc(file, &(o->rot));
 		else if (ft_strncmp("[size] ", file, 7) == 0)
-			file = parse_double(file, &(nobj->size));
+			file = parse_double(file, &(o->size));
 		else if (ft_strncmp("[color] ", file, 8) == 0)
-			file = parse_color(file, &(nobj->col));
+			file = parse_color(file, &(o->col));
 		else if (ft_strncmp("[texture] ", file, 10) == 0)
-			file = parse_texture(file, &(nobj->texture), obj);
+			file = parse_texture(file, &(o->texture), &(o->txt_size), obj);
 		else if (ft_strncmp("[R/T/Rf] ", file, 9) == 0)
-			file = parse_descartes(file, &(nobj->descartes));
+			file = parse_descartes(file, &(o->descartes));
 		else if (ft_strncmp("[Spec/Diff/Amb] ", file, 16) == 0)
-			file = parse_phong(file, &(nobj->phong));
+			file = parse_phong(file, &(o->phong));
 		else if (ft_strncmp("[perturbation] ", file, 15) == 0)
-			file = parse_int(file, &(nobj->perturb));
-		else if (ft_strncmp("[texture_size] ", file, 15) == 0)
-			file = parse_int(file, &(nobj->txt_size));
+			file = parse_int(file, &(o->perturb));
 		else if (ft_strncmp("<cutter>\n", file, 9) == 0)
-			file = parse_cutter(nobj, file + 9);
+			file = parse_cutter(o, file + 9);
 		else
 			break ;
 	}

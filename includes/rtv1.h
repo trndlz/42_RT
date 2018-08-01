@@ -32,7 +32,7 @@
 # define PALETTE_SIZE 40
 # define D_ZERO 0.000001
 
-enum obj_type {
+enum				e_obj {
 	LIGHT,
 	EYE,
 	SPHERE,
@@ -43,7 +43,7 @@ enum obj_type {
 	PARABOLOID
 };
 
-enum texture {
+enum				e_texture {
 	NO_TEXTURE,
 	LINES,
 	COLUMNS,
@@ -52,7 +52,7 @@ enum texture {
 	NEARTH
 };
 
-enum filter {
+enum				e_filter {
 	NO_FILTER,
 	CARTOON,
 	SEPIA,
@@ -62,7 +62,6 @@ enum filter {
 	CYAN,
 	STEREOSCOPIC
 };
-
 
 typedef struct		s_vc
 {
@@ -92,7 +91,7 @@ typedef struct		s_file_texture
 
 typedef struct		s_obj
 {
-	enum obj_type	o_type;
+	enum e_obj		o_type;
 	t_vc			rot;
 	t_vc			pos;
 	t_vc			phong;
@@ -100,7 +99,7 @@ typedef struct		s_obj
 	struct s_obj	*cut;
 	int				col;
 	unsigned int	perturb;
-	enum texture	texture;
+	enum e_texture	texture;
 	unsigned int	txt_size;
 	t_file_texture	file_txt;
 	t_file_texture	file_height;
@@ -112,7 +111,7 @@ typedef struct		s_obj
 
 typedef struct		s_scene
 {
-	enum filter		filter;
+	enum e_filter	filter;
 	char			antialias;
 	char			blinding_lights;
 }					t_scene;
@@ -135,7 +134,7 @@ typedef struct		s_hit_rec
 	t_obj			*hit_obj;
 }					t_hit_rec;
 
-typedef struct 		s_img
+typedef struct		s_img
 {
 	void			*pic;
 	char			*info;
@@ -143,7 +142,7 @@ typedef struct 		s_img
 	int				s_l;
 	int				endian;
 }					t_img;
-//
+
 // typedef struct		s_uvect2
 // {
 //     int				x;
@@ -210,7 +209,8 @@ int					create_image(t_env *e);
 void				draw_point(t_env *e, int x, int y, unsigned int color);
 void				*scene_plot(void *arg);
 t_ray				create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin);
-double				distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray);
+double				distance_to_inter(t_hit_rec *hit, t_obj *obj_list,
+					t_ray ray);
 char				nearest_node(t_env *e, t_ray ray, t_hit_rec *hit);
 int					is_not_cut(t_obj *obj, t_env *e);
 int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
@@ -245,7 +245,6 @@ void				stereoscopic(t_env *e);
 int					sepia(int color);
 int					apply_filter(t_env *e, int color);
 
-
 /*
 ** PARSER
 */
@@ -260,7 +259,7 @@ char				*skip_whitespace(char *file);
 int					ft_htod(char c);
 int					ft_htoi(char *str);
 
-char				*objects_items(t_obj *nobj, char *file, enum obj_type obj);
+char				*objects_items(t_obj *nobj, char *file, enum e_obj obj);
 char				*parse_descartes(char *file, t_vc *v);
 char				*parse_phong(char *file, t_vc *v);
 
@@ -279,10 +278,11 @@ char				*parse_eye(t_env *e, char *file);
 char				*parse_light(t_env *e, char *file);
 char				*parse_cutter(t_obj *cut, char *file);
 
-enum texture		texture_converter(char *str, enum obj_type obj);
-enum filter			filter_converter(char *str);
-char				*parse_texture(char *file, enum texture *texture, enum obj_type obj);
-char				*parse_filter(char *file, enum filter *filter);
+enum e_texture		texture_converter(char *str, enum e_obj obj);
+enum e_filter		filter_converter(char *str);
+char				*parse_texture(char *file, enum e_texture *texture,
+					unsigned int *size, enum e_obj obj);
+char				*parse_filter(char *file, enum e_filter *filter);
 
 char				*read_scene(int fd, char **av);
 char				*parser_error(char *message, char *line);
@@ -294,8 +294,10 @@ int					parser(t_env *e, int ac, char **av);
 ** DESCARTES LAWS
 */
 
-int					transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
-int					reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit);
+int					transparency(t_env *e, int old_color,
+					t_ray ray, t_hit_rec *hit);
+int					reflection(t_env *e, int old_color,
+					t_ray ray, t_hit_rec *hit);
 
 /*
 ** MATHS
@@ -333,7 +335,6 @@ double				quadratic_solver(t_hit_rec *hit, t_vc abc);
 char				hit_not_cut(t_hit_rec *hit, t_obj *obj, t_ray ray);
 char				hit_cut(t_hit_rec *hit, t_obj *obj, t_ray ray);
 
-
 /*
 ** KEYBOARD / MOUSE
 */
@@ -348,7 +349,8 @@ int					deal_mouse(int k, int y, int z, t_env *e);
 */
 
 t_vc				normal_vectors(t_hit_rec *hit, t_obj *obj, t_ray ray);
-double				shadows(t_env *e, t_hit_rec *hit, t_obj *light_obj, t_ray ray);
+double				shadows(t_env *e, t_hit_rec *hit,
+					t_obj *light_obj, t_ray ray);
 
 /*
 ** STRUCTURES INITIALIZATION
@@ -397,6 +399,7 @@ char				checkerboard_plane(t_hit_rec *hit, t_ray ray);
 char				textures_coef(t_obj *obj, t_hit_rec *hit, t_ray ray);
 int					load_texture_to_obj(t_env *e, t_obj *obj);
 int					load_tex_height_to_obj(t_env *e, t_obj *obj);
+void				replace_char(char *str);
 
 /*
 ** CARTOONING
@@ -432,7 +435,7 @@ void				legend(t_env *e);
 int					mouse(int x, int y, t_env *e);
 int					mouse_press(int button, int x, int y, t_env *e);
 int					mouse_release(int button, int x, int y, t_env *e);
-int					mykeyhook(int keycode, t_env* e);
+int					mykeyhook(int keycode, t_env *e);
 int					init_slider(t_env *e);
 void				put_in_color(t_env *e);
 

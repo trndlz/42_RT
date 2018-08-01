@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-enum texture	texture_converter(char *str, enum obj_type obj)
+enum e_texture	texture_converter(char *str, enum e_obj obj)
 {
 	if (!ft_strcmp(str, "LINES")
 		&& (obj == CYLINDER || obj == CONE || obj == SPHERE))
@@ -30,7 +30,7 @@ enum texture	texture_converter(char *str, enum obj_type obj)
 		return (NO_TEXTURE);
 }
 
-enum filter		filter_converter(char *str)
+enum e_filter	filter_converter(char *str)
 {
 	if (!ft_strcmp(str, "CARTOON"))
 		return (CARTOON);
@@ -50,13 +50,17 @@ enum filter		filter_converter(char *str)
 		return (NO_FILTER);
 }
 
-char			*parse_texture(char *file, enum texture *texture, enum obj_type obj)
+char			*parse_texture(char *file,
+				enum e_texture *texture, unsigned int *size, enum e_obj obj)
 {
-	int		check;
-	char	str[30];
+	int				check;
+	unsigned int	n_size;
+	char			str[30];
 
-	if ((check = sscanf(file, "%*s %15s\n", str) != 1))
-		return (parser_error("Invalid texture values\n", file));
+	if ((check = sscanf(file, "%*s %15s %d\n", str, &n_size) != 2))
+		return (parser_error("Invalid texture values !\n", file));
+	if (n_size > 0)
+		size = &n_size;
 	*texture = texture_converter(str, obj);
 	if (!(file = ft_strchr(file, '\n')))
 		return (NULL);
@@ -64,7 +68,7 @@ char			*parse_texture(char *file, enum texture *texture, enum obj_type obj)
 	return (file);
 }
 
-char			*parse_filter(char *file, enum filter *filter)
+char			*parse_filter(char *file, enum e_filter *filter)
 {
 	int		check;
 	char	str[30];

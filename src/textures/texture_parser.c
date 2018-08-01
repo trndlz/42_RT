@@ -12,14 +12,18 @@
 
 #include "rtv1.h"
 
-void	replace_char(char *str)
+int		*get_wh(char *str, int *wh)
 {
-	while (*str)
-	{
-		if (!ft_isspace(*str) && !ft_isdigit(*str))
-			*str = ' ';
-		str++;
-	}
+	char **split;
+
+	replace_char(str);
+	if (!(split = ft_strsplit(str, ' ')))
+		return (NULL);
+	wh[0] = ft_atoi(split[0]);
+	wh[1] = ft_atoi(split[1]);
+	free_split(split);
+	free(str);
+	return (wh);
 }
 
 int		*get_xpm_size(char *file)
@@ -28,7 +32,6 @@ int		*get_xpm_size(char *file)
 	int		line;
 	int		*wh;
 	char	*str;
-	char	**split;
 
 	line = 0;
 	fd = open(file, O_RDONLY);
@@ -39,12 +42,8 @@ int		*get_xpm_size(char *file)
 		line++;
 		if (line == 4)
 		{
-			replace_char(str);
-			split = ft_strsplit(str, ' ');
-			wh[0] = ft_atoi(split[0]);
-			wh[1] = ft_atoi(split[1]);
-			free_split(split);
-			free(str);
+			if (!(wh = get_wh(str, wh)))
+				return (NULL);
 			return (wh);
 		}
 		free(str);

@@ -38,7 +38,6 @@ int			init_mlx(t_mlx *i_mlx)
 	return (1);
 }
 
-
 void		obj_add(t_obj **beg, t_obj *n)
 {
 	if (!beg || !n)

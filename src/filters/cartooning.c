@@ -80,5 +80,6 @@ char	cartooning(t_env *e)
 	flatten_colors(e, palette);
 	line(e);
 	free(palette);
+	free(colorcopy);
 	return (1);
 }

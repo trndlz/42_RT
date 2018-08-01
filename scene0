@@ -1,12 +1,14 @@
 <eye>
+	[position] -1000 0 0
 
 <light>
-	[position] -500 0 0
-<plane>
-	[texture] CHECKERBOARD 2000
-<sphere>
-	[texture] CHECKERBOARD 0
-	[R/T/Rf] 0 0.5 1
+	[position] 0 300 1000
 
-<scene>
-	[filter] CARTOON
+<light>
+	[position] -2500 0 0
+
+<paraboloid>
+
+<plane>
+	[position] 3000	0 0
+	[rotation]  -1 0 0

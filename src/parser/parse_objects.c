@@ -72,7 +72,7 @@ char		*parse_paraboloid(t_env *e, char *file)
 {
 	t_obj *paraboloid;
 
-	paraboloid = default_plane();
+	paraboloid = default_paraboloid();
 	file = objects_items(paraboloid, file, PARABOLOID);
 	obj_add(&e->obj_link, paraboloid);
 	return (file);

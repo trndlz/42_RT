@@ -36,6 +36,7 @@ SRC_NAME	:=	main.c								\
 				textures/textures.c					\
 				textures/bump_map.c					\
 				parser/default_objects.c			\
+				parser/default_objects2.c			\
 				parser/parse_functions.c			\
 				parser/parse_items.c				\
 				parser/parse_items2.c				\

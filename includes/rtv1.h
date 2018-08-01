@@ -254,6 +254,7 @@ t_obj				*default_cone(void);
 t_obj				*default_cylinder(void);
 t_obj				*default_cutter(void);
 t_obj				*default_plane(void);
+t_obj				*default_paraboloid(void);
 
 char				*skip_whitespace(char *file);
 int					ft_htod(char c);

@@ -36,7 +36,7 @@
 	[rotation] 0 0 0
 	[color] 0xb7fffa
 	[size] 200
-	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[Spec/Diff/Amb] 0.4 0 0.1
 	[R/T/Rf] 0 0 1
 	[texture] EARTH 0
 	[perturbation] 2
@@ -47,8 +47,7 @@
 	[color] 0xffc39a
 	[size] 15
 	[Spec/Diff/Amb] 0.8 0.9 0.1
-	[R/T/Rf] 0 0.6 1
-	[texture] LINES 100
+	[R/T/Rf] 0 0 1
 
 <cylinder>
 	[position] 1000 -300 200
@@ -60,4 +59,4 @@
 	[perturbation] 1
 
 <scene>
-	+blinding_lights
+	[filter] STEREOSCOPIC

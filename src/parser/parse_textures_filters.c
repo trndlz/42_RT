@@ -61,6 +61,8 @@ char			*parse_texture(char *file,
 		return (parser_error("Invalid texture values !\n", file));
 	if (n_size > 0)
 		size = &n_size;
+	else
+		size = size;
 	*texture = texture_converter(str, obj);
 	if (!(file = ft_strchr(file, '\n')))
 		return (NULL);

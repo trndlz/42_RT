@@ -11,23 +11,44 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
+#include <stdio.h>
+
+void	progression_bar(t_env *e, char *str, int i)
+{
+	fprintf(stderr, "%s |%.*s%.*s| %02d\r", str, i, e->eq, 100-i, e->sp, i);
+	fflush(stdout);
+}
 
 int		multi_threading(t_env *e)
 {
 	int		i;
 	t_env	copy[TH_NB];
 
-	i = 0;
-	while (i < TH_NB)
+	i = -1;
+	while (++i < TH_NB)
 	{
 		copy[i] = *e;
 		copy[i].thread_int = i;
-		pthread_create(&e->pth[i], NULL, scene_plot, &copy[i]);
-		i++;
+		if (pthread_create(&e->pth[i], NULL, scene_plot, &copy[i]) != 0)
+		{
+			ft_putstr("Error while creating threads\n");
+			return (0);
+		}
+		progression_bar(e, "Threads creation", (i + 1) * 2);
 	}
-	while (i--)
-		pthread_join(e->pth[i], NULL);
-	return (0);
+	ft_putchar('\n');
+	i = -1;
+	while (++i < TH_NB)
+	{
+		if (pthread_join(e->pth[i], NULL) != 0)
+		{
+			ft_putstr("Error while joining threads\n");
+			return (0);
+		}
+		progression_bar(e, "Threads processing", (i + 1) * 2);
+	}
+	ft_putchar('\n');
+	return (1);
 }
 
 int		create_image(t_env *e)
@@ -41,7 +62,8 @@ int		create_image(t_env *e)
 		return (0);
 	if (!(e->imgstr = (int *)mlx_get_data_addr(e->mlx.image, &b, &s, &en)))
 		return (0);
-	multi_threading(e);
+	if (!multi_threading(e))
+		return (0);
 	if (e->scene.blinding_lights)
 		blinding_lights(e);
 	if (e->scene.antialias)

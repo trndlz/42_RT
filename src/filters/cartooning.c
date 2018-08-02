@@ -40,7 +40,9 @@ void	flatten_colors(t_env *e, int *palette)
 		while (++y < WINY)
 			e->imgstr[z * WINY + y] = palette[
 					closest_col(palette, e->imgstr[z * WINY + y])];
+		progression_bar(e, "Cartooning / Colors", (int)(100 * (z + 2) / WINZ));
 	}
+	ft_putchar('\n');
 }
 
 void	line(t_env *e)
@@ -61,7 +63,9 @@ void	line(t_env *e)
 				e->imgstr[z * WINY + y - 1] = 0x000000;
 			}
 		}
+		progression_bar(e, "Cartooning / Process", (int)(100 * (z + 2) / WINZ));
 	}
+	ft_putchar('\n');
 }
 
 char	cartooning(t_env *e)

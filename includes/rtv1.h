@@ -199,6 +199,8 @@ typedef struct		s_env
 	t_obj			*light_link;
 	t_obj			*cut_link;
 	t_scene			scene;
+	char			eq[100];
+	char			sp[100];
 }					t_env;
 
 /*
@@ -420,6 +422,7 @@ void				create_bmp_file(int *imgstr);
 void				antialias(int *imgstr);
 int					clr_abs_dif(int col1, int col2);
 void				blinding_lights(t_env *e);
+void				progression_bar(t_env *e, char *str, int i);
 
 /*
 ** LEGEND

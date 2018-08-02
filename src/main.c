@@ -15,6 +15,8 @@
 int		main(int ac, char **av)
 {
 	t_env *e;
+	clock_t t;
+
 
 	if (ac != 2)
 		ft_usage();
@@ -25,8 +27,11 @@ int		main(int ac, char **av)
 	if (!parser(e, ac, av))
 		return (0);
 	pthread_mutex_init(&(e->mutex), NULL);
+	t = clock();
 	if (!(create_image(e)))
 		exit_message("Problem while creating image\n");
+	t = clock() - t;
+	printf("create_image() execution time -> %f\n", ((double)t)/CLOCKS_PER_SEC);
 	mlx_hook(e->mlx.win, 2, 3, deal_key, e);
 	mlx_mouse_hook(e->mlx.win, deal_mouse, e);
 	mlx_loop(e->mlx.mlx);

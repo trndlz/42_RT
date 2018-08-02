@@ -26,13 +26,13 @@ void	translation(int key, t_env *e)
 		e->eye_lookfrom.y -= 100;
 	if (key == 31)
 		e->eye_lookfrom.z -= 100;
-	ft_putstr("EYE COORDINATES : X : ");
-	ft_putnbr(e->eye_lookfrom.x);
-	ft_putstr(" | Y : ");
-	ft_putnbr(e->eye_lookfrom.y);
-	ft_putstr(" | Z : ");
-	ft_putnbr(e->eye_lookfrom.z);
-	ft_putstr("\n");
+	// ft_putstr("EYE COORDINATES : X : ");
+	// ft_putnbr(e->eye_lookfrom.x);
+	// ft_putstr(" | Y : ");
+	// ft_putnbr(e->eye_lookfrom.y);
+	// ft_putstr(" | Z : ");
+	// ft_putnbr(e->eye_lookfrom.z);
+	// ft_putstr("\n");
 }
 
 void	rotation(int key, t_env *e)
@@ -49,13 +49,13 @@ void	rotation(int key, t_env *e)
 		e->eye_rot.y -= 5;
 	if (key == 12)
 		e->eye_rot.z -= 5;
-	ft_putstr("EYE ROTATION : X : ");
-	ft_putnbr(e->eye_rot.x);
-	ft_putstr(" | Y : ");
-	ft_putnbr(e->eye_rot.y);
-	ft_putstr(" | Z : ");
-	ft_putnbr(e->eye_rot.z);
-	ft_putstr("\n");
+	// ft_putstr("EYE ROTATION : X : ");
+	// ft_putnbr(e->eye_rot.x);
+	// ft_putstr(" | Y : ");
+	// ft_putnbr(e->eye_rot.y);
+	// ft_putstr(" | Z : ");
+	// ft_putnbr(e->eye_rot.z);
+	// ft_putstr("\n");
 }
 
 int		deal_key(int key, t_env *e)
@@ -81,6 +81,17 @@ int		deal_key(int key, t_env *e)
 		create_image(e);
 	}
 	return (0);
+}
+
+t_obj	*click_to_object(t_env *e, int y, int z)
+{
+	t_hit_rec	hit_rec;
+	t_ray		ray;
+
+	ray = create_ray(y, z, e->eye_rot, e->eye_lookfrom);
+	if (nearest_node(e, ray, &hit_rec))
+		return (hit_rec.hit_obj);
+	return (NULL);
 }
 
 int		deal_mouse(int k, int y, int z, t_env *e)

@@ -36,13 +36,13 @@ int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray)
 		pixel = transparency(e, pixel, ray, hit);
 	if (hit->hit_obj->descartes.x > 0.01 && hit->nr > 0)
 		pixel = reflection(e, pixel, ray, hit);
+	pixel = apply_filter(e, pixel);
 	return (pixel);
 }
 
 void	*scene_plot(void *arg)
 {
 	t_env		*e;
-	int			px_color;
 	t_ray		ray;
 	t_hit_rec	hit_rec;
 
@@ -55,11 +55,7 @@ void	*scene_plot(void *arg)
 		{
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))
-			{
-				px_color = compute_point(e, &hit_rec, ray);
-				px_color = apply_filter(e, px_color);
-				draw_point(e, e->y, e->z, px_color);
-			}
+				draw_point(e, e->y, e->z, compute_point(e, &hit_rec, ray));
 		}
 	}
 	if (e->scene.filter == STEREOSCOPIC)

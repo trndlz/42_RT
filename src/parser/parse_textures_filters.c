@@ -24,6 +24,8 @@ enum e_texture	texture_converter(char *str, enum e_obj obj)
 		return (CHECKERBOARD);
 	else if (!ft_strcmp(str, "EARTH") && obj == SPHERE)
 		return (EARTH);
+	else if (!ft_strcmp(str, "PERLIN") && obj == SPHERE)
+		return (PERLIN);
 	else if (!ft_strcmp(str, "NEARTH") && obj == SPHERE)
 		return (NEARTH);
 	else
@@ -61,8 +63,6 @@ char			*parse_texture(char *file,
 		return (parser_error("Invalid texture values !\n", file));
 	if (n_size > 0)
 		size = &n_size;
-	else
-		size = size;
 	*texture = texture_converter(str, obj);
 	if (!(file = ft_strchr(file, '\n')))
 		return (NULL);

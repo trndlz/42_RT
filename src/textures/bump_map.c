@@ -45,9 +45,10 @@ t_vc	bump_map(t_ray ray, t_hit_rec *hit)
 	color = red + green + blue;
 	if (color > 0)
 	{
-		modif.x = red * 255;
-		modif.y = green * 255;
-		modif.z = blue * 255;
+		modif.x = (red / 127.5 - 1);
+		modif.y = (green / 127.5 - 1);
+		modif.z = (blue / 127.5 - 1);
+		vec_norm(modif);
 		return (vec_add(hit->n, modif));
 	}
 	return (hit->n);

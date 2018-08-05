@@ -15,7 +15,7 @@
 int		get_obj_color(t_hit_rec *hit, t_ray ray)
 {
 	if (hit->hit_obj->o_type == SPHERE && (hit->hit_obj->texture == EARTH
-		|| hit->hit_obj->texture == NEARTH))
+		|| hit->hit_obj->texture == NEARTH || hit->hit_obj->texture == PERLIN))
 		return (get_texture_sphere(hit, ray));
 	else
 		return (hit->hit_obj->col);

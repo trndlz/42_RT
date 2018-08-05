@@ -79,7 +79,9 @@ int			get_texture_sphere(t_hit_rec *hit, t_ray ray)
 	v = 0.5 - asin(sph_pos.x) / M_PI;
 	a = (int)(v * hit->hit_obj->file_txt.size[1]);
 	b = (int)(u * hit->hit_obj->file_txt.size[0]);
-	return (hit->hit_obj->file_txt.tab[a][b]);
+	u = hit->hit_obj->file_txt.tab[a][b];
+	u = 65536 * u + 256 * u + u;
+	return (mix_colors(hit->hit_obj->col, u, 0.5));
 }
 
 /*

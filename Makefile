@@ -35,6 +35,8 @@ SRC_NAME	:=	main.c								\
 				textures/textures_sphere_plane.c	\
 				textures/textures.c					\
 				textures/bump_map.c					\
+				textures/perlin.c					\
+				textures/calc_perlin.c				\
 				parser/default_objects.c			\
 				parser/default_objects2.c			\
 				parser/parse_functions.c			\

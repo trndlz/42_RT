@@ -31,6 +31,8 @@
 # define CART_S 20
 # define PALETTE_SIZE 40
 # define D_ZERO 0.000001
+# define PERL_S 600
+# define MAX_COLOR 16776960
 
 enum				e_obj {
 	LIGHT,
@@ -49,7 +51,8 @@ enum				e_texture {
 	COLUMNS,
 	CHECKERBOARD,
 	EARTH,
-	NEARTH
+	NEARTH,
+	PERLIN
 };
 
 enum				e_filter {
@@ -184,7 +187,7 @@ typedef struct		s_env
 	// t_slider		slider_r;
 	// t_slider		slider_g;
 	// t_slider		slider_b;
-    // t_cursor		cursor_r;
+	// t_cursor		cursor_r;
 	// t_cursor		cursor_g;
 	// t_cursor		cursor_b;
 	int				thread_int;
@@ -448,5 +451,12 @@ void				put_in_color(t_env *e);
 */
 
 t_vc				bump_map(t_ray ray, t_hit_rec *hit);
+
+/*
+** PERLIN
+*/
+
+float				perlin(float x, float y, float res, unsigned int *perm);
+t_file_texture		create_perlin_tex(int res, t_env *e);
 
 #endif

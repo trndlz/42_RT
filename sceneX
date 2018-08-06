@@ -1,6 +1,6 @@
 <eye>
-	[position] 400 1700 0
-	[rotation] 0 0 -80
+	[position] 0 0 0
+	[rotation] 0 0 0
 
 <light>
 	[position] 0 1000 400

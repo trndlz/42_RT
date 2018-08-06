@@ -59,6 +59,7 @@ char			*parse_texture(char *file,
 	unsigned int	n_size;
 	char			str[30];
 
+	size += 0;
 	if ((check = sscanf(file, "%*s %15s %d\n", str, &n_size) != 2))
 		return (parser_error("Invalid texture values !\n", file));
 	if (n_size > 0)

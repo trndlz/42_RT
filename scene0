@@ -12,3 +12,6 @@
 <plane>
 	[position] 3000	0 0
 	[rotation]  -1 0 0
+
+<scene>
+	+antialias

@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 13:37:05 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/24 17:15:16 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/08/06 16:26:50 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	progression_bar(t_env *e, char *str, int i)
 {
-	fprintf(stderr, "%s |%.*s%.*s| %02d\r", str, i, e->eq, 100-i, e->sp, i);
+	fprintf(stderr, "%s |%.*s%.*s| %02d\r", str, i, e->eq, 100 - i, e->sp, i);
 	fflush(stdout);
 }
 
@@ -34,7 +34,7 @@ int		multi_threading(t_env *e)
 			ft_putstr("Error while creating threads\n");
 			return (0);
 		}
-		progression_bar(e, "Threads creation", (i + 1) * 2);
+		// progression_bar(e, "Threads creation", (i + 1) * 2);
 	}
 	ft_putchar('\n');
 	i = -1;
@@ -45,7 +45,7 @@ int		multi_threading(t_env *e)
 			ft_putstr("Error while joining threads\n");
 			return (0);
 		}
-		progression_bar(e, "Threads processing", (i + 1) * 2);
+		// progression_bar(e, "Threads processing", (i + 1) * 2);
 	}
 	ft_putchar('\n');
 	return (1);
@@ -72,6 +72,16 @@ int		create_image(t_env *e)
 		if ((!cartooning(e)))
 			return (0);
 	mlx_put_image_to_window(e->mlx.mlx, e->mlx.win, e->mlx.image, 0, 0);
+	return (1);
+}
+
+int		exit_hook(int k, t_env *e)
+{
+		if (k)
+		{
+			pthread_mutex_lock(&(e->mutex));
+			exit(1);
+		}
 	return (1);
 }
 

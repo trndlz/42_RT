@@ -1,6 +1,6 @@
 <eye>
-	[position] 400 1700 0
-	[rotation] 0 0 -80
+	[position] -1000 -1 0
+	[rotation] 0 0 0
 
 <light>
 	[position] 0 1000 400
@@ -15,7 +15,7 @@
 <plane>
 	[position] 1400 -1 -1
 	[rotation] -1 0 0
-	[color] 0xffb8b8
+	[color] 0x6FA6C4
 	[size] 200
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 0 0 1
@@ -23,28 +23,18 @@
 
 <plane>
 	[position] 0 0 -600
-	[rotation] 0 1 1
-	[color] 0x00FFFF
+	[rotation] 0 0 1
+	[color] 0x6E7DC9
 	[size] 200
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 0 0 1
 	[perturbation] 2
 	[texture] CHECKERBOARD 5
 
-<sphere>
-	[position] 800 0 0
-	[rotation] 0 0 0
-	[color] 0xb7fffa
-	[size] 200
-	[Spec/Diff/Amb] 0.4 0.9 0.1
-	[R/T/Rf] 0 0 1
-	[texture] PERLIN 0
-	[perturbation] 0
-
 <cone>
 	[position] 1000 -300 -400
 	[rotation] 0 1 1
-	[color] 0xffc39a
+	[color] 0x34AD7A
 	[size] 15
 	[Spec/Diff/Amb] 0.8 0.9 0.1
 	[R/T/Rf] 0 0 1
@@ -52,11 +42,22 @@
 <cylinder>
 	[position] 1000 -300 200
 	[rotation] 0 -1 1
-	[color] 0xc38bff
+	[color] 0xa78244
 	[size] 120
 	[Spec/Diff/Amb] 0.7 0.8 0.3
 	[R/T/Rf] 0 0 1
 	[perturbation] 1
 
+<sphere>
+	[position] 500 0 0
+	[rotation] 0 0 0
+	[color] 0x590044
+	[size] 200
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+	[texture] LINES 10
+	[perturbation] 0
+
 <scene>
 	[filter] NONE
+	+antialias

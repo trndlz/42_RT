@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/16 15:28:33 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/08/06 16:25:43 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		main(int ac, char **av)
 	t = clock() - t;
 	printf("create_image() execution time -> %f\n", ((double)t)/CLOCKS_PER_SEC);
 	mlx_hook(e->mlx.win, 2, 3, deal_key, e);
+	mlx_hook(e->mlx.win, 17, 0, exit_hook, e);
 	mlx_mouse_hook(e->mlx.win, deal_mouse, e);
 	mlx_loop(e->mlx.mlx);
 	clear_list(e->obj_link);

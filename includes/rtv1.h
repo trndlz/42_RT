@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/25 16:04:29 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/06 16:20:05 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -458,5 +458,6 @@ t_vc				bump_map(t_ray ray, t_hit_rec *hit);
 
 float				perlin(float x, float y, float res, unsigned int *perm);
 t_file_texture		create_perlin_tex(int res, t_env *e);
+int					exit_hook(int k, t_env *e);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 14:26:30 by jostraye          #+#    #+#             */
-/*   Updated: 2018/07/26 19:10:02 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/06 15:55:36 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,6 @@ int		av_col_four(int col1, int col2, int col3, int col4)
 	return (ret);
 }
 
-int		av_col_two(int col1, int col2)
-{
-	t_vc	rgb;
-	t_vc	rgb1;
-	t_vc	rgb2;
-	int		ret;
-
-	rgb1 = hextorgb(col1);
-	rgb2 = hextorgb(col2);
-	rgb.x = color_limits((rgb1.x + rgb2.x) / 2);
-	rgb.y = color_limits((rgb1.y + rgb2.y) / 2);
-	rgb.z = color_limits((rgb1.z + rgb2.z) / 2);
-	ret = rgb.x * 0x100 * 0x100 + rgb.y * 0x100 + rgb.z;
-	return (ret);
-}
-
 char	aa_condition(int *imgstr, int y, int z, int sensib)
 {
 	if (clr_abs_dif(imgstr[z * WINY + y + 1],
@@ -72,27 +56,11 @@ char	aa_condition(int *imgstr, int y, int z, int sensib)
 		return (0);
 }
 
-void	antialias(int *imgstr)
+void	copy_img_array(int *imgstr, int *colorcopy)
 {
-	int *colorcopy;
-	int	z;
-	int	y;
+	int z;
+	int y;
 
-	z = 0;
-	if (!(colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ)))
-		return ;
-	while (++z < WINZ - 1)
-	{
-		y = 0;
-		colorcopy[z * WINY + y] = imgstr[z * WINY + y];
-		while (++y < WINY - 1)
-		{
-			colorcopy[z * WINY + y] = imgstr[z * WINY + y];
-			if (aa_condition(imgstr, y, z, AA_S))
-				colorcopy[z * WINY + y] = av_col_two(av_col_four(imgstr[z * WINY + y + 1], imgstr[z * WINY + y + WINY],
-				imgstr[z * WINY + y - WINY], imgstr[z * WINY + y - 1]), imgstr[z * WINY + y]);
-		}
-	}
 	z = -1;
 	while (++z < WINZ)
 	{
@@ -100,5 +68,30 @@ void	antialias(int *imgstr)
 		while (++y < WINY)
 			imgstr[z * WINY + y] = colorcopy[z * WINY + y];
 	}
+}
+
+void	antialias(int *img)
+{
+	int *colorcopy;
+	int	z;
+	int	y;
+	int i;
+
+	z = 0;
+	if (!(colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ)))
+		return ;
+	while (++z < WINZ - 1)
+	{
+		y = 0;
+		while (++y < WINY - 1)
+		{
+			i = z * WINY + y;
+			colorcopy[i] = img[i];
+			if (aa_condition(img, y, z, AA_S))
+				colorcopy[i] = mix_colors(av_col_four(img[i + 1],
+					img[i + WINY], img[i - WINY], img[i - 1]), img[i], 0.5);
+		}
+	}
+	copy_img_array(img, colorcopy);
 	free(colorcopy);
 }

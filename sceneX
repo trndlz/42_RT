@@ -55,7 +55,7 @@
 	[size] 200
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 0 0 1
-	[texture] PERLIN 0
+	[texture] EARTH 0
 	[perturbation] 0
 
 <scene>

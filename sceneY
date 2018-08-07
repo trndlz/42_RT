@@ -13,49 +13,33 @@
 	[color] 0xFFFFFF
 
 <plane>
-	[position] 1400 -1 -1
+	[position] 4000 0 0
 	[rotation] -1 0 0
-	[color] 0x6FA6C4
+	[color] 0x0000FF
 	[size] 200
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 0 0 1
-	[perturbation] 2
+	[texture] CHECKERBOARD 5
 
 <plane>
 	[position] 0 0 -600
 	[rotation] 0 0 1
-	[color] 0x6E7DC9
+	[color] 0x00FFFF
 	[size] 200
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 0 0 1
-	[perturbation] 2
 	[texture] CHECKERBOARD 5
 
-<cone>
-	[position] 1000 -300 -400
-	[rotation] 0 1 1
-	[color] 0x34AD7A
-	[size] 15
-	[Spec/Diff/Amb] 0.8 0.9 0.1
-	[R/T/Rf] 0 0 1
-
-<cylinder>
-	[position] 1000 -300 200
-	[rotation] 0 -1 1
-	[color] 0xa78244
-	[size] 120
-	[Spec/Diff/Amb] 0.7 0.8 0.3
-	[R/T/Rf] 0 0 1
-	[perturbation] 1
-
 <sphere>
-	[position] 500 0 0
+	[position] 800 0 0
 	[rotation] 0 0 0
-	[color] 0xff0000
+	[color] 0xb7fffa
 	[size] 200
 	[Spec/Diff/Amb] 0.4 0.9 0.1
-	[texture] NEARTH 0
+	[R/T/Rf] 0 0.5 1.5
+	[perturbation] 0
+	[texture] PERLIN 0
+
 
 <scene>
 	[filter] NONE
-	+antialias

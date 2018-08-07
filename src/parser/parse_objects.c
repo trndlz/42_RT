@@ -19,13 +19,16 @@ char		*parse_sphere(t_env *e, char *file)
 	sphere = default_sphere();
 	file = objects_items(sphere, file, SPHERE);
 	if (sphere->texture == EARTH)
-		load_texture_to_obj(e, sphere);
+		if (!load_texture_to_obj(e, sphere))
+			ft_texture_error(e);
 	if (sphere->texture == PERLIN)
 		sphere->file_txt = create_perlin_tex(2, e, sphere);
 	if (sphere->texture == NEARTH)
 	{
-		load_texture_to_obj(e, sphere);
-		load_tex_height_to_obj(e, sphere);
+		if (!load_texture_to_obj(e, sphere))
+			ft_texture_error(e);
+		if (!load_tex_height_to_obj(e, sphere))
+			ft_texture_error(e);
 	}
 	if (sphere->cut && (sphere->descartes.y > 0 || sphere->cut->descartes.y))
 		ft_putstr("Transparent <sphere> objects can't be cut !\n");

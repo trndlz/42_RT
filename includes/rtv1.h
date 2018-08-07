@@ -379,6 +379,7 @@ void				clear_list(t_obj *head);
 
 void				ft_usage(void);
 void				ft_malloc_error(t_env *e);
+void				ft_texture_error(t_env *e);
 void				exit_message(char *str);
 
 /*

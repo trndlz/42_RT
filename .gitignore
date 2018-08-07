@@ -6,4 +6,4 @@ minilibx_macos/*.o
 obj/*.o
 
 # Executables
-rtv1
+rt

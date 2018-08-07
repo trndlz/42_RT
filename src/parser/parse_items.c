@@ -49,12 +49,12 @@ char		*parse_descartes(char *file, t_vc *v)
 	if ((check = sscanf(file, "%*s %lf %lf %lf\n",
 		&(descartes.x), &(descartes.y), &(descartes.z))) != 3)
 		return (parser_error("Invalid values !\n", file));
-	if (!(descartes.x >= 0 && descartes.x <= 1))
+	if (!(descartes.x >= 0 && descartes.x <= 1.0))
 		return (parser_error("Reflection must be [0;1] !\n", file));
-	if (!(descartes.y >= 0 && descartes.y <= 1))
+	if (!(descartes.y >= 0 && descartes.y <= 1.0))
 		return (parser_error("Transparency must be [0;1] !\n", file));
-	if (!(descartes.z >= 1))
-		return (parser_error("Refraction must be > 1 !\n", file));
+	if (!(descartes.z >= 1.0 && descartes.z <= 2.0))
+		return (parser_error("Refraction must be [1;2] !\n", file));
 	*v = descartes;
 	if (!(file = ft_strchr(file, '\n')))
 		return (NULL);

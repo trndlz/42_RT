@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/06 16:20:05 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/07 15:27:22 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define D_ZERO 0.000001
 # define PERL_S 600
 # define MAX_COLOR 16776960
+# define SUN_DISTANCE 3725000
 
 enum				e_obj {
 	LIGHT,

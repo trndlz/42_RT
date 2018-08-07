@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_sphere.c                                     :+:      :+:    :+:   */
+/*   parse_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/25 16:06:41 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/07 14:32:37 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char		*parse_sphere(t_env *e, char *file)
 	if (sphere->texture == EARTH)
 		load_texture_to_obj(e, sphere);
 	if (sphere->texture == PERLIN)
-		sphere->file_txt = create_perlin_tex(10, e, sphere);
+		sphere->file_txt = create_perlin_tex(2, e, sphere);
 	if (sphere->texture == NEARTH)
 	{
 		load_texture_to_obj(e, sphere);

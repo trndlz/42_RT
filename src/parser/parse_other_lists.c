@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_lights_eye.c                                 :+:      :+:    :+:   */
+/*   parse_other_lists.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/25 16:06:41 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/07 15:28:36 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@ char		*parse_eye(t_env *e, char *file)
 			break ;
 	}
 	return (file);
+}
+
+void		parallel_lights(t_obj *light)
+{
+	if (light->rot.x == 0 && light->rot.y == 0 && light->rot.z == 0)
+		return ;
+	else
+		light->pos = vec_mult(light->rot, SUN_DISTANCE);
 }
 
 char		*parse_light(t_env *e, char *file)
@@ -48,6 +56,7 @@ char		*parse_light(t_env *e, char *file)
 		else
 			break ;
 	}
+	parallel_lights(light);
 	obj_add(&e->light_link, light);
 	return (file);
 }

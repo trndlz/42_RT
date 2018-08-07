@@ -58,6 +58,8 @@ int		create_image(t_env *e)
 	int en;
 
 	mlx_clear_window(e->mlx.mlx, e->mlx.win);
+	if ((e->mlx.image))
+		mlx_destroy_image(e->mlx.mlx, e->mlx.image);
 	if (!(e->mlx.image = mlx_new_image(e->mlx.mlx, WINY, WINZ)))
 		return (0);
 	if (!(e->imgstr = (int *)mlx_get_data_addr(e->mlx.image, &b, &s, &en)))
@@ -77,11 +79,11 @@ int		create_image(t_env *e)
 
 int		exit_hook(int k, t_env *e)
 {
-		if (k)
-		{
-			pthread_mutex_lock(&(e->mutex));
-			exit(1);
-		}
+	if (k)
+	{
+		pthread_mutex_lock(&(e->mutex));
+		exit(1);
+	}
 	return (1);
 }
 

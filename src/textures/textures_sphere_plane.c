@@ -82,8 +82,6 @@ int			get_texture_sphere(t_hit_rec *hit, t_ray ray)
 	a = (a < 0) ? 0 : a;
 	b = (b < 0) ? 0 : b;
 	return (hit->hit_obj->file_txt.tab[a][b]);
-	// u = 65536 * u + 256 * u + u;
-	// return (mix_colors(hit->hit_obj->col, u, 0.5));
 }
 
 /*

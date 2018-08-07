@@ -21,12 +21,14 @@ int		get_tex_height_sphere(t_hit_rec *hit, t_ray ray)
 	t_vc	sph_pos;
 
 	sph_pos = vec_norm(vec_mult(vec_sub(inter_position(ray, hit->t),
-	hit->hit_obj->pos), (1 / hit->hit_obj->size)));
+		hit->hit_obj->pos), (1 / hit->hit_obj->size)));
 	sph_pos = rot_all_axis(sph_pos, hit->hit_obj->rot);
-	u = 0.5 + atan2(sph_pos.z, sph_pos.y) / (2 * M_PI);
-	v = 0.5 - asin(sph_pos.x) / M_PI;
-	a = (int)(v * hit->hit_obj->file_height.size[1]);
-	b = (int)(u * hit->hit_obj->file_height.size[0]);
+	u = 0.5 + atan2(sph_pos.x, sph_pos.z) / (2 * M_PI);
+	v = 0.5 - asin(sph_pos.y) / M_PI;
+	a = (int)(v * (hit->hit_obj->file_height.size[1] - 1));
+	b = (int)(u * (hit->hit_obj->file_height.size[0] - 1));
+	a = (a < 0) ? 0 : a;
+	b = (b < 0) ? 0 : b;
 	return (hit->hit_obj->file_height.tab[a][b]);
 }
 

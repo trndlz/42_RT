@@ -26,6 +26,13 @@ void		ft_malloc_error(t_env *e)
 	exit(1);
 }
 
+void		ft_texture_error(t_env *e)
+{
+	ft_putstr_fd("Problem with texture file\n", 2);
+	free(e);
+	exit(1);
+}
+
 void		exit_message(char *str)
 {
 	ft_putstr_fd(str, 2);

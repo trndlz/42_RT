@@ -54,8 +54,7 @@
 	[color] 0xff0000
 	[size] 200
 	[Spec/Diff/Amb] 0.4 0.9 0.1
-	[R/T/Rf] 0 0.5 1.1
-	[perturbation] 0
+	[texture] NEARTH 0
 
 <scene>
 	[filter] NONE

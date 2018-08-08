@@ -27,8 +27,8 @@ t_env		*init_env(void)
 	e->scene.antialias = 0;
 	e->scene.blinding_lights = 0;
 	e->mlx.image = (void*)0;
-	ft_memset(e->eq, '=', 100);
-	ft_memset(e->sp, ' ', 100);
+	ft_memset(e->eq, '=', 51);
+	ft_memset(e->sp, ' ', 51);
 	return (e);
 }
 

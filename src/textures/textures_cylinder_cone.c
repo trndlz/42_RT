@@ -26,7 +26,8 @@ char		get_lines_cylinder(t_hit_rec *hit, t_ray ray)
 	inter = inter_position(ray, hit->t);
 	p = vec_mod(vec_sub(vec_sub(inter, vec_mult(hit->n, hit->hit_obj->size)),
 		hit->hit_obj->pos));
-	x = vec_x(vec_norm(inter), vec_norm(hit->hit_obj->rot));
+	x = vec_x(vec_norm(vec_sub(inter, hit->hit_obj->pos)),
+	vec_norm(hit->hit_obj->rot));
 	mod = (x < 0) ? 0 : 1;
 	if ((int)(mod + p / hit->hit_obj->txt_size) % 2)
 		return (0);
@@ -50,7 +51,8 @@ char		get_lines_cone(t_hit_rec *hit, t_ray ray)
 	r = vec_mod(vec_sub(inter, hit->hit_obj->pos)) * sin(hit->hit_obj->size);
 	p = vec_mod(vec_sub(vec_sub(inter, vec_mult(hit->n, r)),
 		hit->hit_obj->pos));
-	x = vec_x(vec_norm(inter), vec_norm(hit->hit_obj->rot));
+	x = vec_x(vec_norm(vec_sub(inter, hit->hit_obj->pos)),
+	vec_norm(hit->hit_obj->rot));
 	mod = (x < 0) ? 0 : 1;
 	if ((int)(mod + p / hit->hit_obj->txt_size) % 2)
 		return (0);

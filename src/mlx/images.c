@@ -24,7 +24,7 @@ int		multi_threading_join(t_env *e)
 			ft_putstr("Error while joining threads\n");
 			return (0);
 		}
-		progression_bar(e, "Threads processing", (i + 1) * 2);
+		progression_bar(e, "Threads processing", 100 * (i + 1) / TH_NB);
 	}
 	ft_putchar('\n');
 	return (1);
@@ -45,7 +45,7 @@ int		multi_threading(t_env *e)
 			ft_putstr("Error while creating threads\n");
 			return (0);
 		}
-		progression_bar(e, "Threads creation", (i + 1) * 2);
+		progression_bar(e, "Threads creation", 100 * (i + 1) / TH_NB);
 	}
 	ft_putchar('\n');
 	return (multi_threading_join(e));

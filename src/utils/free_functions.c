@@ -37,7 +37,8 @@ void		clear_list(t_obj *head)
 
 void		progression_bar(t_env *e, char *str, int i)
 {
-	fprintf(stderr, "%s |%.*s%.*s| %02d\r", str, i, e->eq, 100 - i, e->sp, i);
+	fprintf(stderr, "%s |%.*s%.*s| %d\r", str, (int)(i / 2),
+	e->eq, (int)(50 - i / 2), e->sp, i);
 	fflush(stdout);
 }
 

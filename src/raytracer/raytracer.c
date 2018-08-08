@@ -33,7 +33,7 @@ int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray, int a)
 	pixel = phong_lighting(e, ray, hit);
 	if (hit->hit_obj->descartes.x > 0.01 && e->nr > 0 && a != 0)
 		pixel = reflection(e, pixel, ray, hit);
-	if (hit->hit_obj->descartes.y > 0.01 && e->nt > 0  && a != 1)
+	if (hit->hit_obj->descartes.y > 0.01 && e->nt > 0 && a != 1)
 		pixel = transparency(e, pixel, ray, hit);
 	pixel = apply_filter(e, pixel);
 	return (pixel);
@@ -53,7 +53,7 @@ void	*scene_plot(void *arg)
 		while (++(e->y) < WINY)
 		{
 			e->nr = 2;
-			e->nt = 2;
+			e->nt = 10;
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))
 				draw_point(e, e->y, e->z, compute_point(e, &hit_rec, ray, 3));

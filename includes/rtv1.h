@@ -166,8 +166,8 @@ typedef struct		s_env
 	t_obj			*light_link;
 	t_obj			*cut_link;
 	t_scene			scene;
-	char			eq[100];
-	char			sp[100];
+	char			eq[51];
+	char			sp[51];
 	int				nr;
 	int				nt;
 }					t_env;

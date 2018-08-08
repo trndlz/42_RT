@@ -44,8 +44,8 @@ void	blinding_lights(t_env *e)
 
 	e->z = 500;
 	e->y = 500;
-	hit_rec.nr = 1;
-	hit_rec.nt = 5;
+	e->nr = 1;
+	e->nt = 2;
 	ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 	nearest_node(e, ray, &hit_rec);
 	nearest_light(e, ray, &hit_light);

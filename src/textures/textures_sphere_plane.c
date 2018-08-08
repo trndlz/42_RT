@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
+#include <stdio.h>
 
 /*
 **	SPHERE TEXTURES
@@ -100,8 +101,8 @@ char		checkerboard_plane(t_hit_rec *hit, t_ray ray)
 	xy_pos = rot_x(xy_pos, (int)(teta * 180 / M_PI));
 	xy_pos = rot_y(xy_pos, (int)(teta * 180 / M_PI));
 	mod = (xy_pos.x * xy_pos.y > 0) ? 1 : 0;
-	if (abs((int)((int)xy_pos.x / hit->hit_obj->txt_size
-				- (int)xy_pos.y / hit->hit_obj->txt_size)) % 2 == mod)
+	if (abs((int)xy_pos.x / (int)hit->hit_obj->txt_size
+	- (int)xy_pos.y / (int)hit->hit_obj->txt_size) % 2 == mod)
 		return (0);
 	else
 		return (1);

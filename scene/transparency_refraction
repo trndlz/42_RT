@@ -1,0 +1,93 @@
+<eye>
+	[position] -600 0 0
+	[rotation] 0 0 0
+
+<light>
+	[position] -500 100 0
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<plane>
+	[position] 2000 0 0
+	[rotation] -1 0 0
+	[color] 0xCCCCCC
+	[size] 200
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+	[texture] CHECKERBOARD 230
+
+<plane>
+	[position] 0 0 -600
+	[rotation] 0 0 1
+	[color] 0x00FFFF
+	[size] 200
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+	[perturbation] 4
+	[texture] CHECKERBOARD 478
+
+<sphere>
+	[position] 0 130 200
+	[size] 50
+	[color] 0x49689b
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0.25 1
+
+<sphere>
+	[position] 0 0 200
+	[size] 50
+	[color] 0x49689b
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0.25 1.05
+
+<sphere>
+	[position] 0 -130 200
+	[size] 50
+	[color] 0x49689b
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0.25 1.31
+
+<sphere>
+	[position] 0 130 50
+	[size] 50
+	[color] 0x49689b
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0.5 1
+
+<sphere>
+	[position] 0 0 50
+	[size] 50
+	[color] 0x49689b
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0.5 1.05
+
+<sphere>
+	[position] 0 -130 50
+	[size] 50
+	[color] 0x49689b
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0.5 1.31
+
+<sphere>
+	[position] 0 130 -100
+	[size] 50
+	[color] 0x49689b
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0.75 1
+
+<sphere>
+	[position] 0 0 -100
+	[size] 50
+	[color] 0x49689b
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0.75 1.05
+
+<sphere>
+	[position] 0 -130 -100
+	[size] 50
+	[color] 0x49689b
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0.75 1.31
+
+<scene>
+	+antialias

@@ -49,6 +49,6 @@
 	[rotation] 0 0 0
 	[color] 0xff0000
 	[size] 200
-	[texture] perlin 10
+	[texture] PERLIN 10
 
 <scene>

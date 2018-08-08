@@ -26,13 +26,6 @@ void	translation(int key, t_env *e)
 		e->eye_lookfrom.y -= 100;
 	if (key == 31)
 		e->eye_lookfrom.z -= 100;
-	// ft_putstr("EYE COORDINATES : X : ");
-	// ft_putnbr(e->eye_lookfrom.x);
-	// ft_putstr(" | Y : ");
-	// ft_putnbr(e->eye_lookfrom.y);
-	// ft_putstr(" | Z : ");
-	// ft_putnbr(e->eye_lookfrom.z);
-	// ft_putstr("\n");
 }
 
 void	rotation(int key, t_env *e)
@@ -49,18 +42,10 @@ void	rotation(int key, t_env *e)
 		e->eye_rot.y -= 5;
 	if (key == 12)
 		e->eye_rot.z -= 5;
-	// ft_putstr("EYE ROTATION : X : ");
-	// ft_putnbr(e->eye_rot.x);
-	// ft_putstr(" | Y : ");
-	// ft_putnbr(e->eye_rot.y);
-	// ft_putstr(" | Z : ");
-	// ft_putnbr(e->eye_rot.z);
-	// ft_putstr("\n");
 }
 
 int		deal_key(int key, t_env *e)
 {
-	printf("key %d\n", key);
 	if (key == 35)
 	{
 		pthread_mutex_lock(&(e->mutex));
@@ -72,6 +57,7 @@ int		deal_key(int key, t_env *e)
 		pthread_mutex_lock(&(e->mutex));
 		mlx_destroy_image(e->mlx.mlx, e->mlx.image);
 		mlx_destroy_window(e->mlx.mlx, e->mlx.win);
+		pause();
 		exit(1);
 	}
 	else
@@ -100,7 +86,11 @@ int		deal_mouse(int k, int y, int z, t_env *e)
 	{
 		if (k == 1)
 		{
-			printf("y %d / z %d\n", y, z);
+			ft_putstr("y -> ");
+			ft_putnbr(y);
+			ft_putstr(" / z -> ");
+			ft_putnbr(z);
+			ft_putchar('\n');
 		}
 	}
 	return (0);

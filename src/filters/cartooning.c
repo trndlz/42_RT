@@ -70,20 +70,13 @@ void	line(t_env *e)
 
 char	cartooning(t_env *e)
 {
-	int *colorcopy;
-	int *palette;
+	int palette[PALETTE_SIZE];
 
-	if (!(palette = (int *)malloc(sizeof(int) * PALETTE_SIZE)))
-		return (0);
-	if (!(colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ)))
-		return (0);
 	if (!(init_palette(palette)))
 		return (0);
 	if (!(create_palette(e, palette)))
 		return (0);
 	flatten_colors(e, palette);
 	line(e);
-	free(palette);
-	free(colorcopy);
 	return (1);
 }

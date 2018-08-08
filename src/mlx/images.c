@@ -11,12 +11,23 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
-#include <stdio.h>
 
-void	progression_bar(t_env *e, char *str, int i)
+int		multi_threading_join(t_env *e)
 {
-	fprintf(stderr, "%s |%.*s%.*s| %02d\r", str, i, e->eq, 100 - i, e->sp, i);
-	fflush(stdout);
+	int		i;
+
+	i = -1;
+	while (++i < TH_NB)
+	{
+		if (pthread_join(e->pth[i], NULL) != 0)
+		{
+			ft_putstr("Error while joining threads\n");
+			return (0);
+		}
+		progression_bar(e, "Threads processing", (i + 1) * 2);
+	}
+	ft_putchar('\n');
+	return (1);
 }
 
 int		multi_threading(t_env *e)
@@ -37,18 +48,7 @@ int		multi_threading(t_env *e)
 		progression_bar(e, "Threads creation", (i + 1) * 2);
 	}
 	ft_putchar('\n');
-	i = -1;
-	while (++i < TH_NB)
-	{
-		if (pthread_join(e->pth[i], NULL) != 0)
-		{
-			ft_putstr("Error while joining threads\n");
-			return (0);
-		}
-		progression_bar(e, "Threads processing", (i + 1) * 2);
-	}
-	ft_putchar('\n');
-	return (1);
+	return (multi_threading_join(e));
 }
 
 int		create_image(t_env *e)
@@ -58,6 +58,8 @@ int		create_image(t_env *e)
 	int en;
 
 	mlx_clear_window(e->mlx.mlx, e->mlx.win);
+	if ((e->mlx.image))
+		mlx_destroy_image(e->mlx.mlx, e->mlx.image);
 	if (!(e->mlx.image = mlx_new_image(e->mlx.mlx, WINY, WINZ)))
 		return (0);
 	if (!(e->imgstr = (int *)mlx_get_data_addr(e->mlx.image, &b, &s, &en)))
@@ -70,18 +72,18 @@ int		create_image(t_env *e)
 		antialias(e->imgstr);
 	if (e->scene.filter == CARTOON)
 		if ((!cartooning(e)))
-			return (0);
+			ft_putstr("Cartoon effect needs more colorful scenes\n");
 	mlx_put_image_to_window(e->mlx.mlx, e->mlx.win, e->mlx.image, 0, 0);
 	return (1);
 }
 
 int		exit_hook(int k, t_env *e)
 {
-		if (k)
-		{
-			pthread_mutex_lock(&(e->mutex));
-			exit(1);
-		}
+	if (k)
+	{
+		pthread_mutex_lock(&(e->mutex));
+		exit(1);
+	}
 	return (1);
 }
 

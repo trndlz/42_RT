@@ -17,9 +17,7 @@
 # include "mlx.h"
 # include "libft.h"
 # include <pthread.h>
-# include <stdio.h>
 # include <stdlib.h>
-// # include "X11.h"
 # define WINY 1000
 # define WINZ 1000
 # define LEG 400
@@ -147,31 +145,6 @@ typedef struct		s_img
 	int				endian;
 }					t_img;
 
-// typedef struct		s_uvect2
-// {
-//     int				x;
-//     int				y;
-// }					t_uvect2;
-//
-// typedef struct		s_cursor
-// {
-//     t_uvect2		start_pos;
-//     t_uvect2		end_pos;
-//     t_uvect2		cursor_vect;
-//     int				height;
-//     int				width;
-// }					t_cursor;
-//
-// typedef struct		s_slider
-// {
-//     int				pos_tmp;
-//     int				pos_x;
-//     int				pos_x_zero;
-//     int				pos_x_max;
-//     int				pos_x_length;
-//     int				pos_y;
-// }					t_slider;
-
 typedef struct		s_mlx
 {
 	void			*mlx;
@@ -183,14 +156,6 @@ typedef struct		s_env
 {
 	t_mlx			mlx;
 	int				*imgstr;
-	// int				key[256];
-	// t_img			img;
-	// t_slider		slider_r;
-	// t_slider		slider_g;
-	// t_slider		slider_b;
-	// t_cursor		cursor_r;
-	// t_cursor		cursor_g;
-	// t_cursor		cursor_b;
 	int				thread_int;
 	int				y;
 	int				z;
@@ -387,6 +352,7 @@ void				exit_message(char *str);
 */
 
 void				free_split(char **split);
+void				free_all_lists(t_env *e);
 
 /*
 ** TEXTURES OBJECTS

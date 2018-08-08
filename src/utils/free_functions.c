@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
+#include <stdio.h>
 
 void		free_split(char **split)
 {
@@ -32,4 +33,17 @@ void		clear_list(t_obj *head)
 		head = head->next;
 		free(tmp);
 	}
+}
+
+void		progression_bar(t_env *e, char *str, int i)
+{
+	fprintf(stderr, "%s |%.*s%.*s| %02d\r", str, i, e->eq, 100 - i, e->sp, i);
+	fflush(stdout);
+}
+
+void		free_all_lists(t_env *e)
+{
+	clear_list(e->obj_link);
+	clear_list(e->light_link);
+	clear_list(e->cut_link);
 }

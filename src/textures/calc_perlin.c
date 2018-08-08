@@ -70,6 +70,7 @@ float			lissage(float x, float y, float *p_tab)
 	calc_tab[0] = y - y0;
 	calc_tab[2] = 3 * calc_tab[0] * calc_tab[0] - 2
 		* calc_tab[0] * calc_tab[0] * calc_tab[0];
+	(p_tab) ? free(p_tab) : 0;
 	return (calc_tab[3] + calc_tab[2] * (calc_tab[4] - calc_tab[3]));
 }
 
@@ -90,6 +91,5 @@ float			perlin(float x, float y, float res, unsigned int *perm)
 	g_tab[3] = perm[x0 % 255 + 1 + perm[y0 % 255 + 1]] % 8;
 	if ((p_tab = pondere(x, y, g_tab)) == NULL)
 		return (-1);
-	(p_tab) ? free(p_tab) : 0;
 	return (lissage(x, y, p_tab));
 }

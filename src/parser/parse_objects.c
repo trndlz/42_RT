@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
+#include <stdio.h>
 
 char		*parse_sphere(t_env *e, char *file)
 {
@@ -22,7 +23,7 @@ char		*parse_sphere(t_env *e, char *file)
 		if (!load_texture_to_obj(e, sphere))
 			ft_texture_error(e);
 	if (sphere->texture == PERLIN)
-		sphere->file_txt = create_perlin_tex(2, e, sphere);
+		sphere->file_txt = create_perlin_tex(sphere->txt_size, e, sphere);
 	if (sphere->texture == NEARTH)
 	{
 		if (!load_texture_to_obj(e, sphere))

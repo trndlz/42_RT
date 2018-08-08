@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
+#include <stdio.h>
 
 enum e_texture	texture_converter(char *str, enum e_obj obj)
 {
@@ -59,11 +60,10 @@ char			*parse_texture(char *file,
 	unsigned int	n_size;
 	char			str[30];
 
-	size += 0;
 	if ((check = sscanf(file, "%*s %15s %d\n", str, &n_size) != 2))
 		return (parser_error("Invalid texture values !\n", file));
 	if (n_size > 0)
-		size = &n_size;
+		*size = n_size;
 	*texture = texture_converter(str, obj);
 	if (!(file = ft_strchr(file, '\n')))
 		return (NULL);

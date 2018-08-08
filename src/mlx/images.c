@@ -58,7 +58,7 @@ int		create_image(t_env *e)
 	int en;
 
 	mlx_clear_window(e->mlx.mlx, e->mlx.win);
-	if ((e->mlx.image))
+	if (e->mlx.image)
 		mlx_destroy_image(e->mlx.mlx, e->mlx.image);
 	if (!(e->mlx.image = mlx_new_image(e->mlx.mlx, WINY, WINZ)))
 		return (0);

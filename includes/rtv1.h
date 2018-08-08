@@ -125,8 +125,6 @@ typedef struct		s_hit_rec
 	double			t1;
 	double			t2;
 	double			tr_max;
-	int				nr;
-	int				nt;
 	char			lit;
 	t_vc			n;
 	t_vc			s;
@@ -170,6 +168,8 @@ typedef struct		s_env
 	t_scene			scene;
 	char			eq[100];
 	char			sp[100];
+	int				nr;
+	int				nt;
 }					t_env;
 
 /*
@@ -184,7 +184,7 @@ double				distance_to_inter(t_hit_rec *hit, t_obj *obj_list,
 					t_ray ray);
 char				nearest_node(t_env *e, t_ray ray, t_hit_rec *hit);
 int					is_not_cut(t_obj *obj, t_env *e);
-int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray);
+int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray, int a);
 
 /*
 ** COLOR CALCULATION

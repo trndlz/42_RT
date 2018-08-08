@@ -23,7 +23,7 @@ void	create_red_blue_img(t_env *e, int *colorcopy)
 	ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 	if (nearest_node(e, ray, &hit_rec))
 	{
-		px_color = compute_point(e, &hit_rec, ray);
+		px_color = compute_point(e, &hit_rec, ray, 3);
 		px_color = px_color % 0x100 + ((px_color / 0x100) % 0x100) * 0x100;
 		draw_point(e, e->y, e->z, px_color);
 	}

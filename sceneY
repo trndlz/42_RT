@@ -1,5 +1,5 @@
 <eye>
-	[position] 0 0 0
+	[position] -200 0 0
 	[rotation] 0 0 0
 
 <light>
@@ -31,5 +31,4 @@
 	[texture] CHECKERBOARD 100
 
 <scene>
-	[filter] CARTOON
 	+antialias

@@ -45,7 +45,7 @@ int				transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 
 	r = (!(textures_coef(hit->hit_obj, hit, ray)))
 		? hit->hit_obj->descartes.y : 0;
-	hit->nt--;
+	e->nt--;
 	next_hit = *hit;
 	r_ray.direction = vec_norm(ray.direction);
 	r_ray.origin = inter_position(ray, hit->t);
@@ -54,7 +54,7 @@ int				transparency(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 		refraction(&r_ray, hit);
 	if (nearest_node(e, r_ray, &next_hit))
 	{
-		new_color = compute_point(e, &next_hit, r_ray);
+		new_color = compute_point(e, &next_hit, r_ray, 0);
 		new_color = mix_colors(new_color, old_color, r);
 		return (new_color);
 	}
@@ -68,7 +68,7 @@ int				reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 	t_hit_rec	next_hit;
 	double		r;
 
-	hit->nr--;
+	e->nr--;
 	next_hit = *hit;
 	r = hit->hit_obj->descartes.x;
 	r_ray.direction = vec_mult(vec_norm(ray.direction), -1);
@@ -77,7 +77,7 @@ int				reflection(t_env *e, int old_color, t_ray ray, t_hit_rec *hit)
 	r_ray.origin = hit->hit_inter;
 	if (nearest_node(e, r_ray, &next_hit))
 	{
-		new_color = compute_point(e, &next_hit, r_ray);
+		new_color = compute_point(e, &next_hit, r_ray, 1);
 		new_color = mix_colors(new_color, old_color, r);
 		return (new_color);
 	}

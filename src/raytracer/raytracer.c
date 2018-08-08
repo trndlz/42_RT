@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
+#include <stdio.h>
 
 t_ray	create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
 {
@@ -24,18 +25,16 @@ t_ray	create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
 	return (ray);
 }
 
-int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray)
+int		compute_point(t_env *e, t_hit_rec *hit, t_ray ray, int a)
 {
 	int	pixel;
 
-	hit->nr = 1;
-	hit->nt = 5;
 	hit->hit_inter = inter_position(ray, hit->t);
 	pixel = phong_lighting(e, ray, hit);
-	if (hit->hit_obj->descartes.y > 0 && hit->nt > 0)
-		pixel = transparency(e, pixel, ray, hit);
-	if (hit->hit_obj->descartes.x > 0.01 && hit->nr > 0)
+	if (hit->hit_obj->descartes.x > 0.01 && e->nr > 0 && a != 0)
 		pixel = reflection(e, pixel, ray, hit);
+	if (hit->hit_obj->descartes.y > 0.01 && e->nt > 0  && a != 1)
+		pixel = transparency(e, pixel, ray, hit);
 	pixel = apply_filter(e, pixel);
 	return (pixel);
 }
@@ -53,9 +52,11 @@ void	*scene_plot(void *arg)
 		e->y = -1;
 		while (++(e->y) < WINY)
 		{
+			e->nr = 2;
+			e->nt = 2;
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))
-				draw_point(e, e->y, e->z, compute_point(e, &hit_rec, ray));
+				draw_point(e, e->y, e->z, compute_point(e, &hit_rec, ray, 3));
 		}
 	}
 	if (e->scene.filter == STEREOSCOPIC)

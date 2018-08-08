@@ -1,0 +1,119 @@
+<eye>
+	[position] -500 0 0
+	[rotation] 0 0 0
+
+<light>
+	[position] -500 100 0
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<plane>
+	[position] 1000 0 0
+	[rotation] -1 0 0
+	[color] 0x0000FF
+	[size] 200
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+	[texture] CHECKERBOARD 20
+
+<plane>
+	[position] 0 0 -600
+	[rotation] 0 0 1
+	[color] 0x00FFFF
+	[size] 200
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+	[texture] CHECKERBOARD 100
+
+<sphere>
+	[position] 0 0 180
+	[size] 50
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[texture] EARTH 0
+
+<sphere>
+	[position] 0 0 50
+	[rotation] 90 90 -120
+	[size] 50
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[texture] EARTH 0
+
+<sphere>
+	[position] 0 0 -80
+	[rotation] 90 90 -120
+	[size] 50
+	[color] 0x35bf4d
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[texture] CHECKERBOARD 5
+	[R/T/Rf] 0 0.5 1
+
+<sphere>
+	[position] 0 0 -210
+	[rotation] 90 90 -250
+	[size] 50
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[texture] CHECKERBOARD 70
+	[R/T/Rf] 0 0 1
+
+<sphere>
+	[position] 0 130 180
+	[size] 50
+	[color] 0x35bf4d
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[texture] LINES 10
+	[R/T/Rf] 0 0.5 1
+
+<sphere>
+	[position] 0 130 50
+	[rotation] 90 90 -120
+	[size] 50
+	[color] 0xbf35a7
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[texture] LINES 100
+
+<sphere>
+	[position] 0 130 -80
+	[rotation] 90 90 -120
+	[size] 50
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0.5 0.5 1
+
+<sphere>
+	[position] 0 130 -210
+	[rotation] 90 90 -250
+	[size] 50
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[texture] COLUMNS 100
+
+<sphere>
+	[position] 0 -130 180
+	[size] 50
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[rotation] 0 0 -1
+	[texture] COLUMNS 10
+	[R/T/Rf] 0 1 1
+
+<sphere>
+	[position] 0 -130 50
+	[rotation] 90 90 -120
+	[size] 50
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[texture] PERLIN 20
+
+<sphere>
+	[position] 0 -130 -80
+	[rotation] 90 90 -120
+	[size] 50
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 1 0 1
+
+<sphere>
+	[position] 0 -130 -210
+	[rotation] 90 90 -250
+	[size] 50
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[texture] COLUMNS 4
+	[R/T/Rf] 1 1 1
+
+<scene>
+	+antialias

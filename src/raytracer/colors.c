@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/26 19:12:19 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/08 13:57:24 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int		specular_diffuse(t_obj *light, t_hit_rec *hit, t_ray ray)
 	t_vc	rm;
 
 	rm = vec_norm(vec_sub(vec_mult(hit->n, 2 * hit->cost), hit->lm));
-	dot_spec = ratio_limits(pow(vec_dot(rm, vec_norm(vec_mult(hit->v, -1.0))),
-		ALPHA_SPEC));
+	dot_spec = pow(ratio_limits(vec_dot(rm, vec_norm(vec_mult(hit->v, -1.0)))),
+		ALPHA_SPEC);
 	dot_diff = ratio_limits(hit->cost);
 	color_spec = multiply_color(light->col, dot_spec * hit->hit_obj->phong.x);
 	color_diff = multiply_color(get_obj_color(hit, ray),

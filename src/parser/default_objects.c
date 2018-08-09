@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/09 17:01:14 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/09 17:10:12 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_obj		*default_plane(void)
 	return (plane);
 }
 
-t_obj		*default_cutter(void)
+t_obj		*default_cutter(t_obj *obj)
 {
 	t_obj *cut;
 
@@ -100,11 +100,12 @@ t_obj		*default_cutter(void)
 	cut->o_type = PLANE;
 	cut->pos = (t_vc){0, 0, 0};
 	cut->rot = (t_vc){0, 0, 1};
-	cut->col = ft_htoi("0xFF5733");
+	cut->col = obj->col;
 	cut->texture = NO_TEXTURE;
 	cut->txt_size = 12;
-	cut->descartes = (t_vc){0, 0, 1.0};
-	cut->phong = (t_vc){0.5, 0.5, 0.2};
+	cut->size = 100;
+	cut->descartes = obj->descartes;
+	cut->phong = obj->phong;
 	cut->cut = NULL;
 	cut->perturb = 0;
 	return (cut);

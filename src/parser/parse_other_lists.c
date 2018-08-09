@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/09 16:52:47 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/09 17:10:19 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char		*parse_cutter(t_obj *obj, char *file)
 {
 	t_obj *cutter;
 
-	if (!(cutter = default_cutter()))
+	if (!(cutter = default_cutter(obj)))
 	{
 		ft_putstr_fd("Malloc <cutter> object failed !\n", 2);
 		return (file);
@@ -77,12 +77,13 @@ char		*parse_cutter(t_obj *obj, char *file)
 			file = parse_vc(file, &(cutter->pos));
 		else if (ft_strncmp("[rotation] ", file, 11) == 0)
 			file = parse_vc(file, &(cutter->rot));
-		else if (ft_strncmp("[color] ", file, 8) == 0)
-			file = parse_color(file, &(cutter->col));
-		else if (ft_strncmp("[R/T/Rf] ", file, 9) == 0)
-			file = parse_descartes(file, &(cutter->descartes));
-		else if (ft_strncmp("[Spec/Diff/Amb] ", file, 16) == 0)
-			file = parse_phong(file, &(cutter->phong));
+		else if (ft_strncmp("[size] ", file, 7) == 0)
+			file = parse_double(file, &(cutter->size));
+		else if (ft_strncmp("[type] sphere\n", file, 14) == 0 && obj->o_type == PLANE)
+		{
+			cutter->o_type = SPHERE;
+			file += 14;
+		}
 		else
 			break ;
 	}

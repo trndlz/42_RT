@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/09 16:46:55 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/09 17:09:14 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ int					apply_filter(t_env *e, int color);
 t_obj				*default_sphere(void);
 t_obj				*default_cone(void);
 t_obj				*default_cylinder(void);
-t_obj				*default_cutter(void);
+t_obj				*default_cutter(t_obj *obj);
 t_obj				*default_plane(void);
 t_obj				*default_paraboloid(void);
 t_obj				*default_light(void);

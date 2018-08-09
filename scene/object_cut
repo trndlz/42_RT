@@ -16,40 +16,59 @@
 	[position] 300 0 0
 	[rotation] -1 0 0
 	[Spec/Diff/Amb] 0.4 0.9 1
-	
+	<cutter>
+		[rotation] 0 1 -1
+		[position] 300 0 0
 
 
 <sphere>
+	<cutter>
+		[rotation] 2 0 11
 
 <sphere>
 	[position] 0 350 0
-
+	<cutter>
+		[rotation] 0 1 1
+		[position] 0 350 0
 
 <sphere>
 	[position] 0 700 0
-
+	<cutter>
+		[rotation] 1 0 1
+		[position] 0 800 0
 
 <sphere>
 	[position] 0 -350 0
-
+	<cutter>
+		[rotation] 0 -1 1
+		[position] 0 -350 75
 
 <sphere>
 	[position] 0 -700 0
-
+	<cutter>
+		[rotation] 1 0 1
+		[position] 0 -700 -100
 
 <cylinder>
 	[rotation] 0 -4 2
 	[position] 0 0 600
 	[size] 100
-
+	<cutter>
+		[position] 0 0 700
+		[rotation] 0 7 5
 
 <cone>
 	[rotation] 0 1 0
 	[position] 200 0 -500
 	[size] 15
-
+	<cutter>
+		[position] 200 0 -500
+		[rotation] 3 0 3
 
 <cone>
 	[rotation] 0 2 -4
 	[position] 200 -400 500
 	[size] 15
+	<cutter>
+		[position] 200 -400 700
+		[rotation] 3 0 3

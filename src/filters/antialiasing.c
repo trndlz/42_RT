@@ -6,7 +6,7 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 14:26:30 by jostraye          #+#    #+#             */
-/*   Updated: 2018/08/06 15:55:36 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/09 12:15:40 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	copy_img_array(int *imgstr, int *colorcopy)
 	{
 		y = -1;
 		while (++y < WINY)
-			imgstr[z * WINY + y] = colorcopy[z * WINY + y];
+			if (colorcopy[z * WINY + y] != 0)
+				imgstr[z * WINY + y] = colorcopy[z * WINY + y];
 	}
 }
 
@@ -80,13 +81,13 @@ void	antialias(int *img)
 	z = 0;
 	if (!(colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ)))
 		return ;
+	copy_img_array(colorcopy, img);
 	while (++z < WINZ - 1)
 	{
 		y = 0;
 		while (++y < WINY - 1)
 		{
 			i = z * WINY + y;
-			colorcopy[i] = img[i];
 			if (aa_condition(img, y, z, AA_S))
 				colorcopy[i] = mix_colors(av_col_four(img[i + 1],
 					img[i + WINY], img[i - WINY], img[i - 1]), img[i], 0.5);

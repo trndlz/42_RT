@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/07 15:28:36 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/09 12:00:58 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char		*parse_light(t_env *e, char *file)
 
 	if (!(light = malloc(sizeof(t_obj))))
 		return (NULL);
+	light->o_type = LIGHT;
 	light->pos = (t_vc){-1000, 0, 0};
 	light->rot = (t_vc){0, 0, 0};
 	light->col = ft_htoi("0xFFFFFF");

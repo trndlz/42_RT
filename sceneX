@@ -52,5 +52,5 @@
 	[texture] NEARTH 0
 
 <scene>
-	[filter] CARTOON
+	[filter] STEREOSCOPIC
 	+antialias

@@ -6,12 +6,11 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/26 19:12:19 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/09 13:45:01 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
-#include <stdio.h>
 
 t_ray	create_ray(int y, int z, t_vc eye_rot, t_vc ray_origin)
 {
@@ -44,6 +43,7 @@ void	*scene_plot(void *arg)
 	t_env		*e;
 	t_ray		ray;
 	t_hit_rec	hit_rec;
+	int			color;
 
 	e = (t_env *)arg;
 	e->z = (e->thread_int) * WINZ / TH_NB - 1;
@@ -56,10 +56,13 @@ void	*scene_plot(void *arg)
 			e->nt = 10;
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))
-				draw_point(e, e->y, e->z, compute_point(e, &hit_rec, ray, 3));
+			{
+				color = compute_point(e, &hit_rec, ray, 3);
+				draw_point(e, e->y, e->z, color);
+			}
+			if (e->scene.filter == STEREOSCOPIC)
+				stereoscopic(e, color);
 		}
 	}
-	if (e->scene.filter == STEREOSCOPIC)
-		stereoscopic(e);
 	return (NULL);
 }

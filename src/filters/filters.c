@@ -6,50 +6,27 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 15:06:54 by jostraye          #+#    #+#             */
-/*   Updated: 2018/07/19 13:27:00 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/09 13:43:06 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-void	create_red_blue_img(t_env *e, int *colorcopy)
+void	stereoscopic(t_env *e, int color)
 {
 	t_hit_rec	hit_rec;
 	t_ray		ray;
 	int			px_color;
 
-	colorcopy[e->z * WINY + e->y] = ((e->imgstr[e->z * WINY + e->y]
-		/ (0x100 * 0x100)) % 0x100) * (0x100 * 0x100);
 	ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
+	ray.origin.y -= 60;
 	if (nearest_node(e, ray, &hit_rec))
 	{
 		px_color = compute_point(e, &hit_rec, ray, 3);
 		px_color = px_color % 0x100 + ((px_color / 0x100) % 0x100) * 0x100;
-		draw_point(e, e->y, e->z, px_color);
+		color = ((color / (0x100 * 0x100)) % 0x100) * (0x100 * 0x100);
+		draw_point(e, e->y, e->z, add_color(px_color, color));
 	}
-}
-
-void	stereoscopic(t_env *e)
-{
-	int	*colorcopy;
-	int	i;
-
-	i = 0;
-	if (!(colorcopy = (int *)malloc(sizeof(int) * WINY * WINZ)))
-		return ;
-	e->z = (e->thread_int) * WINZ / TH_NB - 1;
-	e->eye_lookfrom.y -= 60;
-	while (++(e->z) < ((e->thread_int + 1) * WINZ) / TH_NB)
-	{
-		e->y = -1;
-		while (++(e->y) < WINY)
-		{
-			create_red_blue_img(e, colorcopy);
-		}
-	}
-	while (++i < (((e->thread_int + 1) * WINZ) / TH_NB) * WINY)
-		e->imgstr[i] = add_color(e->imgstr[i], colorcopy[i]);
-	free(colorcopy);
 }
 
 int		sepia(int color)

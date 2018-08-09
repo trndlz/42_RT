@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/07 15:27:22 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/09 13:40:31 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,8 +210,7 @@ t_vc				hextorgb(int hex);
 ** FILTERS
 */
 
-void				create_red_blue_img(t_env *e, int *colorcopy);
-void				stereoscopic(t_env *e);
+void				stereoscopic(t_env *e, int color);
 int					sepia(int color);
 int					apply_filter(t_env *e, int color);
 

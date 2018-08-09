@@ -6,7 +6,7 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/24 10:54:34 by jostraye          #+#    #+#             */
-/*   Updated: 2018/07/24 18:10:24 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/09 13:45:37 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	nearest_light(t_env *e, t_ray ray, t_hit_rec *hit)
 		{
 			if (hit_not_cut(hit, olst, ray))
 				hit_anything = 1;
+			printf("here %u\n", olst->o_type);
 		}
 		olst = olst->next;
 	}
@@ -53,5 +54,5 @@ void	blinding_lights(t_env *e)
 	if (nearest_light(e, ray, &hit_light))
 		if (hit_light.t < hit_rec.t)
 			while (++i < WINY * WINZ)
-				e->imgstr[i] = mix_colors(0xFFFFFF, e->imgstr[i], 0.8);
+				e->imgstr[i] = mix_colors(0xFFFFFF, e->imgstr[i], 0.7);
 }

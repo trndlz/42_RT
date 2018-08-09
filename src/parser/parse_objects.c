@@ -17,24 +17,26 @@ char		*parse_sphere(t_env *e, char *file)
 {
 	t_obj *sphere;
 
-	sphere = default_sphere();
+	if (!(sphere = default_sphere()))
+	{
+		ft_putstr_fd("Malloc <sphere> object failed !\n", 2);
+		return (file);
+	}
 	file = objects_items(sphere, file, SPHERE);
-	if (sphere->texture == EARTH)
-		if (!load_texture_to_obj(e, sphere))
-			ft_texture_error(e);
+	if (sphere->texture == EARTH || sphere->texture == NEARTH)
+		if (!(load_texture_to_obj(e, sphere)))
+			return (file);
 	if (sphere->texture == PERLIN)
 		sphere->file_txt = create_perlin_tex(sphere->txt_size, e, sphere);
 	if (sphere->texture == NEARTH)
-	{
-		if (!load_texture_to_obj(e, sphere))
-			ft_texture_error(e);
-		if (!load_tex_height_to_obj(e, sphere))
-			ft_texture_error(e);
-	}
+		if (!(load_tex_height_to_obj(e, sphere)))
+			return (file);
 	if (sphere->cut && (sphere->descartes.y > 0 || sphere->cut->descartes.y))
+	{
 		ft_putstr("Transparent <sphere> objects can't be cut !\n");
-	else
-		obj_add(&(e->obj_link), sphere);
+		return (file);
+	}
+	obj_add(&(e->obj_link), sphere);
 	return (file);
 }
 
@@ -42,7 +44,11 @@ char		*parse_cylinder(t_env *e, char *file)
 {
 	t_obj *cyl;
 
-	cyl = default_cylinder();
+	if (!(cyl = default_cylinder()))
+	{
+		ft_putstr_fd("Malloc <cylinder> object failed !\n", 2);
+		return (file);
+	}
 	file = objects_items(cyl, file, CYLINDER);
 	if (cyl->cut && (cyl->descartes.y > 0 || cyl->cut->descartes.y))
 		ft_putstr("Transparent <cylinder> can't be cut !\n");
@@ -55,7 +61,11 @@ char		*parse_cone(t_env *e, char *file)
 {
 	t_obj *cone;
 
-	cone = default_cone();
+	if (!(cone = default_cone()))
+	{
+		ft_putstr_fd("Malloc <cone> object failed !\n", 2);
+		return (file);
+	}
 	file = objects_items(cone, file, CONE);
 	if (cone->cut && (cone->descartes.y > 0 || cone->cut->descartes.y))
 		ft_putstr("Transparent <cone> objects can't be cut !\n");
@@ -68,7 +78,11 @@ char		*parse_plane(t_env *e, char *file)
 {
 	t_obj *plane;
 
-	plane = default_plane();
+	if (!(plane = default_plane()))
+	{
+		ft_putstr_fd("Malloc <plane> object failed !\n", 2);
+		return (file);
+	}
 	file = objects_items(plane, file, PLANE);
 	obj_add(&e->obj_link, plane);
 	return (file);
@@ -78,7 +92,11 @@ char		*parse_paraboloid(t_env *e, char *file)
 {
 	t_obj *paraboloid;
 
-	paraboloid = default_paraboloid();
+	if (!(paraboloid = default_paraboloid()))
+	{
+		ft_putstr_fd("Malloc <paraboloid> object failed !\n", 2);
+		return (file);
+	}
 	file = objects_items(paraboloid, file, PARABOLOID);
 	obj_add(&e->obj_link, paraboloid);
 	return (file);

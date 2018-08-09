@@ -6,7 +6,7 @@
 #    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/08/09 13:19:55 by jostraye         ###   ########.fr        #
+#    Updated: 2018/08/09 13:48:15 by jostraye         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC_NAME	:=	main.c								\
 				colors/color_helpers2.c				\
 				utils/free_functions.c				\
 				utils/usage.c						\
+				utils/other.c						\
 				maths/maths_vectors.c				\
 				maths/maths_rot.c					\
 				maths/maths_functions.c				\

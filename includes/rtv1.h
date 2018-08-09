@@ -351,6 +351,8 @@ void				exit_message(char *str);
 
 void				free_split(char **split);
 void				free_all_lists(t_env *e);
+void				free_color_tab(int **tab, int y);
+void				free_size_obj(int *size, t_obj *obj);
 
 /*
 ** TEXTURES OBJECTS

@@ -18,7 +18,11 @@ int		*get_wh(char *str, int *wh)
 
 	replace_char(str);
 	if (!(split = ft_strsplit(str, ' ')))
+	{
+		free(wh);
+		free(str);
 		return (NULL);
+	}
 	wh[0] = ft_atoi(split[0]);
 	wh[1] = ft_atoi(split[1]);
 	free_split(split);
@@ -26,7 +30,7 @@ int		*get_wh(char *str, int *wh)
 	return (wh);
 }
 
-int		*get_xpm_size(char *file)
+int		*get_xpm_size(char *file, t_obj *obj)
 {
 	int		fd;
 	int		line;
@@ -36,45 +40,46 @@ int		*get_xpm_size(char *file)
 	line = 0;
 	fd = open(file, O_RDONLY);
 	if (!(wh = (int *)malloc(sizeof(int) * 2)) || fd < 0)
+	{
+		free(obj);
+		ft_putstr_fd("Texture file size could not be loaded !\n", 2);
 		return (NULL);
+	}
 	while (get_next_line(fd, &str) == 1 && line <= 4)
 	{
 		line++;
 		if (line == 4)
-		{
-			if (!(wh = get_wh(str, wh)))
-				return (NULL);
-			return (wh);
-		}
+			return (get_wh(str, wh));
 		free(str);
 	}
 	free(str);
 	return (NULL);
 }
 
-int		**create_color_tab(int *imgstr, int *size)
+int		**color_tab(int *imgstr, int *size)
 {
 	int		**color_tab;
 	int		x;
 	int		y;
 	int		i;
 
-	y = 0;
+	y = -1;
 	i = 0;
-	if (!(color_tab = (int **)malloc(sizeof(int*) * size[1] * 2)))
+	if (!(color_tab = (int **)malloc(sizeof(int*) * size[1] * 2)) || !imgstr)
 		return (NULL);
-	while (y < size[1])
+	while (++y < size[1])
 	{
 		if (!(color_tab[y] = (int *)malloc(sizeof(int) * size[0] * 2)))
+		{
+			free_color_tab(color_tab, y);
 			return (NULL);
-		x = 0;
-		while (x < size[0])
+		}
+		x = -1;
+		while (++x < size[0])
 		{
 			color_tab[y][x] = imgstr[i];
-			x++;
 			i++;
 		}
-		y++;
 	}
 	return (color_tab);
 }
@@ -86,14 +91,22 @@ int		load_texture_to_obj(t_env *e, t_obj *obj)
 	int		*size;
 	int		a[3];
 
-	if (!(size = get_xpm_size("xpm/earth.xpm")))
+	if (!(size = get_xpm_size("xpm/earth.xpm", obj)))
 		return (0);
 	obj->file_txt.size = size;
-	image = mlx_xpm_file_to_image(e->mlx.mlx, "xpm/earth.xpm",
-			&size[0], &size[1]);
-	imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2]);
-	if (!(obj->file_txt.tab = create_color_tab(imgstr, obj->file_txt.size)))
+	if (!(image = mlx_xpm_file_to_image(e->mlx.mlx,
+		"xpm/earth.xpm", &size[0], &size[1])))
+	{
+		free_size_obj(size, obj);
 		return (0);
+	}
+	imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2]);
+	if (!(obj->file_txt.tab = color_tab(imgstr, obj->file_txt.size)))
+	{
+		ft_putstr_fd("Texture file data could not be loaded !\n", 2);
+		free_size_obj(size, obj);
+		return (0);
+	}
 	return (1);
 }
 
@@ -104,14 +117,21 @@ int		load_tex_height_to_obj(t_env *e, t_obj *obj)
 	int		*size;
 	int		a[3];
 
-	if (!(size = get_xpm_size("xpm/earth_height.xpm")))
+	if (!(size = get_xpm_size("xpm/earth_height.xpm", obj)))
 		return (0);
 	obj->file_height.size = size;
-	image = mlx_xpm_file_to_image(e->mlx.mlx,
-			"xpm/earth_height.xpm", &size[0], &size[1]);
-	imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2]);
-	if (!(obj->file_height.tab = create_color_tab(imgstr,
-				obj->file_height.size)))
+	if (!(image = mlx_xpm_file_to_image(e->mlx.mlx,
+			"xpm/earth_height.xpm", &size[0], &size[1])))
+	{
+		free_size_obj(size, obj);
 		return (0);
+	}
+	imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2]);
+	if (!(obj->file_height.tab = color_tab(imgstr, obj->file_height.size)))
+	{
+		ft_putstr_fd("Texture height file could not be loaded !\n", 2);
+		free_size_obj(size, obj);
+		return (0);
+	}
 	return (1);
 }

@@ -26,6 +26,7 @@ t_env		*init_env(void)
 	e->scene.filter = NO_FILTER;
 	e->scene.antialias = 0;
 	e->scene.blinding_lights = 0;
+	e->scene.nr = 2;
 	e->mlx.image = (void*)0;
 	ft_memset(e->eq, '=', 51);
 	return (e);

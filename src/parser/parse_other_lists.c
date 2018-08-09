@@ -73,17 +73,12 @@ char		*parse_cutter(t_obj *obj, char *file)
 	while (file && *file && file[1] != '-')
 	{
 		file = skip_whitespace(file);
-		if (ft_strncmp("[position] ", file, 11) == 0)
+		if (ft_strncmp("(position) ", file, 11) == 0)
 			file = parse_vc(file, &(cutter->pos));
-		else if (ft_strncmp("[rotation] ", file, 11) == 0)
+		else if (ft_strncmp("(rotation) ", file, 11) == 0)
 			file = parse_vc(file, &(cutter->rot));
-		else if (ft_strncmp("[size] ", file, 7) == 0)
+		else if (ft_strncmp("(size) ", file, 7) == 0)
 			file = parse_double(file, &(cutter->size));
-		else if (ft_strncmp("[type] sphere\n", file, 14) == 0 && obj->o_type == PLANE)
-		{
-			cutter->o_type = SPHERE;
-			file += 14;
-		}
 		else
 			break ;
 	}

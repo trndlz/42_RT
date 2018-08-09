@@ -57,24 +57,22 @@ t_file_texture	create_perlin_tex(int res, t_env *e, t_obj *sphere)
 	int				x;
 	int				y;
 
-	x = 0;
+	x = -1;
 	tex = init_perlin(e);
 	if (!(perm = init_perm()))
 		ft_malloc_error(e);
-	while (x < PERL_S)
+	while (++x < PERL_S)
 	{
 		if ((tex.tab[x] = (int *)malloc((sizeof(int) * PERL_S) + 1)) == NULL)
 			ft_malloc_error(e);
-		y = 0;
-		while (y < PERL_S)
+		y = -1;
+		while (++y < PERL_S)
 		{
 			if ((tex.tab[x][y] = (perlin(x, y, res, perm) + 1)
 				* 0.5 * 255) == -1)
 				ft_malloc_error(e);
 			tex.tab[x][y] = calc_perlin_color(tex.tab[x][y], sphere);
-			y++;
 		}
-		x++;
 	}
 	(perm) ? free(perm) : 0;
 	return (tex);

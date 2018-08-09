@@ -96,17 +96,11 @@ int		load_texture_to_obj(t_env *e, t_obj *obj)
 	obj->file_txt.size = size;
 	if (!(image = mlx_xpm_file_to_image(e->mlx.mlx,
 		"xpm/earth.xpm", &size[0], &size[1])))
-	{
-		free_size_obj(size, obj);
-		return (0);
-	}
-	imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2]);
+		return (err_malloc_texture(size, obj));
+	if (!(imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2])))
+		return (err_malloc_texture(size, obj));
 	if (!(obj->file_txt.tab = color_tab(imgstr, obj->file_txt.size)))
-	{
-		ft_putstr_fd("Texture file data could not be loaded !\n", 2);
-		free_size_obj(size, obj);
-		return (0);
-	}
+		return (err_malloc_texture(size, obj));
 	return (1);
 }
 
@@ -122,16 +116,10 @@ int		load_tex_height_to_obj(t_env *e, t_obj *obj)
 	obj->file_height.size = size;
 	if (!(image = mlx_xpm_file_to_image(e->mlx.mlx,
 			"xpm/earth_height.xpm", &size[0], &size[1])))
-	{
-		free_size_obj(size, obj);
-		return (0);
-	}
-	imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2]);
+		return (err_malloc_texture(size, obj));
+	if (!(imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2])))
+		return (err_malloc_texture(size, obj));
 	if (!(obj->file_height.tab = color_tab(imgstr, obj->file_height.size)))
-	{
-		ft_putstr_fd("Texture height file could not be loaded !\n", 2);
-		free_size_obj(size, obj);
-		return (0);
-	}
+		return (err_malloc_texture(size, obj));
 	return (1);
 }

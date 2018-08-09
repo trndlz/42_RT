@@ -6,7 +6,7 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/24 10:54:34 by jostraye          #+#    #+#             */
-/*   Updated: 2018/08/09 13:45:37 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/09 14:41:44 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	nearest_light(t_env *e, t_ray ray, t_hit_rec *hit)
 		{
 			if (hit_not_cut(hit, olst, ray))
 				hit_anything = 1;
-			printf("here %u\n", olst->o_type);
 		}
 		olst = olst->next;
 	}

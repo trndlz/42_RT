@@ -15,6 +15,9 @@
 <plane>
 	[position] 300 0 0
 	[rotation] -1 0 0
+	<cutter>
+		[rotation] 0 1 -1
+		[position] 300 0 0
 
 
 <sphere>
@@ -68,3 +71,6 @@
 	<cutter>
 		[position] 200 -400 700
 		[rotation] 3 0 3
+
+<scene>
+	[filter] CARTOON

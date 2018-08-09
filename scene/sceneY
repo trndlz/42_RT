@@ -1,0 +1,35 @@
+<eye>
+	[position] 0 0 0
+	[rotation] 0 0 0
+
+<light>
+	[position] 0 1000 400
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<light>
+	[position] -500 -1000 -200
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<plane>
+	[position] 4000 0 0
+	[rotation] -1 0 0
+	[color] 0x0000FF
+	[size] 200
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+	[texture] CHECKERBOARD 5
+
+<plane>
+	[position] 0 0 -600
+	[rotation] 0 0 1
+	[color] 0x00FFFF
+	[size] 200
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+	[texture] CHECKERBOARD 100
+
+<scene>
+	[filter] CARTOON
+	+antialias

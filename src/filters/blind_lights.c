@@ -29,7 +29,6 @@ char	nearest_light(t_env *e, t_ray ray, t_hit_rec *hit)
 		{
 			if (hit_not_cut(hit, olst, ray))
 				hit_anything = 1;
-			printf("here %u\n", olst->o_type);
 		}
 		olst = olst->next;
 	}

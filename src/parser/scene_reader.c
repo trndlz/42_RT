@@ -71,11 +71,14 @@ char		*parse_scene(t_env *e, char *file)
 			e->scene.blinding_lights = 1;
 			file = file + 17;
 		}
+		else if (ft_strncmp("[reflections] ", file, 14) == 0)
+			file = parse_int(file, &(e->scene.nr));
 		else if (ft_strncmp("[filter] ", file, 9) == 0)
 			file = parse_filter(file, &(e->scene.filter));
 		else
 			break ;
 	}
+	e->scene.nr = (e->scene.nr > 10) ? 10 : e->scene.nr;
 	return (file);
 }
 
@@ -114,7 +117,7 @@ int			parser(t_env *e, int ac, char **av)
 	int		fd1;
 	int		fd2;
 
-	if (ac < 2)
+	if (ac != 2)
 	{
 		ft_putstr_fd("Usage:\n", 2);
 		ft_putstr_fd("./rt [scene_file]\n", 2);

@@ -16,8 +16,6 @@ int		main(int ac, char **av)
 {
 	t_env *e;
 
-	if (ac != 2)
-		ft_usage();
 	if (!(e = init_env()))
 		exit_message("Problem while creating environment structure\n");
 	if (!init_mlx(&(e->mlx)))

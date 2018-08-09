@@ -11,10 +11,12 @@
 	[rotation] 0 0 0
 
 <sphere>
-	[position] 0 -150 0
+	[position] 0 -170 0
+	[R/T/Rf] 0.4 0 1
 
 <sphere>
 	[position] 0 150 0
+	[R/T/Rf] 0.4 0 1
 
 <plane>
 	[position] 0 0 -200
@@ -48,3 +50,4 @@
 
 <scene>
 	+antialias
+	[reflections] 5

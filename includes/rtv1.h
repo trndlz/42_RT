@@ -18,6 +18,7 @@
 # include "libft.h"
 # include <pthread.h>
 # include <stdlib.h>
+# include <stdio.h>
 # define WINY 1000
 # define WINZ 1000
 # define LEG 400
@@ -116,6 +117,7 @@ typedef struct		s_scene
 	enum e_filter	filter;
 	char			antialias;
 	char			blinding_lights;
+	unsigned int	nr;
 }					t_scene;
 
 typedef struct		s_hit_rec

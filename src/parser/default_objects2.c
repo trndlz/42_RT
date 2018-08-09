@@ -42,5 +42,5 @@ t_obj		*default_light(void)
 	light->pos = (t_vc){-1000, 0, 0};
 	light->rot = (t_vc){0, 0, 0};
 	light->col = ft_htoi("0xFFFFFF");
-	return(light);
+	return (light);
 }

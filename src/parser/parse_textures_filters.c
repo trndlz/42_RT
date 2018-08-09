@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
-#include <stdio.h>
 
 enum e_texture	texture_converter(char *str, enum e_obj obj)
 {

@@ -52,7 +52,7 @@ void	*scene_plot(void *arg)
 		e->y = -1;
 		while (++(e->y) < WINY)
 		{
-			e->nr = 2;
+			e->nr = e->scene.nr;
 			e->nt = 10;
 			ray = create_ray(e->y, e->z, e->eye_rot, e->eye_lookfrom);
 			if (nearest_node(e, ray, &hit_rec))

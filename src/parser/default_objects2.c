@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/25 16:06:41 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/09 16:47:34 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,17 @@ t_obj		*default_paraboloid(void)
 	parab->cut = NULL;
 	parab->perturb = 0;
 	return (parab);
+}
+
+t_obj		*default_light(void)
+{
+	t_obj *light;
+
+	if (!(light = malloc(sizeof(t_obj))))
+		return (NULL);
+	light->o_type = LIGHT;
+	light->pos = (t_vc){-1000, 0, 0};
+	light->rot = (t_vc){0, 0, 0};
+	light->col = ft_htoi("0xFFFFFF");
+	return(light);
 }

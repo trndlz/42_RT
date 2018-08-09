@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/09 12:00:58 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/09 16:52:47 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,11 @@ char		*parse_light(t_env *e, char *file)
 {
 	t_obj *light;
 
-	if (!(light = malloc(sizeof(t_obj))))
-		return (NULL);
-	light->o_type = LIGHT;
-	light->pos = (t_vc){-1000, 0, 0};
-	light->rot = (t_vc){0, 0, 0};
-	light->col = ft_htoi("0xFFFFFF");
+	if (!(light = default_light()))
+	{
+		ft_putstr_fd("Malloc <light> object failed !\n", 2);
+		return (file);
+	}
 	while (file && *file && file[1] != '-')
 	{
 		file = skip_whitespace(file);
@@ -66,7 +65,11 @@ char		*parse_cutter(t_obj *obj, char *file)
 {
 	t_obj *cutter;
 
-	cutter = default_cutter();
+	if (!(cutter = default_cutter()))
+	{
+		ft_putstr_fd("Malloc <cutter> object failed !\n", 2);
+		return (file);
+	}
 	while (file && *file && file[1] != '-')
 	{
 		file = skip_whitespace(file);

@@ -3,15 +3,6 @@
 	[rotation] 0 0 0
 
 <light>
-	[position] 0 1000 400
-	[rotation] 0 0 0
-	[color] 0xFFFFFF
-
-<light>
-	[position] -500 -1000 -200
-	[rotation] 0 0 0
-	[color] 0xFFFFFF
-
 <plane>
 	[position] 1400 -1 -1
 	[rotation] -1 0 0

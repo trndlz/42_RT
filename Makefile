@@ -44,10 +44,12 @@ SRC_NAME	:=	main.c								\
 				parser/parse_items.c				\
 				parser/parse_items2.c				\
 				parser/parse_objects.c				\
+				parser/parse_objects2.c				\
 				parser/parse_other_lists.c			\
 				parser/parse_textures_filters.c		\
 				parser/scene_reader.c				\
-				raytracer/intersections.c			\
+				raytracer/intersections_plane_disc.c\
+				raytracer/intersections_quadratic.c	\
 				raytracer/solver.c					\
 				raytracer/raytracer.c				\
 				raytracer/shadows.c					\

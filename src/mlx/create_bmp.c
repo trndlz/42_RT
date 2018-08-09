@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
-#include <stdio.h>
 
 static	unsigned char		*create_bmp_img(int *imgstr)
 {

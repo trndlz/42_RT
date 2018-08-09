@@ -60,6 +60,12 @@
 		(position) 200 0 -500
 		(rotation) 3 0 3
 
+<disc>
+	[position] 0 0 200
+	[rotation] -1 2 1
+	[size] 161
+	[color] 0xFF0000
+
 <cone>
 	[rotation] 0 2 -4
 	[position] 200 -400 500

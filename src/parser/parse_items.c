@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
-#include <stdio.h>
 
 char		*objects_items(t_obj *o, char *file, enum e_obj obj)
 {

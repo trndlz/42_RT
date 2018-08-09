@@ -60,7 +60,7 @@ t_vc	normal_vectors(t_hit_rec *hit, t_obj *obj, t_ray ray)
 		return (normal_cylinder(hit, obj, ray));
 	else if (obj->o_type == CONE)
 		return (normal_cone(hit, obj, ray));
-	else if (obj->o_type == PLANE || obj->o_type == DISK)
+	else if (obj->o_type == PLANE || obj->o_type == DISC)
 		return (vec_norm(obj->rot));
 	else if (obj->o_type == PARABOLOID)
 		return (normal_paraboloid(hit, obj, ray));

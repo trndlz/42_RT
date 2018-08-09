@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intersections.c                                    :+:      :+:    :+:   */
+/*   intersections_quadratic.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -59,41 +59,6 @@ double			inter_cone(t_hit_rec *hit, t_obj *obj, t_ray ray)
 		- k * car(vec_x(x, obj->rot));
 	return (quadratic_solver(hit, abc));
 }
-
-double			inter_plane(t_ray ray, t_obj *obj)
-{
-	double	t;
-	double	den;
-	t_vc	x;
-
-	x = vec_sub(ray.origin, obj->pos);
-	den = vec_x(ray.direction, obj->rot);
-	if (den == 0)
-		return (-1);
-	t = -vec_x(x, obj->rot) / den;
-	if (t < 0)
-		return (-1);
-	return (t);
-}
-
-/*
-** double			inter_disc2(t_vc ray, t_vc x, t_env *e, t_obj *obj)
-** {
-** 	double	t;
-** 	double	d;
-** 	t_vc	p;
-**
-** 	t = inter_plane(ray, x, obj);
-** 	if (t > 0)
-** 	{
-** 		p = vec_sub(vec_add(vec_mult(ray, t), e->eye_lookfrom), obj->pos);
-** 		d = sqrtf(vec_x(p, p));
-** 		if (d <= obj->size)
-** 			return (t);
-** 	}
-** 	return (-1.0);
-** }
-*/
 
 double			inter_cyl(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {

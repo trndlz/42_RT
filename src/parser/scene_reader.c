@@ -101,6 +101,8 @@ void		create_scene(t_env *e, char *file)
 			file = parse_plane(e, file + 8);
 		else if (ft_strncmp("<paraboloid>\n", file, 13) == 0)
 			file = parse_paraboloid(e, file + 13);
+		else if (ft_strncmp("<disc>\n", file, 7) == 0)
+			file = parse_disc(e, file + 7);
 		else if (ft_strncmp("<scene>\n", file, 8) == 0)
 			file = parse_scene(e, file + 8);
 		else

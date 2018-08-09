@@ -44,3 +44,22 @@ t_obj		*default_light(void)
 	light->col = ft_htoi("0xFFFFFF");
 	return (light);
 }
+
+t_obj		*default_disc(void)
+{
+	t_obj *disc;
+
+	if (!(disc = malloc(sizeof(t_obj))))
+		return (NULL);
+	disc->o_type = DISC;
+	disc->pos = (t_vc){100, 100, 100};
+	disc->rot = (t_vc){-1, 1, 0};
+	disc->col = ft_htoi("0xDAF7A6");
+	disc->texture = NO_TEXTURE;
+	disc->txt_size = 320;
+	disc->descartes = (t_vc){0, 0, 1.0};
+	disc->phong = (t_vc){0.5, 0.5, 0.2};
+	disc->cut = NULL;
+	disc->perturb = 0;
+	return (disc);
+}

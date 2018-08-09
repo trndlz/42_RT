@@ -1,0 +1,35 @@
+<eye>
+	[position] 0 0 0
+	[rotation] 0 0 0
+
+<light>
+	[position] 0 -300 400
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<light>
+	[position] 0 -500 400
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<light>
+	[position] 0 -700 400
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<plane>
+	[position] 0 0 -600
+	[rotation] 0 0 1
+	[color] 0xf0f0f0
+	[size] 200
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+
+<sphere>
+	[position] 800 -200 0
+	[rotation] 0 0 0
+	[color] 0xff44ff
+	[size] 150
+	[texture] NONE 0
+
+<scene>

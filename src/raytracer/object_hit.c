@@ -17,6 +17,10 @@ double	distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray)
 	double d;
 
 	d = -1.0;
+<<<<<<< HEAD
+=======
+	if (obj_list->o_type == LIGHT)
+>>>>>>> b8be3718c5b0ca9eea99788f564ea73555968a62
 	d = (obj_list->o_type == LIGHT) ? inter_sph(hit, obj_list, ray) : d;
 	d = (obj_list->o_type == SPHERE) ? inter_sph(hit, obj_list, ray) : d;
 	d = (obj_list->o_type == CYLINDER) ? inter_cyl(hit, obj_list, ray) : d;

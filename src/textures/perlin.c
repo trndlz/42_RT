@@ -37,7 +37,7 @@ t_file_texture	init_perlin(t_env *e)
 		ft_malloc_error(e);
 	tex.size[0] = PERL_S;
 	tex.size[1] = PERL_S;
-	if ((tex.tab = (int **)malloc((sizeof(int *) * PERL_S) + 1)) == NULL)
+	if (!(tex.tab = (int **)malloc((sizeof(int *) * PERL_S) + 1)))
 		ft_malloc_error(e);
 	return (tex);
 }
@@ -59,7 +59,8 @@ t_file_texture	create_perlin_tex(int res, t_env *e, t_obj *sphere)
 
 	x = 0;
 	tex = init_perlin(e);
-	perm = init_perm();
+	if (!(perm = init_perm()))
+		ft_malloc_error(e);
 	while (x < PERL_S)
 	{
 		if ((tex.tab[x] = (int *)malloc((sizeof(int) * PERL_S) + 1)) == NULL)

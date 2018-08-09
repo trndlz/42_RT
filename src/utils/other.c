@@ -18,3 +18,10 @@ void		progression_bar(t_env *e, char *str, int i)
 	fprintf(stderr, "%s |%.*s| %d\r", str, (int)(i / 4), e->eq, i);
 	fflush(stdout);
 }
+
+int			err_malloc_texture(int *size, t_obj *obj)
+{
+	ft_putstr_fd("Texture file data could not be loaded !\n", 2);
+	free_size_obj(size, obj);
+	return (0);
+}

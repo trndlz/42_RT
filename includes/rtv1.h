@@ -262,6 +262,7 @@ char				*parse_filter(char *file, enum e_filter *filter);
 char				*read_scene(int fd, char **av);
 char				*parser_error(char *message, char *line);
 char				*parse_scene(t_env *e, char *file);
+char				*parse_scene_disc(t_env *e, char *file);
 void				create_scene(t_env *e, char *file);
 int					parser(t_env *e, int ac, char **av);
 

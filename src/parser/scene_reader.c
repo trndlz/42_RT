@@ -87,6 +87,7 @@ void		create_scene(t_env *e, char *file)
 	while (file && *file)
 	{
 		file = skip_whitespace(file);
+		file = parse_scene_disc(e, file);
 		if (ft_strncmp("<eye>\n", file, 6) == 0)
 			file = parse_eye(e, file + 6);
 		else if (ft_strncmp("<light>\n", file, 8) == 0)
@@ -101,10 +102,6 @@ void		create_scene(t_env *e, char *file)
 			file = parse_plane(e, file + 8);
 		else if (ft_strncmp("<paraboloid>\n", file, 13) == 0)
 			file = parse_paraboloid(e, file + 13);
-		else if (ft_strncmp("<disc>\n", file, 7) == 0)
-			file = parse_disc(e, file + 7);
-		else if (ft_strncmp("<scene>\n", file, 8) == 0)
-			file = parse_scene(e, file + 8);
 		else
 		{
 			file = ft_strchr(file, '\n');

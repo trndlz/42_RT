@@ -85,3 +85,12 @@ char		*parse_cutter(t_obj *obj, char *file)
 	obj->cut = cutter;
 	return (file);
 }
+
+char		*parse_scene_disc(t_env *e, char *file)
+{
+	if (ft_strncmp("<disc>\n", file, 7) == 0)
+		file = parse_disc(e, file + 7);
+	else if (ft_strncmp("<scene>\n", file, 8) == 0)
+		file = parse_scene(e, file + 8);
+	return (file);
+}

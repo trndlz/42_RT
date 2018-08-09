@@ -23,6 +23,22 @@ void		free_split(char **split)
 	free(split);
 }
 
+void		free_color_tab(int **tab, int y)
+{
+	while (y)
+	{
+		free(tab[y - 1]);
+		y--;
+	}
+	free(tab);
+}
+
+void		free_size_obj(int *size, t_obj *obj)
+{
+	free(size);
+	free(obj);
+}
+
 void		clear_list(t_obj *head)
 {
 	t_obj *tmp;
@@ -33,12 +49,6 @@ void		clear_list(t_obj *head)
 		head = head->next;
 		free(tmp);
 	}
-}
-
-void		progression_bar(t_env *e, char *str, int i)
-{
-	fprintf(stderr, "%s |%.*s| %d\r", str, (int)(i / 4), e->eq, i);
-	fflush(stdout);
 }
 
 void		free_all_lists(t_env *e)

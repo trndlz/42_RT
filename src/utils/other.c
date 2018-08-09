@@ -1,43 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   usage.c                                            :+:      :+:    :+:   */
+/*   other.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/14 14:57:03 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/21 13:21:54 by tmervin          ###   ########.fr       */
+/*   Created: 2018/06/19 21:12:32 by tmervin           #+#    #+#             */
+/*   Updated: 2018/06/19 21:25:05 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
+#include <stdio.h>
 
-void		ft_usage(void)
+void		progression_bar(t_env *e, char *str, int i)
 {
-	ft_putstr_fd("Usage:\n", 2);
-	ft_putstr_fd("./rtv1 scene_file\n", 2);
-	exit(1);
-}
-
-void		ft_malloc_error(t_env *e)
-{
-	ft_putstr_fd("Problem while malloc\n", 2);
-	free(e);
-	exit(1);
-}
-
-void		exit_message(char *str)
-{
-	ft_putstr_fd(str, 2);
-	exit(1);
-}
-
-void		replace_char(char *str)
-{
-	while (*str)
-	{
-		if (!ft_isspace(*str) && !ft_isdigit(*str))
-			*str = ' ';
-		str++;
-	}
+	fprintf(stderr, "%s |%.*s| %d\r", str, (int)(i / 4), e->eq, i);
+	fflush(stdout);
 }

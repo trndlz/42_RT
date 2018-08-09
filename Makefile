@@ -22,6 +22,7 @@ SRC_NAME	:=	main.c								\
 				colors/color_helpers2.c				\
 				utils/free_functions.c				\
 				utils/usage.c						\
+				utils/other.c						\
 				maths/maths_vectors.c				\
 				maths/maths_rot.c					\
 				maths/maths_functions.c				\
@@ -81,7 +82,7 @@ ifeq ($(UNAME_S), Darwin)
 endif
 
 CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
-#CC			:= gcc -Werror -Wall -Wextra
+# CC			:= gcc -Werror -Wall -Wextra
 OBJ_NAME	:= $(SRC_NAME:.c=.o)
 
 SRC			:= $(addprefix $(SRC_PATH)/, $(SRC_NAME))

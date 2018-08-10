@@ -21,7 +21,7 @@ char		*parse_disc(t_env *e, char *file)
 		ft_putstr_fd("Malloc <disc> object failed !\n", 2);
 		return (file);
 	}
-	file = objects_items(disc, file, CONE);
+	file = objects_items(disc, file, DISC);
 	if (disc->cut && (disc->descartes.y > 0 || disc->cut->descartes.y))
 		ft_putstr("Transparent <disc> objects can't be cut !\n");
 	else

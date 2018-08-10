@@ -28,6 +28,8 @@ char		textures_coef(t_obj *obj, t_hit_rec *hit, t_ray ray)
 		return (checkerboard_plane(hit, ray));
 	else if (obj->o_type == CYLINDER && obj->texture == LINES)
 		return (get_lines_cylinder(hit, ray));
+	else if (obj->o_type == DISC && obj->texture == CHECKERBOARD)
+		return (checkerboard_plane(hit, ray));
 	else if (obj->o_type == CONE && obj->texture == LINES)
 		return (get_lines_cone(hit, ray));
 	else

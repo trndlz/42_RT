@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:19:08 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/10 14:19:24 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/10 15:18:02 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void		button_release(t_env *e, t_vc rgb, t_vc sda)
 	int i;
 
 	i = -1;
+	e->key[1] = 0;
 	if (e->filter.activate == 0)
 	{
 		e->scene.filter_rgb.x = rgb.x;

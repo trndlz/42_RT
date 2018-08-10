@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:18:34 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/10 15:09:31 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/10 15:47:14 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ int				mouse_press(int button, int x, int y, t_env *e)
 
 	if (button == 1)
 	{
-		e->key[button] = 1;
+		if (y <= 0)
+			return (1);
+		e->key[1] = 1;
 		select_object(x, y, e);
 		if (e->filter.activate == 1)
 		{

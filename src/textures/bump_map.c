@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bump_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avinas <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/28 10:50:57 by avinas            #+#    #+#             */
-/*   Updated: 2018/07/28 10:51:10 by avinas           ###   ########.fr       */
+/*   Updated: 2018/08/10 15:41:22 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_vc	bump_map(t_ray ray, t_hit_rec *hit)
 		modif.y = (green / 127.5 - 1);
 		modif.z = (blue / 127.5 - 1);
 		vec_norm(modif);
-		return (vec_add(hit->n, modif));
+		return (vec_add(hit->n, vec_mult(modif, 0.75)));
 	}
 	return (hit->n);
 }

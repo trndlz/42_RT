@@ -1,7 +1,7 @@
 # RT
 
 ## Eye (Camera Position)
-- Object <eye>
+- Object `<eye>`
 - Restrictions : Only one eye is defined
 - Parameters
     - [position] X Y Z (pixels)

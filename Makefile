@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+         #
+#    By: naminei <naminei@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/08/09 13:48:15 by jostraye         ###   ########.fr        #
+#    Updated: 2018/08/10 08:27:53 by naminei          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,14 @@ SRC_NAME	:=	main.c								\
 				raytracer/colors.c					\
 				raytracer/object_hit.c				\
 				raytracer/descartes.c				\
-				raytracer/normal_vectors.c
+				raytracer/normal_vectors.c			\
+				legend/draw_legend.c				\
+				legend/keycode_legend.c				\
+				legend/draw_rgbsdai.c				\
+				legend/init_slider.c				\
+				legend/mouse_press.c				\
+				legend/mouse_release.c				\
+				legend/put_pixel.c
 
 OBJ_PATH	:= obj
 HEAD_PATH	:= ./includes

@@ -21,7 +21,7 @@ double	distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray)
 	d = (obj_list->o_type == SPHERE) ? inter_sph(hit, obj_list, ray) : d;
 	d = (obj_list->o_type == CYLINDER) ? inter_cyl(hit, obj_list, ray) : d;
 	d = (obj_list->o_type == CONE) ? inter_cone(hit, obj_list, ray) : d;
-	d = (obj_list->o_type == DISC) ? inter_disc(obj_list, ray) : d;
+	d = (obj_list->o_type == DISC) ? inter_disc(hit, obj_list, ray) : d;
 	d = (obj_list->o_type == PLANE) ? inter_plane(ray, obj_list) : d;
 	d = (obj_list->o_type == PARABOLOID)
 		? inter_paraboloid(hit, obj_list, ray) : d;

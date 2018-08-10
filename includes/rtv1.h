@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/09 17:09:14 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/10 14:09:46 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <stdbool.h>
 # define WINY 1000
 # define WINZ 1000
 # define LEG 400
@@ -33,6 +34,12 @@
 # define PERL_S 600
 # define MAX_COLOR 16776960
 # define SUN_DISTANCE 3725000
+# define ButtonPressMask (1L<<2)
+# define ButtonReleaseMask (1L<<3)
+# define KeyPress 2
+# define KeyRelease 3
+# define ButtonPress 4
+# define ButtonRelease 5
 
 enum				e_obj {
 	LIGHT,
@@ -115,6 +122,8 @@ typedef struct		s_obj
 typedef struct		s_scene
 {
 	enum e_filter	filter;
+	t_vc			filter_rgb;
+	float			intensity;
 	char			antialias;
 	char			blinding_lights;
 	unsigned int	nr;
@@ -145,6 +154,53 @@ typedef struct		s_img
 	int				endian;
 }					t_img;
 
+typedef struct		s_uvect2
+{
+    int				x;
+    int				y;
+}					t_uvect2;
+
+typedef struct		s_cursor
+{
+    t_uvect2		start_pos;
+    t_uvect2		end_pos;
+    t_uvect2		cursor_vect;
+    int				height;
+    int				width;
+}					t_cursor;
+
+typedef struct		s_slider
+{
+    int				pos_tmp;
+    int				pos_x;
+    int				pos_x_zero;
+    int				pos_x_max;
+    int				pos_x_length;
+    int				pos_y;
+}					t_slider;
+
+typedef struct		s_filter
+{
+	t_slider		sld_r;
+	t_slider		sld_g;
+	t_slider		sld_b;
+	t_slider		sld_s;
+	t_slider		sld_d;
+	t_slider		sld_a;
+	t_slider		sld_i;
+    t_cursor		crs_r;
+	t_cursor		crs_g;
+	t_cursor		crs_b;
+	t_cursor		crs_s;
+	t_cursor		crs_d;
+	t_cursor		crs_a;
+	t_cursor		crs_i;
+	t_img			img;
+	bool			activate;
+	int				tmp_col_f;
+	float			intensity;
+}					t_filter;
+
 typedef struct		s_mlx
 {
 	void			*mlx;
@@ -156,6 +212,9 @@ typedef struct		s_env
 {
 	t_mlx			mlx;
 	int				*imgstr;
+	int				*img_ori;
+	int				key[500];
+	t_filter		filter;
 	int				thread_int;
 	int				y;
 	int				z;
@@ -167,6 +226,7 @@ typedef struct		s_env
 	t_obj			*obj_link;
 	t_obj			*light_link;
 	t_obj			*cut_link;
+	t_obj			*click_obj;
 	t_scene			scene;
 	char			eq[51];
 	int				nr;
@@ -215,7 +275,7 @@ t_vc				hextorgb(int hex);
 void				stereoscopic(t_env *e, int color);
 int					sepia(int color);
 int					apply_filter(t_env *e, int color);
-
+void				copy_img_array(int *imgstr, int *colorcopy);
 /*
 ** PARSER
 */
@@ -247,7 +307,7 @@ char				*parse_cylinder(t_env *e, char *file);
 char				*parse_cone(t_env *e, char *file);
 char				*parse_plane(t_env *e, char *file);
 char				*parse_paraboloid(t_env *e, char *file);
-char				*parse_disc(t_env *e, char *file);
+char			*parse_disc(t_env *e, char *file);
 
 char				*parse_eye(t_env *e, char *file);
 char				*parse_light(t_env *e, char *file);
@@ -307,7 +367,7 @@ double				inter_cone(t_hit_rec *hit, t_obj *obj, t_ray ray);
 double				inter_plane(t_ray ray, t_obj *obj);
 double				inter_cyl(t_hit_rec *hit, t_obj *obj, t_ray ray);
 double				inter_paraboloid(t_hit_rec *hit, t_obj *obj, t_ray ray);
-double				inter_disc(t_obj *obj, t_ray ray);
+double				inter_disc(t_hit_rec *hit, t_obj *obj, t_ray ray);
 double				quadratic_solver(t_hit_rec *hit, t_vc abc);
 char				hit_not_cut(t_hit_rec *hit, t_obj *obj, t_ray ray);
 char				hit_cut(t_hit_rec *hit, t_obj *obj, t_ray ray);
@@ -408,12 +468,8 @@ void				progression_bar(t_env *e, char *str, int i);
 */
 
 void				put_pixel(t_env *e, int color, int x, int y);
-int					draw_slider_r(t_env *e);
-int					draw_cursor_r(t_env *e);
-int					draw_slider_g(t_env *e);
-int					draw_cursor_g(t_env *e);
-int					draw_slider_b(t_env *e);
-int					draw_cursor_b(t_env *e);
+int    				draw_cursors(t_env *e, t_slider *slider, t_cursor *cursor);
+int    				draw_sliders(t_env *e, t_slider *slider);
 void				legend(t_env *e);
 int					mouse(int x, int y, t_env *e);
 int					mouse_press(int button, int x, int y, t_env *e);
@@ -421,6 +477,12 @@ int					mouse_release(int button, int x, int y, t_env *e);
 int					mykeyhook(int keycode, t_env *e);
 int					init_slider(t_env *e);
 void				put_in_color(t_env *e);
+int					rgbtohex(t_vc rgb);
+t_obj				*click_to_object(t_env *e, int y, int z);
+char				*write_obj(t_obj *click_obj);
+int    				initx(t_slider slider, int a);
+void    			draw_all(t_env *e);
+char     			*ft_sjf(char *s1, char *s2, bool first, bool second);
 
 /*
 ** BUMP_MAP

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_press.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:18:34 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/10 08:18:46 by naminei          ###   ########.fr       */
+/*   Updated: 2018/08/10 15:09:31 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,29 @@ static void		mouse_press_activated(t_env *e, t_vc rgb)
 		* 200 + 50 + WINY;
 }
 
-static void		select_object(int y, int z, t_env *e)
+static void		select_object(int x, int y, t_env *e)
 {
-	if (y >= 0 && z >= 0 && y <= WINY && z <= WINZ && e)
+	if (x >= 0 && y >= 0 && x <= WINY && y <= WINZ && e)
 	{
-		if ((e->click_obj = click_to_object(e, y, z)))
+		if ((e->click_obj = click_to_object(e, x, y)))
 			e->filter.activate = 1;
 	}
 }
 
-int				mouse_press(int button, int y, int z, t_env *e)
+int				mouse_press(int button, int x, int y, t_env *e)
 {
 	t_vc	rgb;
 
 	if (button == 1)
 	{
 		e->key[button] = 1;
-		select_object(y, z, e);
+		select_object(x, y, e);
 		if (e->filter.activate == 1)
 		{
 			rgb = hextorgb(e->click_obj->col);
 			mouse_press_activated(e, rgb);
 		}
-		if (y >= WINY && z >= 0 && y <= WINY + LEG && z <= 100 && e)
+		if (x >= WINY && y >= 0 && x <= WINY + LEG && y <= 100 && e)
 		{
 			e->filter.activate = 0;
 			e->click_obj = NULL;
@@ -62,6 +62,11 @@ int				mouse_press(int button, int y, int z, t_env *e)
 			e->filter.sld_b.pos_x = ((int)(rgb.z + 1) \
 					* 200 / 255) + 50 + WINY;
 		}
+		check_all_mouse(x, y, e);
+		draw_all(e);
+		mlx_put_image_to_window(e->mlx.mlx, e->mlx.win, \
+			e->filter.img.pic, WINY, 0);
+		legend(e);
 	}
 	return (1);
 }

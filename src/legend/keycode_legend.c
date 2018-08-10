@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   keycode_legend.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:17:54 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/10 08:18:09 by naminei          ###   ########.fr       */
+/*   Updated: 2018/08/10 15:05:25 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-static void		check_mouse(int x, int y, t_slider *slider, t_cursor *cursor)
+void		check_mouse(int x, int y, t_slider *slider, t_cursor *cursor)
 {
 	if (x >= slider->pos_x_zero && x <= slider->pos_x_max \
 		&& y <= cursor->end_pos.y && y >= cursor->start_pos.y)
@@ -22,7 +22,7 @@ static void		check_mouse(int x, int y, t_slider *slider, t_cursor *cursor)
 	}
 }
 
-static void		check_all_mouse(int x, int y, t_env *e)
+void		check_all_mouse(int x, int y, t_env *e)
 {
 	check_mouse(x, y, &(e->filter.sld_r), &(e->filter.crs_r));
 	check_mouse(x, y, &(e->filter.sld_g), &(e->filter.crs_g));

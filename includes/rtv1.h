@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/10 14:09:46 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/10 15:04:45 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -483,6 +483,8 @@ char				*write_obj(t_obj *click_obj);
 int    				initx(t_slider slider, int a);
 void    			draw_all(t_env *e);
 char     			*ft_sjf(char *s1, char *s2, bool first, bool second);
+void		check_mouse(int x, int y, t_slider *slider, t_cursor *cursor);
+void		check_all_mouse(int x, int y, t_env *e);
 
 /*
 ** BUMP_MAP

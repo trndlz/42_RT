@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/10 12:41:42 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/10 15:24:42 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ char		*parser_error(char *message, char *line)
 	else
 		ft_putstr_fd(line, 2);
 	ft_putstr_fd("\n", 2);
-	if (end + 1)
-		return (end + 1);
+	if (end)
+		return (end);
 	return (NULL);
 }
 

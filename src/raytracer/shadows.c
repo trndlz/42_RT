@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:42:39 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/10 12:40:16 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/10 15:22:29 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ double		get_minimum_tr_cut(t_hit_rec hit_s, t_obj *olst, t_ray light_r)
 	hit_s.t = INFINITY;
 	if (hit_cut(&hit_s, olst, light_r))
 	{
-		if (hit_s.t1 < (1 - D_ZERO) && hit_s.t1 > D_ZERO)
+		if ((hit_s.t1 < (1 - D_ZERO) && hit_s.t1 > D_ZERO)
+		|| (hit_s.t2 < (1 - D_ZERO) && hit_s.t2 > D_ZERO))
 		{
 			tr = (!(textures_coef(hit_s.hit_obj, &hit_s, light_r)))
 				? hit_s.hit_obj->descartes.y : 0;

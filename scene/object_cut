@@ -3,20 +3,19 @@
 	[rotation] 0 0 0
 
 <light>
-	[position] -500 100 0
+	[position] -500 0 200
 	[rotation] 0 0 0
 	[color] 0xFFFFFF
 
 <light>
-	[position] -500 300 200
+	[position] -2500 0 -400
 	[rotation] 0 0 0
 	[color] 0xFFFFFF
 
-<disc>
+<plane>
 	[position] 300 750 800
 	[rotation] -1 0 0
-	[color] 0xDAF7A6
-	[size] -400
+	[color] 0xD0F252
 
 <sphere>
 	<cutter>
@@ -60,14 +59,7 @@
 	[size] 15
 	<cutter>
 		(position) 200 0 -500
-		(rotation) 3 0 3
-
-<disc>
-	[position] 0 0 200
-	[rotation] -1 2 1
-	[size] 161
-	[texture] CHECKERBOARD 15
-	[color] 0xFF0000
+		(rotation) 2 0 4
 
 <cone>
 	[rotation] 0 2 -4

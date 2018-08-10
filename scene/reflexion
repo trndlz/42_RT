@@ -50,4 +50,4 @@
 
 <scene>
 	+antialias
-	[reflections] 5
+	[reflections] 10

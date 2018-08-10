@@ -10,7 +10,7 @@
 <plane>
 	[position] 1000 0 0
 	[rotation] -1 0 0
-	[color] 0x0000FF
+	[color] 0xAAFFFF
 	[size] 200
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 0 0 1
@@ -19,7 +19,7 @@
 <plane>
 	[position] 0 0 -300
 	[rotation] 0 0 1
-	[color] 0x00FFFF
+	[color] 0xAAFFFF
 	[size] 200
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 0 0 1

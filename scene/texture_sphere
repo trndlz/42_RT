@@ -10,7 +10,7 @@
 <plane>
 	[position] 1000 0 0
 	[rotation] -1 0 0
-	[color] 0x0000FF
+	[color] 0xAAFFFF
 	[size] 200
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 0 0 1
@@ -19,21 +19,22 @@
 <plane>
 	[position] 0 0 -600
 	[rotation] 0 0 1
-	[color] 0x00FFFF
+	[color] 0xCCEEFF
 	[size] 200
-	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[Spec/Diff/Amb] 0.4 0.9 0.3
 	[R/T/Rf] 0 0 1
 	[texture] CHECKERBOARD 100
 
 <sphere>
 	[position] 0 0 180
+	[rotation] -120 0 190
 	[size] 50
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[texture] EARTH 0
 
 <sphere>
 	[position] 0 0 50
-	[rotation] 90 90 -120
+	[rotation] -120 0 100
 	[size] 50
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[texture] EARTH 0

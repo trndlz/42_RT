@@ -7,12 +7,15 @@
 	[rotation] 0 0 0
 	[color] 0xFFFFFF
 
-
+<light>
+	[position] -400 400 0
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
 
 <disc>
 	[position] 0 0 0
 	[rotation] 1 0 0
-	[color] 0xDAF7A6
+	[color] 0xffffff
 	[size] -400
 	[perturbation] 2
 
@@ -23,6 +26,13 @@
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 1 0 1
 
+<plane>
+	[position] -2000 0 0
+	[rotation] 1 0 0
+	[color] 0xFFFFFF
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+
 <cone>
 	[position] 800 -300 -400
 	[rotation] 0 1 1
@@ -32,10 +42,10 @@
 	[R/T/Rf] 0 0 1
 
 <cylinder>
-	[position] 700 -300 200
+	[position] -300 -300 200
 	[rotation] 0 -1 1
 	[color] 0xff00ff
-	[size] 120
+	[size] 20
 	[Spec/Diff/Amb] 0.7 0.8 0.3
 	[R/T/Rf] 0 0 1
 

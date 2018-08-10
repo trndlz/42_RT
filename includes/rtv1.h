@@ -30,7 +30,7 @@
 # define CART_S 20
 # define PALETTE_SIZE 40
 # define D_ZERO 0.000001
-# define PERL_S 600
+# define PERL_S 1000
 # define MAX_COLOR 16776960
 # define SUN_DISTANCE 3725000
 

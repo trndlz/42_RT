@@ -99,7 +99,7 @@ $(NAME): $(OBJ)
 	make -C $(MLX_PATH)
 	$(CC) $^ $(LDFLAGS) $(LDLIBS) $(MINILIBX) -o $@
 
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c includes/rtv1.h
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@mkdir -p $(@D)
 	$(CC) $(CPPFLAGS) -o $@ -c $<

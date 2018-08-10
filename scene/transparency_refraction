@@ -45,7 +45,7 @@
 	[size] 50
 	[color] 0x49689b
 	[Spec/Diff/Amb] 0.4 0.9 0.1
-	[R/T/Rf] 1 0.25 1.31
+	[R/T/Rf] 0 0.25 1.31
 
 <sphere>
 	[position] 0 130 50

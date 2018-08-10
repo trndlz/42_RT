@@ -28,25 +28,18 @@ double			inter_plane(t_ray ray, t_obj *obj)
 	return (t);
 }
 
-double			inter_disc(t_obj *obj, t_ray ray)
+double			inter_disc(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {
 	double	t;
 	t_vc	p;
 
+	hit += 0;
 	t = inter_plane(ray, obj);
 	if (t > 0)
 	{
 		p = vec_sub(inter_position(ray, t), obj->pos);
-		if (obj->size > 0)
-		{
-			if (sqrtf(vec_x(p, p)) <= fabs(obj->size))
-				return (t);
-		}
-		else
-		{
-			if (sqrtf(vec_x(p, p)) > fabs(obj->size))
-				return (t);
-		}
+		if (sqrtf(vec_x(p, p)) <= obj->size)
+			return (t);
 	}
 	return (-1.0);
 }

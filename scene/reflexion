@@ -52,4 +52,4 @@
 
 <scene>
 	+antialias
-	[reflections] 10
+	[reflections] 5

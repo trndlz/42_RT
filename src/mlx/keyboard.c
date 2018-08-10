@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 10:47:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/06 16:10:08 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/10 08:29:15 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	rotation(int key, t_env *e)
 
 int		deal_key(int key, t_env *e)
 {
+	if (key)
+		e->key[key] = 1;
 	if (key == 35)
 	{
 		pthread_mutex_lock(&(e->mutex));
@@ -79,18 +81,18 @@ t_obj	*click_to_object(t_env *e, int y, int z)
 	return (NULL);
 }
 
-int		deal_mouse(int k, int y, int z, t_env *e)
-{
-	if (y >= 0 && z >= 0 && y <= WINY && z <= WINZ && e)
-	{
-		if (k == 1)
-		{
-			ft_putstr("y -> ");
-			ft_putnbr(y);
-			ft_putstr(" / z -> ");
-			ft_putnbr(z);
-			ft_putchar('\n');
-		}
-	}
-	return (0);
-}
+// int		deal_mouse(int k, int y, int z, t_env *e)
+// {
+// 	if (y >= 0 && z >= 0 && y <= WINY && z <= WINZ && e)
+// 	{
+// 		if (k == 1)
+// 		{
+// 			ft_putstr("y -> ");
+// 			ft_putnbr(y);
+// 			ft_putstr(" / z -> ");
+// 			ft_putnbr(z);
+// 			ft_putchar('\n');
+// 		}
+// 	}
+// 	return (0);
+// }

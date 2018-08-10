@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   images.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 13:37:05 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/09 15:16:56 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/10 14:12:10 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,13 @@ int		create_image(t_env *e)
 	mlx_clear_window(e->mlx.mlx, e->mlx.win);
 	if (e->mlx.image)
 		mlx_destroy_image(e->mlx.mlx, e->mlx.image);
+	if (e->filter.img.pic)
+		mlx_destroy_image(e->mlx.mlx, e->filter.img.pic);
 	if (!(e->mlx.image = mlx_new_image(e->mlx.mlx, WINY, WINZ)))
+		return (0);
+	if (!(e->filter.img.pic = mlx_new_image(e->mlx.mlx, LEG, WINZ)))
+		return (0);
+	if (!(e->filter.img.info = mlx_get_data_addr(e->filter.img.pic, &e->filter.img.bpp, &e->filter.img.s_l, &e->filter.img.endian)))
 		return (0);
 	if (!(e->imgstr = (int *)mlx_get_data_addr(e->mlx.image, &b, &s, &en)))
 		return (0);
@@ -73,7 +79,11 @@ int		create_image(t_env *e)
 	if (e->scene.filter == CARTOON)
 		if ((!cartooning(e)))
 			ft_putstr("Cartoon effect needs more colorful scenes\n");
+	draw_all(e);
+	mlx_put_image_to_window(e->mlx.mlx, e->mlx.win, e->filter.img.pic, WINY, 0);
+	legend(e);
 	mlx_put_image_to_window(e->mlx.mlx, e->mlx.win, e->mlx.image, 0, 0);
+	copy_img_array(e->img_ori, e->imgstr);
 	return (1);
 }
 

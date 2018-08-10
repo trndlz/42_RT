@@ -20,7 +20,7 @@ enum e_texture	texture_converter(char *str, enum e_obj obj)
 	else if (!ft_strcmp(str, "COLUMNS") && obj == SPHERE)
 		return (COLUMNS);
 	else if (!ft_strcmp(str, "CHECKERBOARD")
-		&& (obj == SPHERE || obj == PLANE))
+	&& (obj == SPHERE || obj == PLANE || obj == DISC))
 		return (CHECKERBOARD);
 	else if (!ft_strcmp(str, "EARTH") && obj == SPHERE)
 		return (EARTH);

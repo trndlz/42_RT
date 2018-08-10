@@ -1,52 +1,54 @@
 <eye>
-	[position] -1000 0 0
+	[position] -1000 70 0
+	[rotation] 0 10 0
+
+<light>
+	[position] -1500 0 0
 	[rotation] 0 0 0
 
 <light>
+	[position] -1000 200 0
+	[rotation] 0 0 0
+
+<sphere>
 	[position] 0 0 0
-	[rotation] 0 0 0
-
-<light>
-	[position] -500 -100 200
-	[rotation] 0 0 0
-
-<sphere>
-	[position] 0 -170 0
-	[R/T/Rf] 0.4 0 1
-
-<sphere>
-	[position] 0 150 0
-	[R/T/Rf] 0.4 0 1
+	[R/T/Rf] 0.2 0 1
 
 <plane>
 	[position] 0 0 -200
 	[rotation] 0 0 1
-	[R/T/Rf] 0.4 0 1
+	[R/T/Rf] 0.7 0 1
+	[color] 0xCCCCCC
 
 <plane>
 	[position] -2000 0 0
-	[rotation] -1 0 0
-	[R/T/Rf] 0.4 0 1
+	[rotation] 1 0 0
+	[R/T/Rf] 1 0 1
+	[color] 0xFFFFFF
 
 <plane>
 	[position] 0 0 200
 	[rotation] 0 0 -1
-	[R/T/Rf] 0.4 0 1
+	[R/T/Rf] 0.7 0 1
+
 
 <plane>
 	[position] 0 300 0
 	[rotation] 0 1 0
-	[R/T/Rf] 0.4 0 1
+	[R/T/Rf] 0.7 0 1
+	[color] 0xCCCCCC
 
 <plane>
 	[position] 0 -300 0
 	[rotation] 0 -1 0
-	[R/T/Rf] 1 0 1
+	[R/T/Rf] 0.7 0 1
+	[color] 0xCCCCCC
 
 <plane>
 	[position] 300 0 0
 	[rotation] -1 0 0
-	[R/T/Rf] 0.4 0 1
+	[R/T/Rf] 0.3 0 1
+	[color] 0xFFFFFF
 
 <scene>
 	+antialias

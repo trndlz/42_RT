@@ -1,5 +1,5 @@
 <eye>
-	[position] -1700 0 0
+	[position] -1700 0 110
 	[rotation] 0 0 0
 
 <light>
@@ -8,14 +8,14 @@
 	[color] 0xFFFFFF
 
 <light>
-	[position] -2500 0 -400
+	[position] -2500 0 600
 	[rotation] 0 0 0
 	[color] 0xFFFFFF
 
 <plane>
 	[position] 300 750 800
 	[rotation] -1 0 0
-	[color] 0xD0F252
+	[color] 0x40A2F2
 
 <sphere>
 	<cutter>

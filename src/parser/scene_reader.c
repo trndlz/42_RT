@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/10 15:24:42 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/10 16:32:09 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,9 @@ void		create_scene(t_env *e, char *file)
 	{
 		file = skip_whitespace(file);
 		file = parse_scene_disc(e, file);
-		if (ft_strncmp("<eye>\n", file, 6) == 0)
+		if (ft_strncmp("<disc>\n", file, 7) == 0)
+			file = parse_disc(e, file + 7);
+		else if (ft_strncmp("<eye>\n", file, 6) == 0)
 			file = parse_eye(e, file + 6);
 		else if (ft_strncmp("<light>\n", file, 8) == 0)
 			file = parse_light(e, file + 8);

@@ -3,12 +3,12 @@
 	[rotation] 0 0 0
 
 <light>
-	[position] 0 1000 400
+	[position] 500 -1000 200
 	[rotation] 0 0 0
 	[color] 0xFFFFFF
 
 <light>
-	[position] 500 -1000 200
+	[position] 1500 200 200
 	[rotation] 0 0 0
 	[color] 0xFFFFFF
 
@@ -20,8 +20,27 @@
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 0 0 1
 
+
+<disc>
+	[position] 600 0 100
+	[rotation] 3 1 0
+	[color] 0xFF4200
+	[size] 50
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+
+<scene>
+	[filter] CARTOON
+<disc>
+	[position] 1300 0 -100
+	[rotation] -1 0 0
+	[color] 0xBBBBBB
+	[size] -600
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+
 <cone>
-	[position] 1000 -300 -400
+	[position] 2000 -300 -400
 	[rotation] 0 1 1
 	[color] 0x34AD7A
 	[size] 15
@@ -32,7 +51,7 @@
 	[position] 1000 -300 200
 	[rotation] 0 -1 1
 	[color] 0xa78244
-	[size] 120
+	[size] 50
 	[Spec/Diff/Amb] 0.7 0.8 0.3
 	[R/T/Rf] 0 0 1
 
@@ -40,7 +59,5 @@
 	[position] 1000 0 200
 	[rotation] 0 0 0
 	[color] 0xff0000
-	[size] 100
+	[size] 50
 	[texture] NONE 0
-
-<scene>

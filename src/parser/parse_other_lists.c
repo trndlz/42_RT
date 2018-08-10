@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/09 17:10:19 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/10 16:32:35 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,7 @@ char		*parse_cutter(t_obj *obj, char *file)
 
 char		*parse_scene_disc(t_env *e, char *file)
 {
-	if (ft_strncmp("<disc>\n", file, 7) == 0)
-		file = parse_disc(e, file + 7);
-	else if (ft_strncmp("<scene>\n", file, 8) == 0)
+	if (ft_strncmp("<scene>\n", file, 8) == 0)
 		file = parse_scene(e, file + 8);
 	return (file);
 }

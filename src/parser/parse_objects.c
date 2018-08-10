@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/07 14:32:37 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/10 16:28:20 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char		*parse_sphere(t_env *e, char *file)
 	if (sphere->texture == NEARTH)
 		if (!(load_tex_height_to_obj(e, sphere)))
 			return (file);
-	if (sphere->cut && (sphere->descartes.y > 0 || sphere->cut->descartes.y))
+	if (sphere->cut && (sphere->descartes.y > 0 || sphere->cut->descartes.y > 0))
 	{
 		ft_putstr("Transparent <sphere> objects can't be cut !\n");
 		return (file);
@@ -49,7 +49,7 @@ char		*parse_cylinder(t_env *e, char *file)
 		return (file);
 	}
 	file = objects_items(cyl, file, CYLINDER);
-	if (cyl->cut && (cyl->descartes.y > 0 || cyl->cut->descartes.y))
+	if (cyl->cut && (cyl->descartes.y > 0 || cyl->cut->descartes.y > 0))
 		ft_putstr("Transparent <cylinder> can't be cut !\n");
 	else
 		obj_add(&(e->obj_link), cyl);
@@ -66,7 +66,7 @@ char		*parse_cone(t_env *e, char *file)
 		return (file);
 	}
 	file = objects_items(cone, file, CONE);
-	if (cone->cut && (cone->descartes.y > 0 || cone->cut->descartes.y))
+	if (cone->cut && (cone->descartes.y > 0 || cone->cut->descartes.y > 0))
 		ft_putstr("Transparent <cone> objects can't be cut !\n");
 	else
 		obj_add(&e->obj_link, cone);

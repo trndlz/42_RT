@@ -12,9 +12,11 @@
 	[rotation] 0 0 0
 	[color] 0xFFFFFF
 
-<plane>
-	[position] 300 0 0
-	[rotation] -1 0 0	
+<disc>
+	[position] 300 750 800
+	[rotation] -1 0 0
+	[color] 0xDAF7A6
+	[size] -400
 
 <sphere>
 	<cutter>

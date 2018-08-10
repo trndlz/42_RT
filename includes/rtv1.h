@@ -247,7 +247,7 @@ char				*parse_cylinder(t_env *e, char *file);
 char				*parse_cone(t_env *e, char *file);
 char				*parse_plane(t_env *e, char *file);
 char				*parse_paraboloid(t_env *e, char *file);
-char			*parse_disc(t_env *e, char *file);
+char				*parse_disc(t_env *e, char *file);
 
 char				*parse_eye(t_env *e, char *file);
 char				*parse_light(t_env *e, char *file);
@@ -307,7 +307,7 @@ double				inter_cone(t_hit_rec *hit, t_obj *obj, t_ray ray);
 double				inter_plane(t_ray ray, t_obj *obj);
 double				inter_cyl(t_hit_rec *hit, t_obj *obj, t_ray ray);
 double				inter_paraboloid(t_hit_rec *hit, t_obj *obj, t_ray ray);
-double				inter_disc(t_hit_rec *hit, t_obj *obj, t_ray ray);
+double				inter_disc(t_obj *obj, t_ray ray);
 double				quadratic_solver(t_hit_rec *hit, t_vc abc);
 char				hit_not_cut(t_hit_rec *hit, t_obj *obj, t_ray ray);
 char				hit_cut(t_hit_rec *hit, t_obj *obj, t_ray ray);

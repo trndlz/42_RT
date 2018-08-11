@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color_helpers2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/24 10:54:54 by jostraye          #+#    #+#             */
-/*   Updated: 2018/07/24 13:50:08 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/10 02:23:08 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,9 @@ t_vc	hextorgb(int hex)
 	rgb.y = (int)((hex / 0x100) % 0x100);
 	rgb.z = (int)(hex % 0x100);
 	return (rgb);
+}
+
+int		rgbtohex(t_vc rgb)
+{
+    return (((int)rgb.x << 16) | ((int)rgb.y << 8) | (int)rgb.z);
 }

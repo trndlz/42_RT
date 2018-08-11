@@ -1,0 +1,59 @@
+<eye>
+	[position] -800 0 0
+	[rotation] 0 0 0
+
+<light>
+	[position] 0 1000 400
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+<light>
+	[position] 0 999 400
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<cylinder>
+	[position] 1000 -300 200
+	[rotation] 3 -1 0
+	[color] 0xAAAAAA
+	[size] 20
+	[Spec/Diff/Amb] 0.7 0.7 0.1
+	[R/T/Rf] 0 0 1
+
+<plane>
+	[position] 3000 -1 -1
+	[rotation] -1 0 0
+	[color] 0x6E7Dff
+	[size] 20
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+
+<sphere>
+	[position] -100 200 00
+	[rotation] 0 0 0
+	[color] 0x9400FF
+	[size] 100
+	[texture] NONE 0
+
+<sphere>
+	[position] 200 00 -100
+	[rotation] 0 0 0
+	[color] 0x9400FF
+	[size] 100
+	[texture] NONE 0
+
+<sphere>
+	[position] 0 -300 00
+	[rotation] 0 0 0
+	[color] 0x9400FF
+	[size] 100
+	[texture] NONE 0
+
+<sphere>
+	[position] 800 -500 -500
+	[rotation] 0 0 0
+	[color] 0xA9FF00
+	[size] 100
+	[texture] NONE 0
+
+<scene>
+	[filter] STEREOSCOPIC

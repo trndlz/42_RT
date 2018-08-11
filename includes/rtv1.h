@@ -290,6 +290,7 @@ t_obj				*default_light(void);
 t_obj				*default_disc(void);
 
 char				*skip_whitespace(char *file);
+char				*skip_line(char *file);
 int					ft_htod(char c);
 int					ft_htoi(char *str);
 
@@ -324,7 +325,7 @@ char				*parser_error(char *message, char *line);
 char				*parse_scene(t_env *e, char *file);
 char				*parse_scene_disc(t_env *e, char *file);
 void				create_scene(t_env *e, char *file);
-int					parser(t_env *e, int ac, char **av);
+int					parser(t_env *e, char **av);
 
 /*
 ** DESCARTES LAWS
@@ -496,7 +497,7 @@ t_vc				bump_map(t_ray ray, t_hit_rec *hit);
 ** PERLIN
 */
 
-float				perlin(float x, float y, float res, unsigned int *perm);
+float				perlin(float x, float y, float res, int *perm);
 t_file_texture		create_perlin_tex(int res, t_env *e, t_obj *sphere);
 int					exit_hook(int k, t_env *e);
 

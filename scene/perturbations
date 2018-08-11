@@ -1,0 +1,46 @@
+<eye>
+	[position] -1000 0 0
+	[rotation] 0 0 0
+<light>
+	[position] -2000 -1000 1000
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<light>
+	[position] 0 100 100000
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<plane>
+	[position] 500 0 -500
+	[rotation]  -1 -1 10
+	[color] 0x80ff40
+	[R/T/Rf] 0 0 1
+	[Spec/Diff/Amb] 0 0.9 0.1
+	[perturbation] 3
+
+<paraboloid>
+	[position] 600 -300 -100
+	[rotation] 0 0 1
+	[color] 0xA24200
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+	[perturbation] 4
+
+<cylinder>
+	[position] 600 -300 -100
+	[rotation] 0 -1 1
+	[color] 0xa78244
+	[size] 50
+	[Spec/Diff/Amb] 0.7 0.8 0.3
+	[R/T/Rf] 0 0 1
+	[texture] LINES 20
+	[perturbation] 2
+
+<sphere>
+	[position] -100 200 00
+	[rotation] 0 0 0
+	[color] 0xff0000
+	[size] 100
+	[texture] NONE 0
+	[perturbation] 1

@@ -10,7 +10,7 @@
 <plane>
 	[position] 1000 0 0
 	[rotation] -1 0 0
-	[color] 0x0000FF
+	[color] 0x97DFC6
 	[size] 200
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 0 0 1
@@ -19,7 +19,7 @@
 <plane>
 	[position] 0 0 -300
 	[rotation] 0 0 1
-	[color] 0x00FFFF
+	[color] 0xCD853F
 	[size] 200
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 0 0 1
@@ -29,7 +29,7 @@
 	[rotation] 0 1 1
 	[position] 800 0 0
 	[size] 20
-	[color] 0x35bf4d
+	[color] 0xFF000d
 	[texture] LINES 20
 
 <cylinder>
@@ -44,7 +44,7 @@
 	[rotation] 0 1 1
 	[position] 800 0 400
 	[size] 35
-	[color] 0x35bf4d
+	[color] 0x00AeFF
 	[R/T/Rf] 0 0.6 1
 	[texture] LINES 150
 
@@ -60,6 +60,6 @@
 	[rotation] 0 0 1
 	[position] 300 -150 0
 	[size] 20
-	[color] 0xFF9650
+	[color] 0x50CFA1
 	[R/T/Rf] 0 1 1
 	[texture] LINES 100000

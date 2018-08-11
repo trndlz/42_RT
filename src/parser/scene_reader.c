@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/10 16:44:11 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/11 16:32:31 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ char		*read_scene(int fd, char **av)
 	int		ret;
 
 	size = 0;
-	while ((ret = read(fd, buf, 2048)) > 0)
+	while ((ret = read(fd, buf, 2048)) > 0 && size < 6000)
 		size += ret;
 	close(fd);
 	fd = open(av[1], O_RDONLY);
-	if (!(file = (char*)malloc(sizeof(char) * (size + 1))))
+	if (!(file = (char*)malloc(sizeof(char) * (size + 1))) || size > 3000)
 	{
 		if (file)
 			free(file);
@@ -107,25 +107,16 @@ void		create_scene(t_env *e, char *file)
 		else if (ft_strncmp("<paraboloid>\n", file, 13) == 0)
 			file = parse_paraboloid(e, file + 13);
 		else
-		{
-			file = ft_strchr(file, '\n');
-			(file) ? file++ : 0;
-		}
+			file = skip_line(file);
 	}
 }
 
-int			parser(t_env *e, int ac, char **av)
+int			parser(t_env *e, char **av)
 {
 	char	*file;
 	int		fd1;
 	int		fd2;
 
-	if (ac != 2)
-	{
-		ft_putstr_fd("Usage:\n", 2);
-		ft_putstr_fd("./rt [scene_file]\n", 2);
-		return (0);
-	}
 	fd1 = open(av[1], O_DIRECTORY);
 	fd2 = open(av[1], O_RDONLY);
 	if (fd1 > 0 || fd2 < 0)
@@ -133,10 +124,16 @@ int			parser(t_env *e, int ac, char **av)
 		ft_putstr_fd("Cannot open scene file.\n", 2);
 		return (0);
 	}
-	file = read_scene(fd2, av);
+	if (!(file = read_scene(fd2, av)))
+		return (0);
 	create_scene(e, file);
 	free(file);
 	close(fd1);
 	close(fd2);
+	if (e->obj_link == NULL)
+	{
+		ft_putstr_fd("Could not find any object to compute RT.\n", 2);
+		return (0);
+	}
 	return (1);
 }

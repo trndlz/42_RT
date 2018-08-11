@@ -1,0 +1,57 @@
+<eye>
+	[position] -1700 0 0
+	[rotation] 0 0 0
+
+<light>
+	[position] 400 400 0
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<light>
+	[position] -400 400 0
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<disc>
+	[position] 0 0 0
+	[rotation] 1 0 0
+	[color] 0xffffff
+	[size] -400
+	[perturbation] 2
+
+<plane>
+	[position] 1000 0 0
+	[rotation] -1 0 0
+	[color] 0xFFFFFF
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 1 0 1
+
+<plane>
+	[position] -2000 0 0
+	[rotation] 1 0 0
+	[color] 0xFFFFFF
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+
+<cone>
+	[position] 800 -300 -400
+	[rotation] 0 1 1
+	[color] 0xffff00
+	[size] 15
+	[Spec/Diff/Amb] 0.8 0.9 0.1
+	[R/T/Rf] 0 0 1
+
+<cylinder>
+	[position] -300 -300 200
+	[rotation] 0 -1 1
+	[color] 0xff00ff
+	[size] 20
+	[Spec/Diff/Amb] 0.7 0.8 0.3
+	[R/T/Rf] 0 0 1
+
+<sphere>
+	[position] 600 600 -500
+	[rotation] 0 0 0
+	[color] 0xff0000
+	[size] 100
+	[texture] NONE 0

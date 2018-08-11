@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:17:54 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/10 15:57:18 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/11 17:19:53 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void		check_mouse(int x, int y, t_slider *slider, t_cursor *cursor)
 {
-	if (x >= slider->pos_x_zero - cursor->width / 2 && x <= slider->pos_x_max + cursor->width / 2 \
-		&& y <= cursor->end_pos.y + cursor->height / 2 && y >= cursor->start_pos.y - cursor->height / 2)
+	if (x >= slider->pos_x_zero - cursor->width / 2 \
+		&& x <= slider->pos_x_max + cursor->width / 2 \
+		&& y <= cursor->end_pos.y + cursor->height / 2 \
+		&& y >= cursor->start_pos.y - cursor->height / 2)
 	{
 		if (x > slider->pos_x_zero && x < slider->pos_x_max)
 			slider->pos_x = x;
@@ -43,7 +45,7 @@ void		check_all_mouse(int x, int y, t_env *e)
 	}
 }
 
-int				mouse(int x, int y, t_env *e)
+int			mouse(int x, int y, t_env *e)
 {
 	if (e->key[1] == 1)
 	{
@@ -56,7 +58,7 @@ int				mouse(int x, int y, t_env *e)
 	return (1);
 }
 
-int				mykeyhook(int keycode, t_env *e)
+int			mykeyhook(int keycode, t_env *e)
 {
 	if (keycode)
 		e->key[keycode] = 1;

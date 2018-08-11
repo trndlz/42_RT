@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:19:08 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/10 15:18:02 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/11 17:33:59 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,29 @@ static float	initx_two(t_slider slider)
 	return (((float)slider.pos_x - (float)slider.pos_x_zero) / (LEG / 2));
 }
 
-static void		button_release(t_env *e, t_vc rgb, t_vc sda)
+static void		button_release(t_env *e, t_vc rgb, t_vc sda, int button)
 {
 	int i;
 
+	e->key[button] = 0;
 	i = -1;
 	e->key[1] = 0;
-	if (e->filter.activate == 0)
-	{
-		e->scene.filter_rgb.x = rgb.x;
-		e->scene.filter_rgb.y = rgb.y;
-		e->scene.filter_rgb.z = rgb.z;
-		e->filter.tmp_col_f = rgbtohex(rgb);
-	}
-	else if (e->filter.activate == 1)
+	if (e->filter.activate == 1)
 	{
 		e->click_obj->col = rgbtohex(rgb);
 		e->click_obj->phong.x = sda.x;
 		e->click_obj->phong.y = sda.y;
 		e->click_obj->phong.z = sda.z;
 	}
-	if (e->filter.activate == 0)
+	else if (e->filter.activate == 0)
 	{
+		e->scene.filter_rgb.x = rgb.x;
+		e->scene.filter_rgb.y = rgb.y;
+		e->scene.filter_rgb.z = rgb.z;
+		e->filter.tmp_col_f = rgbtohex(rgb);
 		while (++i < WINY * WINZ)
-			e->imgstr[i] = mix_colors(e->img_ori[i], rgbtohex(e->scene.filter_rgb), (1 - e->filter.intensity));
+			e->imgstr[i] = mix_colors(e->img_ori[i], \
+				rgbtohex(e->scene.filter_rgb), (1 - e->filter.intensity));
 	}
 	else
 		create_image(e);
@@ -65,15 +64,6 @@ int				mouse_release(int button, int x, int y, t_env *e)
 	t_vc	rgb;
 	t_vc	sda;
 
-	mlx_clear_window(e->mlx.mlx, e->mlx.win);
-	if (e->mlx.image)
-		mlx_destroy_image(e->mlx.mlx, e->mlx.image);
-	if (e->filter.img.pic)
-		mlx_destroy_image(e->mlx.mlx, e->filter.img.pic);
-	if (!(e->mlx.image = mlx_new_image(e->mlx.mlx, WINY, WINZ)))
-		return (0);
-	if (!(e->filter.img.pic = mlx_new_image(e->mlx.mlx, LEG, WINZ)))
-		return (0);
 	x = 0;
 	y = 0;
 	rgb.x = initx(e->filter.sld_r, 1);
@@ -84,10 +74,7 @@ int				mouse_release(int button, int x, int y, t_env *e)
 	sda.z = initx_two(e->filter.sld_a);
 	e->filter.intensity = initx_two(e->filter.sld_i);
 	if (button)
-	{
-		e->key[button] = 0;
-		button_release(e, rgb, sda);
-	}
+		button_release(e, rgb, sda, button);
 	draw_all(e);
 	mlx_put_image_to_window(e->mlx.mlx, e->mlx.win, e->filter.img.pic, WINY, 0);
 	legend(e);

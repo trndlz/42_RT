@@ -16,11 +16,16 @@ int		main(int ac, char **av)
 {
 	t_env *e;
 
+	if (ac != 2)
+	{
+		ft_putstr_fd("Usage: ./rt [scene_file]\n", 2);
+		return (0);
+	}
 	if (!(e = init_env()))
 		exit_message("Problem while creating environment structure\n");
 	if (!init_mlx(&(e->mlx)))
 		exit_message("Problem while creating MLX environment\n");
-	if (!parser(e, ac, av))
+	if (!parser(e, av))
 		return (0);
 	pthread_mutex_init(&(e->mutex), NULL);
 	if (!(create_image(e)))

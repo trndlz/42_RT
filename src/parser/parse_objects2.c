@@ -28,3 +28,10 @@ char		*parse_disc(t_env *e, char *file)
 		obj_add(&e->obj_link, disc);
 	return (file);
 }
+
+char		*skip_line(char *file)
+{
+	file = ft_strchr(file, '\n');
+	(file) ? file++ : 0;
+	return (file);
+}

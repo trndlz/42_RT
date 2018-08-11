@@ -230,6 +230,7 @@ t_obj				*default_light(void);
 t_obj				*default_disc(void);
 
 char				*skip_whitespace(char *file);
+char				*skip_line(char *file);
 int					ft_htod(char c);
 int					ft_htoi(char *str);
 
@@ -264,7 +265,7 @@ char				*parser_error(char *message, char *line);
 char				*parse_scene(t_env *e, char *file);
 char				*parse_scene_disc(t_env *e, char *file);
 void				create_scene(t_env *e, char *file);
-int					parser(t_env *e, int ac, char **av);
+int					parser(t_env *e, char **av);
 
 /*
 ** DESCARTES LAWS

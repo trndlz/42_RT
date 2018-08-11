@@ -26,7 +26,11 @@
 	[color] 0xff0000
 	[size] 50
 	[R/T/Rf] 0 0 1
+<<<<<<< HEAD:scene/perlin
 	[texture] PERLIN 9
+=======
+	[texture] PERLIN 2
+>>>>>>> ad2133ef4e5103ebfd0bfe7819fab43775fb507f:scene/perlin
 
 <sphere>
 	[position] 500 -100 -150
@@ -34,7 +38,11 @@
 	[color] 0xff0000
 	[size] 50
 	[R/T/Rf] 0 0 1
+<<<<<<< HEAD:scene/perlin
 	[texture] PERLIN 7
+=======
+	[texture] PERLIN 5
+>>>>>>> ad2133ef4e5103ebfd0bfe7819fab43775fb507f:scene/perlin
 
 <sphere>
 	[position] 500 -100 0
@@ -42,7 +50,11 @@
 	[color] 0xff0000
 	[size] 50
 	[R/T/Rf] 0 0 1
+<<<<<<< HEAD:scene/perlin
 	[texture] PERLIN 0
+=======
+	[texture] PERLIN 10
+>>>>>>> ad2133ef4e5103ebfd0bfe7819fab43775fb507f:scene/perlin
 
 <sphere>
 	[position] 500 100 0

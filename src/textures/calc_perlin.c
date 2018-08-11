@@ -74,7 +74,7 @@ float			lissage(float x, float y, float *p_tab)
 	return (calc_tab[3] + calc_tab[2] * (calc_tab[4] - calc_tab[3]));
 }
 
-float			perlin(float x, float y, float res, int *perm)
+float			perlin(float x, float y, float res, unsigned int *perm)
 {
 	int		x0;
 	int		y0;

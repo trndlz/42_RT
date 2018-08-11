@@ -20,17 +20,21 @@
 	[Spec/Diff/Amb] 0.4 0.9 0.1
 	[R/T/Rf] 0 0 1
 
+<plane>
+	[position] 0 0 -600
+	[rotation] 0 0 1
+	[color] 0x6E7DC9
+	[size] 200
+	[Spec/Diff/Amb] 0 0.9 0.1
+	[R/T/Rf] 0 0 1
+
 <sphere>
 	[position] 500 100 -150
 	[rotation] 0 0 0
 	[color] 0xff0000
 	[size] 50
 	[R/T/Rf] 0 0 1
-<<<<<<< HEAD:scene/perlin
-	[texture] PERLIN 9
-=======
 	[texture] PERLIN 2
->>>>>>> ad2133ef4e5103ebfd0bfe7819fab43775fb507f:scene/perlin
 
 <sphere>
 	[position] 500 -100 -150
@@ -38,11 +42,7 @@
 	[color] 0xff0000
 	[size] 50
 	[R/T/Rf] 0 0 1
-<<<<<<< HEAD:scene/perlin
-	[texture] PERLIN 7
-=======
 	[texture] PERLIN 5
->>>>>>> ad2133ef4e5103ebfd0bfe7819fab43775fb507f:scene/perlin
 
 <sphere>
 	[position] 500 -100 0
@@ -50,11 +50,7 @@
 	[color] 0xff0000
 	[size] 50
 	[R/T/Rf] 0 0 1
-<<<<<<< HEAD:scene/perlin
-	[texture] PERLIN 0
-=======
 	[texture] PERLIN 10
->>>>>>> ad2133ef4e5103ebfd0bfe7819fab43775fb507f:scene/perlin
 
 <sphere>
 	[position] 500 100 0
@@ -69,8 +65,10 @@
 	[rotation] 0 0 0
 	[color] 0x0060ff
 	[size] 125
-	[R/T/Rf] 0 0.5  1.2
+	[R/T/Rf] 0 0.5 1.2
 	[Spec/Diff/Amb] 0 0.9 0.1
-	[texture] PERLIN 4
+	[texture] PERLIN 10
+
 
 <scene>
+

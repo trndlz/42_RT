@@ -12,12 +12,12 @@
 
 #include "rtv1.h"
 
-int	*init_perm(void)
+unsigned int	*init_perm(void)
 {
-	int	*perm;
+	unsigned int	*perm;
 	int				i;
 
-	if ((perm = (int *)malloc(sizeof(int) * 510)) == NULL)
+	if ((perm = (unsigned int *)malloc(sizeof(unsigned int) * 500)) == NULL)
 		return (NULL);
 	i = 0;
 	srand(time(NULL));
@@ -53,7 +53,7 @@ int				calc_perlin_color(int color, t_obj *sphere)
 t_file_texture	create_perlin_tex(int res, t_env *e, t_obj *sphere)
 {
 	t_file_texture	tex;
-	int	*perm;
+	unsigned int	*perm;
 	int				x;
 	int				y;
 

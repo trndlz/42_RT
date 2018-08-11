@@ -433,7 +433,7 @@ t_vc				bump_map(t_ray ray, t_hit_rec *hit);
 ** PERLIN
 */
 
-float				perlin(float x, float y, float res, int *perm);
+float				perlin(float x, float y, float res, unsigned int *perm);
 t_file_texture		create_perlin_tex(int res, t_env *e, t_obj *sphere);
 int					exit_hook(int k, t_env *e);
 

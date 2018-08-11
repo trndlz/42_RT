@@ -32,7 +32,7 @@ void		parallel_lights(t_obj *light)
 	if (light->rot.x == 0 && light->rot.y == 0 && light->rot.z == 0)
 		return ;
 	else
-		light->pos = vec_mult(light->rot, SUN_DISTANCE);
+		light->pos = vec_mult(light->rot, -1 * SUN_DISTANCE);
 }
 
 char		*parse_light(t_env *e, char *file)

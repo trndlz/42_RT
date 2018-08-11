@@ -51,7 +51,7 @@ t_vc	bump_map(t_ray ray, t_hit_rec *hit)
 		modif.y = (green / 127.5 - 1);
 		modif.z = (blue / 127.5 - 1);
 		vec_norm(modif);
-		return (vec_add(hit->n, modif));
+		return (vec_add(hit->n, vec_mult(modif, 0.6)));
 	}
 	return (hit->n);
 }

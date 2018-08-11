@@ -1,0 +1,102 @@
+<eye>
+	[position] -1000 0 0
+	[rotation] 0 -5 0
+
+<light>
+	[position] -1500 -1000 200
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<light>
+	[position] -1500 0 2000
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<light>
+	[position] 300 200 200
+	[rotation] 0 0 0
+	[color] 0xFFFFFF
+
+<plane>
+	[position] 0 0 -100
+	[rotation] 0 0 1
+	[color] 0x6E7DC9
+	[size] 200
+	[Spec/Diff/Amb] 0.4 0.9 0.4
+	[R/T/Rf] 0 0 1
+
+<plane>
+	[position] 2900 0 -100
+	[rotation] -1 0 0
+	[color] 0X000940
+	[size] -600
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+
+<disc>
+	[position] 2500 0 -100
+	[rotation] -1 0 0
+	[color] 0x0892D0
+	[size] -600
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+
+<disc>
+	[position] 500 0 -100
+	[rotation] -1 0 0
+	[color] 0xDD4200
+	[size] -600
+	[Spec/Diff/Amb] 0.4 0.9 0.1
+	[R/T/Rf] 0 0 1
+
+<cone>
+	[position] 1000 -300 -400
+	[rotation] 0 1 1
+	[color] 0x34AD7A
+	[size] 10
+	[Spec/Diff/Amb] 0.8 0.9 0.1
+	[R/T/Rf] 0 0 1
+
+<cylinder>
+	[position] 1000 -300 200
+	[rotation] 0 -1 1
+	[color] 0xa78244
+	[size] 50
+	[Spec/Diff/Amb] 0.7 0.8 0.3
+	[R/T/Rf] 0 0 1
+<sphere>
+	[position] -200 0 200
+	[rotation] 0 0 0
+	[color] 0x50D0F0
+	[Spec/Diff/Amb] 0.5 1 0.1
+	[size] 50
+	[texture] NONE 0
+<sphere>
+	[position] -500 300 300
+	[rotation] 0 0 0
+	[color] 0xf0a20e
+	[size] 200
+	[texture] NONE 0
+<sphere>
+	[position] -500 -300 300
+	[rotation] 0 0 0
+	[color] 0xd8be1f
+	[size] 200
+	[R/T/Rf] 0 0.5 1
+	[texture] NONE 0
+<sphere>
+	[position] 100 0 0
+	[rotation] 0 0 0
+	[color] 0x901050
+	[size] 30
+	[texture] NONE 0
+
+<sphere>
+	[position] 20 0 -100
+	[rotation] 0 0 0
+	[color] 0xD07050
+	[size] 50
+	[texture] NONE 0
+<scene>
+	[filter] CARTOON
+	+antialias

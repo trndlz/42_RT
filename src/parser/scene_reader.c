@@ -6,7 +6,7 @@
 /*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/10 16:32:09 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/11 11:35:40 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,5 +138,10 @@ int			parser(t_env *e, int ac, char **av)
 	free(file);
 	close(fd1);
 	close(fd2);
+	if (e->obj_link == NULL)
+	{
+		ft_putstr_fd("Could not find any object to compute RT.\n", 2);
+		return (0);
+	}
 	return (1);
 }

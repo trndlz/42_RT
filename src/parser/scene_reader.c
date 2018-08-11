@@ -20,11 +20,11 @@ char		*read_scene(int fd, char **av)
 	int		ret;
 
 	size = 0;
-	while ((ret = read(fd, buf, 2048)) > 0)
+	while ((ret = read(fd, buf, 2048)) > 0 && size < 6000)
 		size += ret;
 	close(fd);
 	fd = open(av[1], O_RDONLY);
-	if (!(file = (char*)malloc(sizeof(char) * (size + 1))) || size > 10000)
+	if (!(file = (char*)malloc(sizeof(char) * (size + 1))) || size > 3000)
 	{
 		if (file)
 			free(file);

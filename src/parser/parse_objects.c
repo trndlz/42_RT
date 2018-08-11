@@ -30,7 +30,8 @@ char		*parse_sphere(t_env *e, char *file)
 	if (sphere->texture == NEARTH)
 		if (!(load_tex_height_to_obj(e, sphere)))
 			return (file);
-	if (sphere->cut && (sphere->descartes.y > 0 || sphere->cut->descartes.y > 0))
+	if (sphere->cut && (sphere->descartes.y > 0
+	|| sphere->cut->descartes.y > 0))
 	{
 		ft_putstr("Transparent <sphere> objects can't be cut !\n");
 		return (file);

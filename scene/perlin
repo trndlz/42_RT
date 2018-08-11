@@ -33,7 +33,7 @@
 	[rotation] 0 0 0
 	[color] 0xff0000
 	[size] 50
-	[R/T/Rf] 0 0 0
+	[R/T/Rf] 0 0 1
 	[texture] PERLIN 2
 
 <sphere>
@@ -41,7 +41,7 @@
 	[rotation] 0 0 0
 	[color] 0xff0000
 	[size] 50
-	[R/T/Rf] 0 0 0
+	[R/T/Rf] 0 0 1
 	[texture] PERLIN 5
 
 <sphere>
@@ -49,7 +49,7 @@
 	[rotation] 0 0 0
 	[color] 0xff0000
 	[size] 50
-	[R/T/Rf] 0 0 0
+	[R/T/Rf] 0 0 1
 	[texture] PERLIN 10
 
 <sphere>
@@ -57,7 +57,7 @@
 	[rotation] 0 0 0
 	[color] 0xff0000
 	[size] 50
-	[R/T/Rf] 0 0 0
+	[R/T/Rf] 0 0 1
 	[texture] PERLIN 20
 
 <sphere>

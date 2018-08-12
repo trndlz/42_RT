@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perlin.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avinas <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/02 12:20:15 by avinas            #+#    #+#             */
-/*   Updated: 2018/08/05 17:40:06 by avinas           ###   ########.fr       */
+/*   Updated: 2018/08/12 12:58:48 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int				*init_perm(void)
 		return (NULL);
 	i = 0;
 	srand(time(NULL));
-	while (i < 500)
+	while (i < 510)
 	{
 		perm[i] = rand() % 255;
 		i++;

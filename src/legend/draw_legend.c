@@ -37,6 +37,8 @@ static void		legend_activate_yes(t_env *e, char *leg)
 	draw_legend(e, WINY + 270, 490, leg);
 	mlx_string_put(e->mlx.mlx, e->mlx.win, WINY \
 		+ 50, 50, 0xded9df, "Click HERE to change RGB Filters");
+	leg = ft_sjf("Perturbation:  ", ft_itoa(e->click_obj->perturb), 0, 1);
+	draw_legend(e, WINY + 70, 540, leg);
 }
 
 static void		legend_activate(t_env *e)

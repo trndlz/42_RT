@@ -6,7 +6,7 @@
 /*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/10 08:29:15 by naminei          ###   ########.fr       */
+/*   Updated: 2018/08/13 00:45:50 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int		main(int ac, char **av)
 	mlx_hook(e->mlx.win, 2, 3, deal_key, e);
 	mlx_slider(e);
 	mlx_hook(e->mlx.win, 17, 0, exit_hook, e);
-	// mlx_mouse_hook(e->mlx.win, deal_mouse, e);
 	mlx_loop(e->mlx.mlx);
 	free_all_lists(e);
 	free(e);

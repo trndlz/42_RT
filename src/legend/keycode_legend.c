@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:17:54 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/11 17:19:53 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/11 18:13:36 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void		check_mouse(int x, int y, t_slider *slider, t_cursor *cursor)
 		if (x > slider->pos_x_zero && x < slider->pos_x_max)
 			slider->pos_x = x;
 		if (x <= slider->pos_x_zero && x > WINY)
-			slider->pos_x = WINY + 50;
+			slider->pos_x = WINY + (LEG / 8);
 		if (x >= slider->pos_x_max && x < WINY + LEG)
-			slider->pos_x = WINY + 250;
+			slider->pos_x = WINY + (LEG / 2 + LEG / 8);
 	}
 }
 

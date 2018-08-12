@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:18:34 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/11 17:37:04 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/11 18:15:07 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 static void		mouse_press_activated(t_env *e, t_vc rgb)
 {
-	e->filter.sld_r.pos_x = ((int)(rgb.x + 1) * 200 / 255) \
-		+ 50 + WINY;
-	e->filter.sld_g.pos_x = ((int)(rgb.y + 1) * 200 / 255) \
-		+ 50 + WINY;
-	e->filter.sld_b.pos_x = ((int)(rgb.z + 1) * 200 / 255) \
-		+ 50 + WINY;
+	e->filter.sld_r.pos_x = ((int)(rgb.x + 1) * (LEG / 2) / UCHAR_MAX) \
+		+ (LEG / 8) + WINY;
+	e->filter.sld_g.pos_x = ((int)(rgb.y + 1) * (LEG / 2) / UCHAR_MAX) \
+		+ (LEG / 8) + WINY;
+	e->filter.sld_b.pos_x = ((int)(rgb.z + 1) * (LEG / 2) / UCHAR_MAX) \
+		+ (LEG / 8) + WINY;
 	e->filter.sld_s.pos_x = ((float)(e->click_obj->phong.x)) \
-		* 200 + 50 + WINY;
+		* (LEG / 2) + (LEG / 8) + WINY;
 	e->filter.sld_d.pos_x = ((float)(e->click_obj->phong.y)) \
-		* 200 + 50 + WINY;
+		* (LEG / 2) + (LEG / 8) + WINY;
 	e->filter.sld_a.pos_x = ((float)(e->click_obj->phong.z)) \
-		* 200 + 50 + WINY;
+		* (LEG / 2) + (LEG / 8) + WINY;
 }
 
 static void		select_object(int x, int y, t_env *e)
@@ -44,9 +44,12 @@ static void		click_for_filters(t_env *e, t_vc rgb)
 	e->filter.activate = 0;
 	e->click_obj = NULL;
 	rgb = hextorgb(e->filter.tmp_col_f);
-	e->filter.sld_r.pos_x = ((int)(rgb.x + 1) * 200 / 255) + 50 + WINY;
-	e->filter.sld_g.pos_x = ((int)(rgb.y + 1) * 200 / 255) + 50 + WINY;
-	e->filter.sld_b.pos_x = ((int)(rgb.z + 1) * 200 / 255) + 50 + WINY;
+	e->filter.sld_r.pos_x = ((int)(rgb.x + 1) * (LEG / 2) \
+			/ UCHAR_MAX) + (LEG / 8) + WINY;
+	e->filter.sld_g.pos_x = ((int)(rgb.y + 1) * (LEG / 2) \
+			/ UCHAR_MAX) + (LEG / 8) + WINY;
+	e->filter.sld_b.pos_x = ((int)(rgb.z + 1) * (LEG / 2) \
+			/ UCHAR_MAX) + (LEG / 8) + WINY;
 }
 
 int				mouse_press(int button, int x, int y, t_env *e)

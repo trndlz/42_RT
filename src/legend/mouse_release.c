@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:19:08 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/11 17:33:59 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/12 12:04:08 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,7 @@ static void		button_release(t_env *e, t_vc rgb, t_vc sda, int button)
 	e->key[button] = 0;
 	i = -1;
 	e->key[1] = 0;
-	if (e->filter.activate == 1)
-	{
-		e->click_obj->col = rgbtohex(rgb);
-		e->click_obj->phong.x = sda.x;
-		e->click_obj->phong.y = sda.y;
-		e->click_obj->phong.z = sda.z;
-	}
-	else if (e->filter.activate == 0)
+	if (e->filter.activate == 0)
 	{
 		e->scene.filter_rgb.x = rgb.x;
 		e->scene.filter_rgb.y = rgb.y;
@@ -55,8 +48,14 @@ static void		button_release(t_env *e, t_vc rgb, t_vc sda, int button)
 			e->imgstr[i] = mix_colors(e->img_ori[i], \
 				rgbtohex(e->scene.filter_rgb), (1 - e->filter.intensity));
 	}
-	else
+	else if (e->filter.activate == 1)
+	{
+		e->click_obj->col = rgbtohex(rgb);
+		e->click_obj->phong.x = sda.x;
+		e->click_obj->phong.y = sda.y;
+		e->click_obj->phong.z = sda.z;
 		create_image(e);
+	}
 }
 
 int				mouse_release(int button, int x, int y, t_env *e)

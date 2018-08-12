@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_slider.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:17:04 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/10 08:19:44 by naminei          ###   ########.fr       */
+/*   Updated: 2018/08/11 18:12:53 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void		init_each_slider(t_slider *slider, t_cursor *cursor)
 {
-	slider->pos_x_zero = WINY + 50;
+	slider->pos_x_zero = WINY + (LEG / 8);
 	slider->pos_x = slider->pos_x_zero;
 	slider->pos_x_max = slider->pos_x_zero + (LEG / 2);
 	cursor->height = 20;

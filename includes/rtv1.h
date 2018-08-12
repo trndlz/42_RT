@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/11 16:23:44 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/11 18:23:35 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include <limits.h>
 # define WINY 1000
 # define WINZ 1000
 # define LEG 400
@@ -380,7 +381,6 @@ char				hit_cut(t_hit_rec *hit, t_obj *obj, t_ray ray);
 void				translation(int key, t_env *e);
 void				rotation(int key, t_env *e);
 int					deal_key(int key, t_env *e);
-int					deal_mouse(int k, int y, int z, t_env *e);
 
 /*
 ** LIGHTING

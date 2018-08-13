@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:14:10 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/11 18:18:50 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 09:59:06 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void		legend_activate_yes(t_env *e, char *leg)
 	draw_legend(e, WINY + 270, 390, leg);
 	leg = ft_sjf("Diff: ", inter_leg(e->filter.sld_d), 0, 1);
 	draw_legend(e, WINY + 270, 440, leg);
-	leg = NULL;
+	leg = ft_sjf("Amb: ", inter_leg(e->filter.sld_a), 0, 1);
 	draw_legend(e, WINY + 270, 490, leg);
 	mlx_string_put(e->mlx.mlx, e->mlx.win, WINY \
 		+ 50, 50, 0xded9df, "Click HERE to change RGB Filters");

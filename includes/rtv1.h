@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 09:52:37 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 10:06:44 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@
 # define PERL_S 1000
 # define MAX_COLOR 16776960
 # define SUN_DISTANCE 3725000
-# define ButtonPressMask (1L<<2)
-# define ButtonReleaseMask (1L<<3)
-# define KeyPress 2
-# define KeyRelease 3
-# define ButtonPress 4
-# define ButtonRelease 5
+# define BUTTONPRESSMASK (1L<<2)
+# define BUTTONRELEASEMASK (1L<<3)
+# define KEYPRESS 2
+# define KEYRELEASE 3
+# define BUTTONPRESS 4
+# define BUTTONRELEASE 5
 
 enum				e_obj {
 	LIGHT,
@@ -157,27 +157,27 @@ typedef struct		s_img
 
 typedef struct		s_uvect2
 {
-    int				x;
-    int				y;
+	int				x;
+	int				y;
 }					t_uvect2;
 
 typedef struct		s_cursor
 {
-    t_uvect2		start_pos;
-    t_uvect2		end_pos;
-    t_uvect2		cursor_vect;
-    int				height;
-    int				width;
+	t_uvect2		start_pos;
+	t_uvect2		end_pos;
+	t_uvect2		cursor_vect;
+	int				height;
+	int				width;
 }					t_cursor;
 
 typedef struct		s_slider
 {
-    int				pos_tmp;
-    int				pos_x;
-    int				pos_x_zero;
-    int				pos_x_max;
-    int				pos_x_length;
-    int				pos_y;
+	int				pos_tmp;
+	int				pos_x;
+	int				pos_x_zero;
+	int				pos_x_max;
+	int				pos_x_length;
+	int				pos_y;
 }					t_slider;
 
 typedef struct		s_filter
@@ -189,7 +189,7 @@ typedef struct		s_filter
 	t_slider		sld_d;
 	t_slider		sld_a;
 	t_slider		sld_i;
-    t_cursor		crs_r;
+	t_cursor		crs_r;
 	t_cursor		crs_g;
 	t_cursor		crs_b;
 	t_cursor		crs_s;
@@ -469,8 +469,8 @@ void				progression_bar(t_env *e, char *str, int i);
 */
 
 void				put_pixel(t_env *e, int color, int x, int y);
-int    				draw_cursors(t_env *e, t_slider *slider, t_cursor *cursor);
-int    				draw_sliders(t_env *e, t_slider *slider);
+int					draw_cursors(t_env *e, t_slider *slider, t_cursor *cursor);
+int					draw_sliders(t_env *e, t_slider *slider);
 void				legend(t_env *e);
 int					mouse(int x, int y, t_env *e);
 int					mouse_press(int button, int x, int y, t_env *e);
@@ -481,10 +481,11 @@ void				put_in_color(t_env *e);
 int					rgbtohex(t_vc rgb);
 t_obj				*click_to_object(t_env *e, int y, int z);
 char				*write_obj(t_obj *click_obj);
-int    				initx(t_slider slider, int a);
-void    			draw_all(t_env *e);
-char     			*ft_sjf(char *s1, char *s2, bool first, bool second);
-void				check_mouse(int x, int y, t_slider *slider, t_cursor *cursor);
+int					initx(t_slider slider, int a);
+void				draw_all(t_env *e);
+char				*ft_sjf(char *s1, char *s2, bool first, bool second);
+void				check_mouse(int x, int y, t_slider *slider, \
+	t_cursor *cursor);
 void				check_all_mouse(int x, int y, t_env *e);
 int					init_fct(t_env *e);
 

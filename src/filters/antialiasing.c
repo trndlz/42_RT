@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   antialiasing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 14:26:30 by jostraye          #+#    #+#             */
-/*   Updated: 2018/08/09 12:15:40 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/13 12:56:01 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,12 @@ void	copy_img_array(int *imgstr, int *colorcopy)
 	{
 		y = -1;
 		while (++y < WINY)
+		{
 			if (colorcopy[z * WINY + y] != 0)
 				imgstr[z * WINY + y] = colorcopy[z * WINY + y];
 			else
 				imgstr[z * WINY + y] = 0x000000;
+		}
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:41:47 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:21 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:09:33 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int			multiply_color(int hex, double mult)
 	b = color_limits(hex % 0x100);
 	g = color_limits((hex / 0x100) % 0x100);
 	r = color_limits((hex / (0x100 * 0x100)) % 0x100);
-	hex = (int)(mult * b) + (int)(mult * g) * 0x100 +
-	(int)(mult * r) * 0x100 * 0x100;
+	hex = (int)(mult * b) + (int)(mult * g) * 0x100
+		+ (int)(mult * r) * 0x100 * 0x100;
 	return (hex);
 }
 
@@ -55,7 +55,7 @@ int			add_color(int hex1, int hex2)
 	int b;
 
 	r = color_limits((hex1 / (0x100 * 0x100)) % 0x100
-		+ (hex2 / (0x100 * 0x100)) % 0x100);
+			+ (hex2 / (0x100 * 0x100)) % 0x100);
 	g = color_limits((hex1 / 0x100) % 0x100 + (hex2 / 0x100) % 0x100);
 	b = color_limits(hex1 % 0x100 + hex2 % 0x100);
 	return (((int)(r & 0xff) << 16) + ((int)(g & 0xff) << 8) + (int)(b & 0xff));

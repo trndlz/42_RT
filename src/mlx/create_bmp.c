@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/23 19:01:36 by jostraye          #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:33 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:18:46 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static	unsigned char		*create_bmp_img(int *imgstr)
 	t_vc			rgb;
 
 	if (!(img = (unsigned char*)malloc(sizeof(unsigned char)
-	* 3 * 2 * WINY * WINZ)))
+					* 3 * 2 * WINY * WINZ)))
 		return (0);
 	ft_memset(img, 0, 3 * 2 * WINY * WINZ);
 	o = 0;

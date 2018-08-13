@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:15:34 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/10 15:49:03 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:01:02 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		draw_cursors(t_env *e, t_slider *slider, t_cursor *cursor)
 	cursor->end_pos.x = slider->pos_x + cursor->width / 2;
 	cursor->start_pos.y = slider->pos_y - cursor->height / 2;
 	cursor->end_pos.y = slider->pos_y + cursor->height / 2;
-	while (cursor->start_pos.y < cursor->end_pos.y \
+	while (cursor->start_pos.y < cursor->end_pos.y
 		&& cursor->end_pos.y < WINY + LEG)
 	{
 		while (cursor->start_pos.x < cursor->end_pos.x - (LEG / 2))

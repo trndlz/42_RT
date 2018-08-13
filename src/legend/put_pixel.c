@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:26:45 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/13 09:44:26 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:01:05 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	put_pixel(t_env *e, int x, int y, int color)
 	b = (color & 0xFF);
 	if (y < WINZ - 3 && x < WINY + LEG)
 	{
-		e->filter.img.info[(y * e->filter.img.s_l) \
+		e->filter.img.info[(y * e->filter.img.s_l)
 			+ ((e->filter.img.bpp / 8) * x) + 2] = r;
-		e->filter.img.info[(y * e->filter.img.s_l) \
+		e->filter.img.info[(y * e->filter.img.s_l)
 			+ ((e->filter.img.bpp / 8) * x) + 1] = g;
-		e->filter.img.info[(y * e->filter.img.s_l) \
+		e->filter.img.info[(y * e->filter.img.s_l)
 			+ ((e->filter.img.bpp / 8) * x)] = b;
 	}
 }

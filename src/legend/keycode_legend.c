@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:17:54 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/11 18:13:36 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:01:03 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void		check_mouse(int x, int y, t_slider *slider, t_cursor *cursor)
 {
-	if (x >= slider->pos_x_zero - cursor->width / 2 \
-		&& x <= slider->pos_x_max + cursor->width / 2 \
-		&& y <= cursor->end_pos.y + cursor->height / 2 \
+	if (x >= slider->pos_x_zero - cursor->width / 2
+		&& x <= slider->pos_x_max + cursor->width / 2
+		&& y <= cursor->end_pos.y + cursor->height / 2
 		&& y >= cursor->start_pos.y - cursor->height / 2)
 	{
 		if (x > slider->pos_x_zero && x < slider->pos_x_max)
@@ -51,7 +51,7 @@ int			mouse(int x, int y, t_env *e)
 	{
 		check_all_mouse(x, y, e);
 		draw_all(e);
-		mlx_put_image_to_window(e->mlx.mlx, e->mlx.win, \
+		mlx_put_image_to_window(e->mlx.mlx, e->mlx.win,
 			e->filter.img.pic, WINY, 0);
 		legend(e);
 	}

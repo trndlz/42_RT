@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:18:34 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/11 18:15:07 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:01:04 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 static void		mouse_press_activated(t_env *e, t_vc rgb)
 {
-	e->filter.sld_r.pos_x = ((int)(rgb.x + 1) * (LEG / 2) / UCHAR_MAX) \
+	e->filter.sld_r.pos_x = ((int)(rgb.x + 1) * (LEG / 2) / UCHAR_MAX)
 		+ (LEG / 8) + WINY;
-	e->filter.sld_g.pos_x = ((int)(rgb.y + 1) * (LEG / 2) / UCHAR_MAX) \
+	e->filter.sld_g.pos_x = ((int)(rgb.y + 1) * (LEG / 2) / UCHAR_MAX)
 		+ (LEG / 8) + WINY;
-	e->filter.sld_b.pos_x = ((int)(rgb.z + 1) * (LEG / 2) / UCHAR_MAX) \
+	e->filter.sld_b.pos_x = ((int)(rgb.z + 1) * (LEG / 2) / UCHAR_MAX)
 		+ (LEG / 8) + WINY;
-	e->filter.sld_s.pos_x = ((float)(e->click_obj->phong.x)) \
+	e->filter.sld_s.pos_x = ((float)(e->click_obj->phong.x))
 		* (LEG / 2) + (LEG / 8) + WINY;
-	e->filter.sld_d.pos_x = ((float)(e->click_obj->phong.y)) \
+	e->filter.sld_d.pos_x = ((float)(e->click_obj->phong.y))
 		* (LEG / 2) + (LEG / 8) + WINY;
-	e->filter.sld_a.pos_x = ((float)(e->click_obj->phong.z)) \
+	e->filter.sld_a.pos_x = ((float)(e->click_obj->phong.z))
 		* (LEG / 2) + (LEG / 8) + WINY;
 }
 
@@ -44,11 +44,11 @@ static void		click_for_filters(t_env *e, t_vc rgb)
 	e->filter.activate = 0;
 	e->click_obj = NULL;
 	rgb = hextorgb(e->filter.tmp_col_f);
-	e->filter.sld_r.pos_x = ((int)(rgb.x + 1) * (LEG / 2) \
+	e->filter.sld_r.pos_x = ((int)(rgb.x + 1) * (LEG / 2)
 			/ UCHAR_MAX) + (LEG / 8) + WINY;
-	e->filter.sld_g.pos_x = ((int)(rgb.y + 1) * (LEG / 2) \
+	e->filter.sld_g.pos_x = ((int)(rgb.y + 1) * (LEG / 2)
 			/ UCHAR_MAX) + (LEG / 8) + WINY;
-	e->filter.sld_b.pos_x = ((int)(rgb.z + 1) * (LEG / 2) \
+	e->filter.sld_b.pos_x = ((int)(rgb.z + 1) * (LEG / 2)
 			/ UCHAR_MAX) + (LEG / 8) + WINY;
 }
 
@@ -71,7 +71,7 @@ int				mouse_press(int button, int x, int y, t_env *e)
 			click_for_filters(e, rgb);
 		check_all_mouse(x, y, e);
 		draw_all(e);
-		mlx_put_image_to_window(e->mlx.mlx, e->mlx.win, \
+		mlx_put_image_to_window(e->mlx.mlx, e->mlx.win,
 			e->filter.img.pic, WINY, 0);
 		legend(e);
 	}

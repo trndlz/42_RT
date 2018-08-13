@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:19:08 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/12 12:04:08 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:01:03 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int				initx(t_slider slider, int a)
 
 	legend_nb = 0;
 	if (a == 0)
-		legend_nb = ((float)slider.pos_x \
+		legend_nb = ((float)slider.pos_x
 				- (float)slider.pos_x_zero) * 100 / (LEG / 2);
 	else if (a == 1)
-		legend_nb = ((int)((float)slider.pos_x \
+		legend_nb = ((int)((float)slider.pos_x
 						- (float)slider.pos_x_zero) * 255 / (LEG / 2));
 	return (legend_nb);
 }
@@ -45,7 +45,7 @@ static void		button_release(t_env *e, t_vc rgb, t_vc sda, int button)
 		e->scene.filter_rgb.z = rgb.z;
 		e->filter.tmp_col_f = rgbtohex(rgb);
 		while (++i < WINY * WINZ)
-			e->imgstr[i] = mix_colors(e->img_ori[i], \
+			e->imgstr[i] = mix_colors(e->img_ori[i],
 				rgbtohex(e->scene.filter_rgb), (1 - e->filter.intensity));
 	}
 	else if (e->filter.activate == 1)

@@ -68,6 +68,8 @@ void	copy_img_array(int *imgstr, int *colorcopy)
 		while (++y < WINY)
 			if (colorcopy[z * WINY + y] != 0)
 				imgstr[z * WINY + y] = colorcopy[z * WINY + y];
+			else
+				imgstr[z * WINY + y] = 0x000000;
 	}
 }
 

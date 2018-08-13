@@ -73,10 +73,10 @@ char		*parse_scene(t_env *e, char *file)
 			e->scene.blinding_lights = 1;
 			file = file + 17;
 		}
-		else if (ft_strncmp("[reflections] ", file, 14) == 0)
-			file = parse_int(file, &(e->scene.nr));
 		else if (ft_strncmp("[filter] ", file, 9) == 0)
 			file = parse_filter(file, &(e->scene.filter));
+		else if (ft_strncmp("[reflections] ", file, 14) == 0)
+			file = parse_int(file, &(e->scene.nr));
 		else
 			break ;
 	}
@@ -89,8 +89,9 @@ void		create_scene(t_env *e, char *file)
 	while (file && *file)
 	{
 		file = skip_whitespace(file);
-		file = parse_scene_disc(e, file);
-		if (ft_strncmp("<disc>\n", file, 7) == 0)
+		if (!(file = parse_scene_disc(e, file)))
+			break ;
+		else if (ft_strncmp("<disc>\n", file, 7) == 0)
 			file = parse_disc(e, file + 7);
 		else if (ft_strncmp("<eye>\n", file, 6) == 0)
 			file = parse_eye(e, file + 6);

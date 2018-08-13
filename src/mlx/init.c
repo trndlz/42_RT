@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 15:04:59 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:34 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:19:34 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int			init_fct(t_env *e)
 		return (0);
 	if (!(e->filter.img.pic = mlx_new_image(e->mlx.mlx, LEG, WINZ)))
 		return (0);
-	if (!(e->filter.img.info = mlx_get_data_addr(e->filter.img.pic, \
-					&e->filter.img.bpp, &e->filter.img.s_l, \
+	if (!(e->filter.img.info = mlx_get_data_addr(e->filter.img.pic,
+					&e->filter.img.bpp, &e->filter.img.s_l,
 					&e->filter.img.endian)))
 		return (0);
 	if (!(e->imgstr = (int *)mlx_get_data_addr(e->mlx.image, &b, &s, &en)))

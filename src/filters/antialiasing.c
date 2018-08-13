@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 14:26:30 by jostraye          #+#    #+#             */
-/*   Updated: 2018/08/13 12:56:01 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 12:57:58 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void	antialias(int *img)
 			i = z * WINY + y;
 			if (aa_condition(img, y, z, AA_S))
 				colorcopy[i] = mix_colors(av_col_four(img[i + 1],
-					img[i + WINY], img[i - WINY], img[i - 1]), img[i], 0.5);
+							img[i + WINY], img[i - WINY],
+							img[i - 1]), img[i], 0.5);
 		}
 	}
 	copy_img_array(img, colorcopy);

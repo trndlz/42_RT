@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 11:01:00 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/11 18:23:35 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 09:52:37 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,7 @@ double				distance_to_inter(t_hit_rec *hit, t_obj *obj_list,
 char				nearest_node(t_env *e, t_ray ray, t_hit_rec *hit);
 int					is_not_cut(t_obj *obj, t_env *e);
 int					compute_point(t_env *e, t_hit_rec *hit, t_ray ray, int a);
+int					multi_threading(t_env *e);
 
 /*
 ** COLOR CALCULATION
@@ -484,8 +485,9 @@ char				*write_obj(t_obj *click_obj);
 int    				initx(t_slider slider, int a);
 void    			draw_all(t_env *e);
 char     			*ft_sjf(char *s1, char *s2, bool first, bool second);
-void		check_mouse(int x, int y, t_slider *slider, t_cursor *cursor);
-void		check_all_mouse(int x, int y, t_env *e);
+void				check_mouse(int x, int y, t_slider *slider, t_cursor *cursor);
+void				check_all_mouse(int x, int y, t_env *e);
+int					init_fct(t_env *e);
 
 /*
 ** BUMP_MAP

@@ -35,8 +35,8 @@
 # define PERL_S 1000
 # define MAX_COLOR 16776960
 # define SUN_DISTANCE 3725000
-# define BUTTONPRESSMASK (1L<<2)
-# define BUTTONRELEASEMASK (1L<<3)
+# define BUTTONPRESSMASK (1L << 2)
+# define BUTTONRELEASEMASK (1L << 3)
 # define KEYPRESS 2
 # define KEYRELEASE 3
 # define BUTTONPRESS 4
@@ -485,7 +485,7 @@ int					initx(t_slider slider, int a);
 void				draw_all(t_env *e);
 char				*ft_sjf(char *s1, char *s2, bool first, bool second);
 void				check_mouse(int x, int y, t_slider *slider, \
-	t_cursor *cursor);
+					t_cursor *cursor);
 void				check_all_mouse(int x, int y, t_env *e);
 int					init_fct(t_env *e);
 

@@ -44,6 +44,20 @@ void	rotation(int key, t_env *e)
 		e->eye_rot.z -= 5;
 }
 
+void	perturb(int key, t_env *e)
+{
+	if (e->click_obj && key == 82)
+		e->click_obj->perturb = 0;
+	if (e->click_obj && key == 83)
+		e->click_obj->perturb = 1;
+	if (e->click_obj && key == 84)
+		e->click_obj->perturb = 2;
+	if (e->click_obj && key == 85)
+		e->click_obj->perturb = 3;
+	if (e->click_obj && key == 86)
+		e->click_obj->perturb = 4;
+}
+
 int		deal_key(int key, t_env *e)
 {
 	if (key)
@@ -65,6 +79,7 @@ int		deal_key(int key, t_env *e)
 	{
 		translation(key, e);
 		rotation(key, e);
+		perturb(key, e);
 		create_image(e);
 	}
 	return (0);

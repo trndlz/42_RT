@@ -90,7 +90,6 @@ ifeq ($(UNAME_S), Darwin)
 	MINILIBX	:= -L ./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit
 endif
 
-#CC			:= gcc -Werror -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
 CC			:= gcc -Werror -Wall -Wextra
 OBJ_NAME	:= $(SRC_NAME:.c=.o)
 

@@ -33,12 +33,12 @@ t_file_texture	init_perlin(void)
 {
 	t_file_texture	tex;
 
-	if (!(tex.size = NULL))
-		exit_message("malloc error\n");
+	if (!(tex.size = (int *)malloc(sizeof(int) * 2)))
+		exit_message("Error while creating Perlin malloc\n");
 	tex.size[0] = PERL_S;
 	tex.size[1] = PERL_S;
 	if (!(tex.tab = (int **)malloc((sizeof(int *) * PERL_S) + 1)))
-		exit_message("malloc error\n");
+		exit_message("Error while creating Perlin malloc\n");
 	return (tex);
 }
 
@@ -60,17 +60,17 @@ t_file_texture	create_perlin_tex(int res, t_obj *sphere)
 	x = -1;
 	tex = init_perlin();
 	if (!(perm = init_perm()))
-		exit_message("malloc error\n");
+		exit_message("Error while creating Perlin malloc\n");
 	while (++x < PERL_S)
 	{
 		if ((tex.tab[x] = (int *)malloc((sizeof(int) * PERL_S) + 1)) == NULL)
-			exit_message("malloc error\n");
+			exit_message("Error while creating Perlin malloc\n");
 		y = -1;
 		while (++y < PERL_S)
 		{
 			if ((tex.tab[x][y] = (perlin(x, y, res, perm) + 1)
 				* 0.5 * 255) == -1)
-				exit_message("malloc error\n");
+				exit_message("Error while creating Perlin malloc\n");
 			tex.tab[x][y] = calc_perlin_color(tex.tab[x][y], sphere);
 		}
 	}

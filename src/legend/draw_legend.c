@@ -17,7 +17,7 @@ static void		draw_legend(t_env *e, int x, int y, char *legend)
 	if (legend)
 		mlx_string_put(e->mlx.mlx, e->mlx.win, x, y, 0xded9df, legend);
 	else
-		exit_message("malloc error\n");
+		exit_message("Error while creating Perlin malloc\n");
 	free(legend);
 }
 

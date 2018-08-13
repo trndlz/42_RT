@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/24 10:54:45 by jostraye          #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:24 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:06:57 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ char	line_condition(int *imgstr, int y, int z)
 {
 	if (imgstr[z * WINY + y + WINY] != 0 && imgstr[z * WINY + y + 1] != 0
 		&& imgstr[z * WINY + y - WINY] != 0 && imgstr[z * WINY + y - 1] != 0)
-		if (major_color(imgstr[z * WINY + y]) !=
-			major_color(imgstr[z * WINY + y + WINY])
-			|| major_color(imgstr[z * WINY + y]) !=
-			major_color(imgstr[z * WINY + y - WINY])
-			|| major_color(imgstr[z * WINY + y]) !=
-			major_color(imgstr[z * WINY + y + 1])
-			|| major_color(imgstr[z * WINY + y]) !=
-			major_color(imgstr[z * WINY + y - 1]))
+		if (major_color(imgstr[z * WINY + y])
+			!= major_color(imgstr[z * WINY + y + WINY])
+			|| major_color(imgstr[z * WINY + y])
+			!= major_color(imgstr[z * WINY + y - WINY])
+			|| major_color(imgstr[z * WINY + y])
+			!= major_color(imgstr[z * WINY + y + 1])
+			|| major_color(imgstr[z * WINY + y])
+			!= major_color(imgstr[z * WINY + y - 1]))
 			return (1);
 	return (0);
 }

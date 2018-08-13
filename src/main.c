@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 00:45:50 by naminei          ###   ########.fr       */
+/*   Updated: 2018/08/13 09:33:01 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	mlx_slider(t_env *e)
 {
-    mlx_put_image_to_window(e->mlx.mlx, e->mlx.win, e->filter.img.pic, WINY, 0);
-    legend(e);
-    mlx_key_hook(e->mlx.win, &mykeyhook, e);
-    mlx_hook(e->mlx.win, ButtonPress, ButtonPressMask, &mouse_press, e);
-    mlx_hook(e->mlx.win, 6, 0, &mouse, e);
-    mlx_hook(e->mlx.win, ButtonRelease, ButtonReleaseMask, &mouse_release, e);
+	mlx_put_image_to_window(e->mlx.mlx, e->mlx.win, e->filter.img.pic, WINY, 0);
+	legend(e);
+	mlx_key_hook(e->mlx.win, &mykeyhook, e);
+	mlx_hook(e->mlx.win, ButtonPress, ButtonPressMask, &mouse_press, e);
+	mlx_hook(e->mlx.win, 6, 0, &mouse, e);
+	mlx_hook(e->mlx.win, ButtonRelease, ButtonReleaseMask, &mouse_release, e);
 }
 
 int		main(int ac, char **av)

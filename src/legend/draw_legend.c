@@ -33,7 +33,7 @@ static void		legend_activate_yes(t_env *e, char *leg)
 	draw_legend(e, WINY + 270, 390, leg);
 	leg = ft_sjf("Diff: ", inter_leg(e->filter.sld_d), 0, 1);
 	draw_legend(e, WINY + 270, 440, leg);
-	leg = ft_sjf("Amb: ", inter_leg(e->filter.sld_a), 0, 1);
+	leg = NULL;
 	draw_legend(e, WINY + 270, 490, leg);
 	mlx_string_put(e->mlx.mlx, e->mlx.win, WINY \
 		+ 50, 50, 0xded9df, "Click HERE to change RGB Filters");

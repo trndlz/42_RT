@@ -26,7 +26,7 @@ char		*parse_sphere(t_env *e, char *file)
 		if (!(load_texture_to_obj(e, sphere)))
 			return (file);
 	if (sphere->texture == PERLIN)
-		sphere->file_txt = create_perlin_tex(sphere->txt_size, e, sphere);
+		sphere->file_txt = create_perlin_tex(sphere->txt_size, sphere);
 	if (sphere->texture == NEARTH)
 		if (!(load_tex_height_to_obj(e, sphere)))
 			return (file);

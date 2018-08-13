@@ -409,7 +409,6 @@ void				clear_list(t_obj *head);
 */
 
 void				ft_usage(void);
-void				ft_malloc_error(t_env *e);
 void				ft_texture_error(t_env *e);
 void				exit_message(char *str);
 int					err_malloc_texture(int *size, t_obj *obj);
@@ -498,7 +497,7 @@ t_vc				bump_map(t_ray ray, t_hit_rec *hit);
 */
 
 float				perlin(float x, float y, float res, int *perm);
-t_file_texture		create_perlin_tex(int res, t_env *e, t_obj *sphere);
+t_file_texture		create_perlin_tex(int res, t_obj *sphere);
 int					exit_hook(int k, t_env *e);
 
 #endif

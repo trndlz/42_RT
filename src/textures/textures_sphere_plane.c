@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:41:47 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:46 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:33:50 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char		get_lines_sphere(t_hit_rec *hit, t_ray ray)
 	t_vc	sph_pos;
 
 	sph_pos = vec_norm(vec_mult(vec_sub(inter_position(ray, hit->t),
-		hit->hit_obj->pos), (1 / hit->hit_obj->size)));
+					hit->hit_obj->pos), (1 / hit->hit_obj->size)));
 	sph_pos = rot_all_axis(sph_pos, hit->hit_obj->rot);
 	v = 0.5 - asin(sph_pos.x) / M_PI;
 	if ((int)(hit->hit_obj->txt_size * v) % 2)
@@ -38,7 +38,7 @@ char		get_columns_sphere(t_hit_rec *hit, t_ray ray)
 	t_vc	sph_pos;
 
 	sph_pos = vec_norm(vec_mult(vec_sub(inter_position(ray, hit->t),
-		hit->hit_obj->pos), (1 / hit->hit_obj->size)));
+					hit->hit_obj->pos), (1 / hit->hit_obj->size)));
 	sph_pos = rot_all_axis(sph_pos, hit->hit_obj->rot);
 	u = 0.5 + atan2(sph_pos.z, sph_pos.y) / (2 * M_PI);
 	if ((int)(hit->hit_obj->txt_size * u) % 2)
@@ -54,7 +54,7 @@ char		get_checkerboard_sphere(t_hit_rec *hit, t_ray ray)
 	t_vc	sph_pos;
 
 	sph_pos = vec_norm(vec_mult(vec_sub(inter_position(ray, hit->t),
-		hit->hit_obj->pos), (1 / hit->hit_obj->size)));
+					hit->hit_obj->pos), (1 / hit->hit_obj->size)));
 	sph_pos = rot_all_axis(sph_pos, hit->hit_obj->rot);
 	u = 0.5 + atan2(sph_pos.z, sph_pos.y) / (2 * M_PI);
 	v = 0.5 - asin(sph_pos.x) / M_PI;
@@ -74,7 +74,7 @@ int			get_texture_sphere(t_hit_rec *hit, t_ray ray)
 	t_vc	sph_pos;
 
 	sph_pos = vec_norm(vec_mult(vec_sub(inter_position(ray, hit->t),
-		hit->hit_obj->pos), (1 / hit->hit_obj->size)));
+					hit->hit_obj->pos), (1 / hit->hit_obj->size)));
 	sph_pos = rot_all_axis(sph_pos, hit->hit_obj->rot);
 	u = 0.5 + atan2(sph_pos.x, sph_pos.z) / (2 * M_PI);
 	v = 0.5 - asin(sph_pos.y) / M_PI;
@@ -96,13 +96,13 @@ char		checkerboard_plane(t_hit_rec *hit, t_ray ray)
 	int		mod;
 
 	xy_pos = vec_sub(vec_add(vec_mult(ray.direction, hit->t),
-		ray.origin), hit->hit_obj->pos);
+					ray.origin), hit->hit_obj->pos);
 	teta = acos(vec_dot(hit->hit_obj->rot, (t_vc){0, 0, 1}));
 	xy_pos = rot_x(xy_pos, (int)(teta * 180 / M_PI));
 	xy_pos = rot_y(xy_pos, (int)(teta * 180 / M_PI));
 	mod = (xy_pos.x * xy_pos.y > 0) ? 1 : 0;
 	if (abs((int)xy_pos.x / (int)hit->hit_obj->txt_size
-	- (int)xy_pos.y / (int)hit->hit_obj->txt_size) % 2 == mod)
+			- (int)xy_pos.y / (int)hit->hit_obj->txt_size) % 2 == mod)
 		return (0);
 	else
 		return (1);

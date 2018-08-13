@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 14:57:03 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:48 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:34:31 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void		ft_usage(void)
 {
 	ft_putstr_fd("Usage:\n", 2);
-	ft_putstr_fd("./rtv1 scene_file\n", 2);
+	ft_putstr_fd("./rt scene_file\n", 2);
 	exit(1);
 }
 

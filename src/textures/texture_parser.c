@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 18:25:04 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:45 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:31:15 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int		load_texture_to_obj(t_env *e, t_obj *obj)
 		return (0);
 	obj->file_txt.size = size;
 	if (!(image = mlx_xpm_file_to_image(e->mlx.mlx,
-		"xpm/earth.xpm", &size[0], &size[1])))
+					"xpm/earth.xpm", &size[0], &size[1])))
 		return (err_malloc_texture(size, obj));
 	if (!(imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2])))
 		return (err_malloc_texture(size, obj));
@@ -115,7 +115,7 @@ int		load_tex_height_to_obj(t_env *e, t_obj *obj)
 		return (0);
 	obj->file_height.size = size;
 	if (!(image = mlx_xpm_file_to_image(e->mlx.mlx,
-			"xpm/earth_height.xpm", &size[0], &size[1])))
+					"xpm/earth_height.xpm", &size[0], &size[1])))
 		return (err_malloc_texture(size, obj));
 	if (!(imgstr = (int *)mlx_get_data_addr(image, &a[0], &a[1], &a[2])))
 		return (err_malloc_texture(size, obj));

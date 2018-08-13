@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/02 12:20:15 by avinas            #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:45 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:30:27 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ t_file_texture	init_perlin(void)
 
 int				calc_perlin_color(int color, t_obj *sphere)
 {
-	color = 65536 * color
-		+ 256 * color + color;
+	color = 65536 * color + 256 * color + color;
 	color = mix_colors(sphere->col, color, 0.5);
 	return (color);
 }

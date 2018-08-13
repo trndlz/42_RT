@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   maths_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/18 18:40:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 17:19:06 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:31 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 double	car(double a)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   calc_perlin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avinas <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/05 18:03:44 by avinas            #+#    #+#             */
-/*   Updated: 2018/08/05 18:03:49 by avinas           ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:44 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 float			get_grad(int a, int b)
 {

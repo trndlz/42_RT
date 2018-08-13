@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   maths_vectors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:16:36 by tmervin           #+#    #+#             */
-/*   Updated: 2018/06/20 17:10:58 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:32 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 double	vec_squ_sum(t_vc v1)
 {

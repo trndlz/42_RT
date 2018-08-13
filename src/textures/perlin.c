@@ -6,11 +6,11 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/02 12:20:15 by avinas            #+#    #+#             */
-/*   Updated: 2018/08/12 12:58:48 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:45 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 int				*init_perm(void)
 {

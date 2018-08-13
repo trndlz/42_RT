@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   other.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 21:12:32 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/09 15:41:04 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:48 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 #include <stdio.h>
 
 void		progression_bar(t_env *e, char *str, int i)

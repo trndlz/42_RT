@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/10 16:34:20 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:38 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 char		*parse_disc(t_env *e, char *file)
 {

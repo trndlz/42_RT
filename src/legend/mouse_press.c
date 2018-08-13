@@ -6,11 +6,11 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:18:34 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/13 13:01:04 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:29 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 static void		mouse_press_activated(t_env *e, t_vc rgb)
 {

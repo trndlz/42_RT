@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   palette.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 16:31:45 by jostraye          #+#    #+#             */
-/*   Updated: 2018/07/24 13:47:01 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:25 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 int		palette_compare(int *palette, int color)
 {

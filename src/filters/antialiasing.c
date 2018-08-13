@@ -6,11 +6,11 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 14:26:30 by jostraye          #+#    #+#             */
-/*   Updated: 2018/08/13 13:01:01 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:23 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 int		clr_abs_dif(int col1, int col2)
 {

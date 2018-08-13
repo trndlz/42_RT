@@ -6,11 +6,11 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/28 10:50:57 by avinas            #+#    #+#             */
-/*   Updated: 2018/08/11 16:32:08 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:43 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 int		get_tex_height_sphere(t_hit_rec *hit, t_ray ray)
 {

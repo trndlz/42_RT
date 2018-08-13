@@ -6,11 +6,11 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:26:45 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/13 13:01:05 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:30 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void	put_pixel(t_env *e, int x, int y, int color)
 {

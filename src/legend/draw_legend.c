@@ -6,11 +6,11 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:14:10 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/13 13:01:01 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:26 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 static void		draw_legend(t_env *e, int x, int y, char *legend)
 {

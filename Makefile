@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: naminei <naminei@student.42.fr>            +#+  +:+       +#+         #
+#    By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/11 13:50:29 by tmervin           #+#    #+#              #
-#    Updated: 2018/08/10 08:27:53 by naminei          ###   ########.fr        #
+#    Updated: 2018/08/13 13:56:01 by nozanne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,7 +105,7 @@ $(NAME): $(OBJ)
 	make -C $(MLX_PATH)
 	$(CC) $^ $(LDFLAGS) $(LDLIBS) $(MINILIBX) -o $@
 
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c includes/rtv1.h
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c includes/rt.h
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@mkdir -p $(@D)
 	$(CC) $(CPPFLAGS) -o $@ -c $<

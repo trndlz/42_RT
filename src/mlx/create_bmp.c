@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   create_bmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/23 19:01:36 by jostraye          #+#    #+#             */
-/*   Updated: 2018/07/19 18:30:15 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:33 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 static	unsigned char		*create_bmp_img(int *imgstr)
 {

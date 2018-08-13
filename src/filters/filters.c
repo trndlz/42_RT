@@ -6,11 +6,11 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 15:06:54 by jostraye          #+#    #+#             */
-/*   Updated: 2018/08/13 09:38:50 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:25 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void	stereoscopic(t_env *e, int color)
 {

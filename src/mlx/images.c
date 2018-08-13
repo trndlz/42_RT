@@ -6,11 +6,11 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 13:37:05 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 09:47:48 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:33 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 int		multi_threading_join(t_env *e)
 {

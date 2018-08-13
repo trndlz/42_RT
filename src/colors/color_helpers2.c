@@ -6,11 +6,11 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/24 10:54:54 by jostraye          #+#    #+#             */
-/*   Updated: 2018/08/13 09:37:36 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:22 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 int		closest_col(int *palette, int color)
 {

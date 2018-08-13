@@ -6,11 +6,11 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 08:17:54 by naminei           #+#    #+#             */
-/*   Updated: 2018/08/13 13:01:03 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:29 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 void		check_mouse(int x, int y, t_slider *slider, t_cursor *cursor)
 {

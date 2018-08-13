@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_items2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/10 15:16:25 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:37 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 char			*parse_vc(char *file, t_vc *v)
 {

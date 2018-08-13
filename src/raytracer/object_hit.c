@@ -6,11 +6,11 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/11 16:19:47 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:42 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 double	distance_to_inter(t_hit_rec *hit, t_obj *obj_list, t_ray ray)
 {

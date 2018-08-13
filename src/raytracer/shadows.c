@@ -6,11 +6,11 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:42:39 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/11 16:20:12 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:43 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 double		get_minimum_tr(t_hit_rec hit_s, t_obj *olst, t_ray light_r)
 {

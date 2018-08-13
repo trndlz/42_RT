@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   blind_lights.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/24 10:54:34 by jostraye          #+#    #+#             */
-/*   Updated: 2018/08/09 14:41:44 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:23 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 char	nearest_light(t_env *e, t_ray ray, t_hit_rec *hit)
 {

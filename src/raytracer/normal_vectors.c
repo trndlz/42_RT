@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   normal_vectors.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:42:39 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/24 11:22:43 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:41 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 t_vc	normal_cylinder(t_hit_rec *hit, t_obj *obj, t_ray ray)
 {

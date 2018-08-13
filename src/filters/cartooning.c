@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cartooning.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/24 10:54:45 by jostraye          #+#    #+#             */
-/*   Updated: 2018/07/24 13:52:50 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:24 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 char	line_condition(int *imgstr, int y, int z)
 {

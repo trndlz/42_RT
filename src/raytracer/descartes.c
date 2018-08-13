@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   descartes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmervin <tmervin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/07/24 13:55:25 by jostraye         ###   ########.fr       */
+/*   Updated: 2018/08/13 13:54:40 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "rt.h"
 
 static void		refraction(t_ray *ray, t_hit_rec *hit)
 {

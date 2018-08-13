@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/26 14:26:30 by jostraye          #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:23 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:13:33 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ int		av_col_four(int col1, int col2, int col3, int col4)
 char	aa_condition(int *imgstr, int y, int z, int sensib)
 {
 	if (clr_abs_dif(imgstr[z * WINY + y + 1],
-		imgstr[z * WINY + y + WINY]) > sensib
-	|| clr_abs_dif(imgstr[z * WINY + y + 1],
-		imgstr[z * WINY + y - WINY]) > sensib
-	|| clr_abs_dif(imgstr[z * WINY + y - 1],
-		imgstr[z * WINY + y + WINY]) > sensib
-	|| clr_abs_dif(imgstr[z * WINY + y - 1],
-		imgstr[z * WINY + y - WINY]) > sensib)
+			imgstr[z * WINY + y + WINY]) > sensib
+			|| clr_abs_dif(imgstr[z * WINY + y + 1],
+				imgstr[z * WINY + y - WINY]) > sensib
+				|| clr_abs_dif(imgstr[z * WINY + y - 1],
+					imgstr[z * WINY + y + WINY]) > sensib
+					|| clr_abs_dif(imgstr[z * WINY + y - 1],
+						imgstr[z * WINY + y - WINY]) > sensib)
 		return (1);
 	else
 		return (0);

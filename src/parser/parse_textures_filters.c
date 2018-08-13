@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:39 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:23:12 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ enum e_texture	texture_converter(char *str, enum e_obj obj)
 	else if (!ft_strcmp(str, "COLUMNS") && obj == SPHERE)
 		return (COLUMNS);
 	else if (!ft_strcmp(str, "CHECKERBOARD")
-	&& (obj == SPHERE || obj == PLANE || obj == DISC))
+		&& (obj == SPHERE || obj == PLANE || obj == DISC))
 		return (CHECKERBOARD);
 	else if (!ft_strcmp(str, "EARTH") && obj == SPHERE)
 		return (EARTH);

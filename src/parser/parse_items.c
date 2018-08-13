@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:36 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:21:27 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char		*parse_descartes(char *file, t_vc *v)
 	t_vc	descartes;
 
 	if ((check = sscanf(file, "%*s %lf %lf %lf\n",
-		&(descartes.x), &(descartes.y), &(descartes.z))) != 3)
+					&(descartes.x), &(descartes.y), &(descartes.z))) != 3)
 		return (parser_error("Invalid values !\n", file));
 	if (!(descartes.x >= 0 && descartes.x <= 1.0))
 		return (parser_error("Reflection must be [0;1] !\n", file));
@@ -68,7 +68,7 @@ char		*parse_phong(char *file, t_vc *v)
 	t_vc	phong;
 
 	if ((check = sscanf(file, "%*s %lf %lf %lf\n",
-		&(phong.x), &(phong.y), &(phong.z))) != 3)
+					&(phong.x), &(phong.y), &(phong.z))) != 3)
 		return (parser_error("Invalid values !\n", file));
 	if (phong.x < 0 || phong.y < 0 || phong.z < 0)
 		return (parser_error("Values must be [0;1] !\n", file));

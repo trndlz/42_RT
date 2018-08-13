@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:37 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:22:01 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char			*parse_vc(char *file, t_vc *v)
 	int		check;
 
 	if ((check = sscanf(file, "%*s %lf %lf %lf\n",
-		&(v->x), &(v->y), &(v->z))) != 3)
+					&(v->x), &(v->y), &(v->z))) != 3)
 		return (parser_error("Invalid values !\n", file));
 	if (!(file = ft_strchr(file, '\n')))
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 10:37:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:37 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:22:31 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char		*parse_sphere(t_env *e, char *file)
 		if (!(load_tex_height_to_obj(e, sphere)))
 			return (file);
 	if (sphere->cut && (sphere->descartes.y > 0
-	|| sphere->cut->descartes.y > 0))
+			|| sphere->cut->descartes.y > 0))
 	{
 		ft_putstr("Transparent <sphere> objects can't be cut !\n");
 		return (file);

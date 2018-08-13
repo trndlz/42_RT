@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 13:37:05 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/11 18:19:14 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 09:47:48 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,8 @@ int		multi_threading(t_env *e)
 
 int		create_image(t_env *e)
 {
-	int b;
-	int s;
-	int en;
-
 	mlx_clear_window(e->mlx.mlx, e->mlx.win);
-	if (e->mlx.image)
-		mlx_destroy_image(e->mlx.mlx, e->mlx.image);
-	if (e->filter.img.pic)
-		mlx_destroy_image(e->mlx.mlx, e->filter.img.pic);
-	if (!(e->mlx.image = mlx_new_image(e->mlx.mlx, WINY, WINZ)))
-		return (0);
-	if (!(e->filter.img.pic = mlx_new_image(e->mlx.mlx, LEG, WINZ)))
-		return (0);
-	if (!(e->filter.img.info = mlx_get_data_addr(e->filter.img.pic, &e->filter.img.bpp, &e->filter.img.s_l, &e->filter.img.endian)))
-		return (0);
-	if (!(e->imgstr = (int *)mlx_get_data_addr(e->mlx.image, &b, &s, &en)))
-		return (0);
-	if (!multi_threading(e))
-		return (0);
+	init_fct(e);
 	if (e->scene.blinding_lights)
 		blinding_lights(e);
 	if (e->scene.antialias)

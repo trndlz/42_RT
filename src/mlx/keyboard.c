@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 10:47:19 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/10 08:29:15 by naminei          ###   ########.fr       */
+/*   Updated: 2018/08/13 09:40:34 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,3 @@ t_obj	*click_to_object(t_env *e, int y, int z)
 		return (hit_rec.hit_obj);
 	return (NULL);
 }
-
-// int		deal_mouse(int k, int y, int z, t_env *e)
-// {
-// 	if (y >= 0 && z >= 0 && y <= WINY && z <= WINZ && e)
-// 	{
-// 		if (k == 1)
-// 		{
-// 			ft_putstr("y -> ");
-// 			ft_putnbr(y);
-// 			ft_putstr(" / z -> ");
-// 			ft_putnbr(z);
-// 			ft_putchar('\n');
-// 		}
-// 	}
-// 	return (0);
-// }

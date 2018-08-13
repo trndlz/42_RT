@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 15:04:59 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/10 14:11:33 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 09:48:58 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,29 @@ void		obj_add(t_obj **beg, t_obj *n)
 		n->next = *beg;
 		*beg = n;
 	}
+}
+
+int			init_fct(t_env *e)
+{
+	int b;
+	int s;
+	int en;
+
+	if (e->mlx.image)
+		mlx_destroy_image(e->mlx.mlx, e->mlx.image);
+	if (e->filter.img.pic)
+		mlx_destroy_image(e->mlx.mlx, e->filter.img.pic);
+	if (!(e->mlx.image = mlx_new_image(e->mlx.mlx, WINY, WINZ)))
+		return (0);
+	if (!(e->filter.img.pic = mlx_new_image(e->mlx.mlx, LEG, WINZ)))
+		return (0);
+	if (!(e->filter.img.info = mlx_get_data_addr(e->filter.img.pic, \
+					&e->filter.img.bpp, &e->filter.img.s_l, \
+					&e->filter.img.endian)))
+		return (0);
+	if (!(e->imgstr = (int *)mlx_get_data_addr(e->mlx.image, &b, &s, &en)))
+		return (0);
+	if (!multi_threading(e))
+		return (0);
+	return (0);
 }

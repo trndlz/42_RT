@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 15:06:54 by jostraye          #+#    #+#             */
-/*   Updated: 2018/08/10 14:18:08 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 09:38:50 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		sepia(int color)
 int		apply_filter(t_env *e, int color)
 {
 	if (e->scene.filter == NO_FILTER)
-		return(color);
+		return (color);
 	else if (e->scene.filter == BLUE)
 		return (color % 0x100);
 	else if (e->scene.filter == GREEN)

@@ -64,7 +64,7 @@ char	hit_cut(t_hit_rec *hit, t_obj *obj, t_ray ray)
 		hit_anything = 1;
 	}
 	else if (t > D_ZERO && t_cut < hit->t
-		&& hit->t1 < t_cut && hit->t2 > t_cut && t_cut > D_ZERO)
+		&& hit->t1 < t_cut && hit->t2 > t_cut && t_cut > D_ZERO && hit->t1 > 0)
 	{
 		hit->t = t_cut;
 		hit->hit_obj = clst;

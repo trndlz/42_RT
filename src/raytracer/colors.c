@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 14:51:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:40 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:24:57 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int		get_obj_color(t_hit_rec *hit, t_ray ray)
 {
 	if (hit->hit_obj->o_type == SPHERE && (hit->hit_obj->texture == EARTH
-		|| hit->hit_obj->texture == NEARTH || hit->hit_obj->texture == PERLIN))
+			|| hit->hit_obj->texture == NEARTH
+			|| hit->hit_obj->texture == PERLIN))
 		return (get_texture_sphere(hit, ray));
 	else
 		return (hit->hit_obj->col);
@@ -31,7 +32,7 @@ int		specular_diffuse(t_obj *light, t_hit_rec *hit, t_ray ray)
 
 	rm = vec_norm(vec_sub(vec_mult(hit->n, 2 * hit->cost), hit->lm));
 	dot_spec = pow(ratio_limits(vec_dot(rm, vec_norm(vec_mult(hit->v, -1.0)))),
-		ALPHA_SPEC);
+			ALPHA_SPEC);
 	dot_diff = ratio_limits(hit->cost);
 	color_spec = multiply_color(light->col, dot_spec * hit->hit_obj->phong.x);
 	color_diff = multiply_color(get_obj_color(hit, ray),

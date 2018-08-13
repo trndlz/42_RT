@@ -6,7 +6,7 @@
 /*   By: nozanne <nozanne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 16:03:32 by tmervin           #+#    #+#             */
-/*   Updated: 2018/08/13 13:54:41 by nozanne          ###   ########.fr       */
+/*   Updated: 2018/08/13 14:26:43 by nozanne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ double			inter_paraboloid(t_hit_rec *hit, t_obj *obj, t_ray ray)
 	v = vec_norm(obj->rot);
 	abc.x = vec_x(ray.direction, ray.direction) - car(vec_x(ray.direction, v));
 	abc.y = 2 * (vec_x(ray.direction, x)
-		- vec_x(ray.direction, v) * (vec_x(x, v) + 2 * k));
+			- vec_x(ray.direction, v) * (vec_x(x, v) + 2 * k));
 	abc.z = (vec_x(x, x) - vec_x(x, v) * (vec_x(x, v) + 4 * k));
 	return (quadratic_solver(hit, abc));
 }
@@ -53,8 +53,8 @@ double			inter_cone(t_hit_rec *hit, t_obj *obj, t_ray ray)
 	abc.x = vec_x(ray.direction, ray.direction)
 		- k * car(vec_x(ray.direction, obj->rot));
 	abc.y = 2 * (vec_x(ray.direction, x)
-		- k * vec_x(ray.direction, obj->rot)
-		* vec_x(x, obj->rot));
+			- k * vec_x(ray.direction, obj->rot)
+			* vec_x(x, obj->rot));
 	abc.z = vec_x(x, x)
 		- k * car(vec_x(x, obj->rot));
 	return (quadratic_solver(hit, abc));
@@ -69,7 +69,7 @@ double			inter_cyl(t_hit_rec *hit, t_obj *obj, t_ray ray)
 	obj->rot = vec_norm(obj->rot);
 	abc.x = vec_squ_sum(ray.direction) - car(vec_x(ray.direction, obj->rot));
 	abc.y = 2 * (vec_x(ray.direction, x)
-		- vec_x(ray.direction, obj->rot) * vec_x(x, obj->rot));
+			- vec_x(ray.direction, obj->rot) * vec_x(x, obj->rot));
 	abc.z = vec_squ_sum(x)
 		- car(vec_x(x, obj->rot)) - car(obj->size);
 	return (quadratic_solver(hit, abc));

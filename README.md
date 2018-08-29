@@ -82,3 +82,11 @@
 - Parameters:
     - (position) X Y Z (pixels)
 	- (rotation) X Y Z (in vector direction)
+	
+![alt text](https://github.com/trndlz/rtv1/blob/master/img/allobj.png)
+
+![alt text](https://github.com/trndlz/rtv1/blob/master/img/bump.png)
+
+![alt text](https://github.com/trndlz/rtv1/blob/master/img/cut.png)
+
+![alt text](https://github.com/trndlz/rtv1/blob/master/img/sphere.png)
